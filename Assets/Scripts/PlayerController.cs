@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     Animator animator;
     private Vector2 huongDiChuyen;
-    private Vector2 huongHoatAnh = new Vector2(0, -1); // hướng mặc định (xuống dưới)
+    private Vector2 huongHoatAnh = new Vector2(0, -1); 
 
     #endregion
 
