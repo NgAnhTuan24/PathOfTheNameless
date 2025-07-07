@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -25,10 +22,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // Lấy input ở đây
         huongDiChuyen = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 
-        // Cập nhật hướng hoạt ảnh nếu có input
         if (huongDiChuyen != Vector2.zero)
         {
             huongHoatAnh = huongDiChuyen;
