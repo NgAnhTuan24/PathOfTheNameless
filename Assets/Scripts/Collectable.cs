@@ -1,15 +1,16 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
     public CollectableType type;
+    public Sprite icon;
     private void OnTriggerEnter2D(Collider2D collectable)
     {
         Player player = collectable.GetComponent<Player>();
 
         if (player)
         {
-            player.inventory.Add(type);
+            player.inventory.Add(this);
             Destroy(this.gameObject);
         }
     }
@@ -17,5 +18,28 @@ public class Collectable : MonoBehaviour
 
 public enum CollectableType
 {
-    NONE, caChua
+    NONE, 
+    go,
+
+    // Hạt giống các loại
+    hatGiongLua,
+    hatGiongNgo,
+    hatGiongCaChua,
+    hatGiongCuCaiTrang,
+    hatGiongCaRot,
+    hatGiongDauTay,
+    hatGiongLac,
+    hatGiongTaoDo,
+    hatGiongTaoXanh,
+
+    // Nông sản sau khi thu hoạch
+    lua, 
+    ngo, 
+    caChua, 
+    cuCaiTrang, 
+    caRot, 
+    dauTay, 
+    lac, 
+    taoDo,
+    taoXanh
 }
