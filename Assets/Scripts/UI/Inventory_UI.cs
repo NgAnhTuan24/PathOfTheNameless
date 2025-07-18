@@ -5,9 +5,16 @@ public class Inventory_UI : MonoBehaviour
 {
     public GameObject inventoryPanel;
 
+    public GameObject balo;
+ 
     public Player player;
 
     public List<Slot_UI> slots = new List<Slot_UI>();
+
+    private void Start()
+    {
+        inventoryPanel.SetActive(false);
+    }
 
     void Update()
     {
@@ -22,11 +29,13 @@ public class Inventory_UI : MonoBehaviour
         if (!inventoryPanel.activeSelf)
         {
             inventoryPanel.SetActive(true);
+            balo.SetActive(false);
             Setup();
         }
         else
         {
             inventoryPanel.SetActive(false);
+            balo.SetActive(true);
         }
     }
 
