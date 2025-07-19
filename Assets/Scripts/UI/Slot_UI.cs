@@ -1,9 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class Slot_UI : MonoBehaviour
 {
+    public int slotID;
     public Image itemIcon;
     public TextMeshProUGUI quantityText;
 

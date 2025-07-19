@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Toolbar_UI : MonoBehaviour
@@ -27,7 +27,6 @@ public class Toolbar_UI : MonoBehaviour
 
             selectedSlot = toolbarSlots[index];
             selectedSlot.SetHighlight(true);
-            //Debug.Log("Selected Slot: " + index);
         }
     }
 

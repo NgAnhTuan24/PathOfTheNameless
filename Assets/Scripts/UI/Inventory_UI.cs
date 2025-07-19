@@ -12,16 +12,15 @@ public class Inventory_UI : MonoBehaviour
 
     public List<Slot_UI> slots = new List<Slot_UI>();
 
-    [SerializeField] private Canvas canvas;
-
     private Slot_UI draggedSlot;
     private Image draggedIcon;
+    private Canvas canvas;
+    private bool dragSingle;
 
     private void Awake()
     {
         canvas = FindObjectOfType<Canvas>();
     }
-
 
     private void Start()
     {
@@ -34,6 +33,15 @@ public class Inventory_UI : MonoBehaviour
         {
             OpenCloseInventory();
         }
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            dragSingle = true;
+        }
+        else
+        {
+            dragSingle = false;
+        }
     }
 
     public void OpenCloseInventory()
@@ -42,7 +50,7 @@ public class Inventory_UI : MonoBehaviour
         {
             inventoryPanel.SetActive(true);
             balo.SetActive(false);
-            Setup();
+            Refresh();
         }
         else
         {
@@ -51,7 +59,7 @@ public class Inventory_UI : MonoBehaviour
         }
     }
 
-    void Setup()
+    void Refresh()
     {
         if (slots.Count == player.inventory.slots.Count)
         {
@@ -69,6 +77,32 @@ public class Inventory_UI : MonoBehaviour
         }
     }
 
+    public void Remove()
+    {
+        Collectable itemtoDrop = GameManager.instance.itemManager.
+            GetItemByType(player.inventory.slots[draggedSlot.slotID].type);
+
+        if(itemtoDrop != null)
+        {
+            if (dragSingle)
+            {
+                player.DropItem(itemtoDrop);
+                player.inventory.Remove(draggedSlot.slotID);
+            }
+            else
+            {
+                player.DropItem(itemtoDrop,
+                    player.inventory.slots[draggedSlot.slotID].count);
+                player.inventory.Remove(draggedSlot.slotID, 
+                    player.inventory.slots[draggedSlot.slotID].count);
+            }
+
+            Refresh();
+        }
+
+        draggedSlot = null;
+    }
+
     public void SlotBeginDrag(Slot_UI slot)
     {
         draggedSlot = slot;
@@ -77,13 +111,13 @@ public class Inventory_UI : MonoBehaviour
         draggedIcon.raycastTarget = false;
         draggedIcon.rectTransform.sizeDelta = new Vector2(100, 100);
 
-        MoveToMouse(draggedIcon.gameObject);
+        MoveToMousePosition(draggedIcon.gameObject);
         Debug.Log("Start Drag Slot: " + draggedSlot.name);
     }
 
     public void SlotDrag()
     {
-        MoveToMouse(draggedIcon.gameObject);
+        MoveToMousePosition(draggedIcon.gameObject);
         Debug.Log("Dragging Slot: " + draggedSlot.name);
     }
 
@@ -99,7 +133,7 @@ public class Inventory_UI : MonoBehaviour
         Debug.Log("Dropped " + draggedSlot.name + " onto " + slot.name);
     }
 
-    private void MoveToMouse(GameObject toMove)
+    private void MoveToMousePosition(GameObject toMove)
     {
         if(canvas != null)
         {
@@ -112,7 +146,8 @@ public class Inventory_UI : MonoBehaviour
                 out pos
             );
 
-            toMove.transform.position = canvas.transform.TransformPoint(pos);
+            toMove.transform.position = canvas.transform.
+                TransformPoint(pos);
         }
     }
 }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2838916808737419365}
   - component: {fileID: 1735498502591110931}
   - component: {fileID: 7104545230287966416}
+  - component: {fileID: -6346691954304918309}
   m_Layer: 0
   m_Name: "H\u1EA1t gi\u1ED1ng c\xE0 chua"
   m_TagString: Untagged
@@ -145,3 +146,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 4
   icon: {fileID: 754197975, guid: e5434ec9f9de23741a92afc0a1d38316, type: 3}
+  rb: {fileID: 0}
+--- !u!50 &-6346691954304918309
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3045314243926610777}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0.2
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
