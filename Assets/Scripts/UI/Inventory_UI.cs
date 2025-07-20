@@ -65,7 +65,7 @@ public class Inventory_UI : MonoBehaviour
         {
             for (int i = 0; i < slots.Count; i++)
             {
-                if (player.inventory.slots[i].type != CollectableType.NONE)
+                if (player.inventory.slots[i].itemName != "")
                 {
                     slots[i].SetItem(player.inventory.slots[i]);
                 }
@@ -79,8 +79,8 @@ public class Inventory_UI : MonoBehaviour
 
     public void Remove()
     {
-        Collectable itemtoDrop = GameManager.instance.itemManager.
-            GetItemByType(player.inventory.slots[draggedSlot.slotID].type);
+        Item itemtoDrop = GameManager.instance.itemManager.
+            GetItemByName(player.inventory.slots[draggedSlot.slotID].itemName);
 
         if(itemtoDrop != null)
         {
@@ -109,23 +109,20 @@ public class Inventory_UI : MonoBehaviour
         draggedIcon = Instantiate(draggedSlot.itemIcon);
         draggedIcon.transform.SetParent(canvas.transform);
         draggedIcon.raycastTarget = false;
-        draggedIcon.rectTransform.sizeDelta = new Vector2(100, 100);
+        draggedIcon.rectTransform.sizeDelta = new Vector2(80f, 80f);
 
         MoveToMousePosition(draggedIcon.gameObject);
-        Debug.Log("Start Drag Slot: " + draggedSlot.name);
     }
 
     public void SlotDrag()
     {
         MoveToMousePosition(draggedIcon.gameObject);
-        Debug.Log("Dragging Slot: " + draggedSlot.name);
     }
 
     public void SlotEndDrag()
     {
         Destroy(draggedIcon.gameObject);
         draggedIcon = null;
-        Debug.Log("Done Dragging " + draggedSlot.name);
     }
 
     public void SlotDrop(Slot_UI slot)

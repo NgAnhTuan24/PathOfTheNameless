@@ -9,13 +9,13 @@ public class Player : MonoBehaviour
         inventory = new Inventory(20);
     }
 
-    public void DropItem(Collectable item)
+    public void DropItem(Item item)
     {
         Vector2 spawnLocation = transform.position;
 
         Vector2 spawnOffset = Random.insideUnitCircle * 1.25f;
 
-        Collectable droppedItem = Instantiate(
+        Item droppedItem = Instantiate(
             item, 
             spawnLocation + spawnOffset, 
             Quaternion.identity);
@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
             spawnOffset * 2f, ForceMode2D.Impulse);
     }
 
-    public void DropItem(Collectable item, int numToDrop)
+    public void DropItem(Item item, int numToDrop)
     {
        for(int i = 0; i < numToDrop; i++)
         {

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5554975631777222170}
   - component: {fileID: 6296671542703728315}
   - component: {fileID: 6263393268480005693}
+  - component: {fileID: 8918114748765179476}
   m_Layer: 0
   m_Name: "L\xFAa"
   m_TagString: Untagged
@@ -144,9 +145,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edb715d5d8f65524f97292b02e8c6032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 11
-  icon: {fileID: 92561544, guid: e5434ec9f9de23741a92afc0a1d38316, type: 3}
-  rb: {fileID: 0}
 --- !u!50 &6263393268480005693
 Rigidbody2D:
   serializedVersion: 4
@@ -159,8 +157,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0.2
+  m_Mass: 2
+  m_LinearDrag: 0.75
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -174,3 +172,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &8918114748765179476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3510423122866213654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbabaa452aabf59408443554f88035db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 9afa8304d3033494e881230439a91007, type: 2}
+  rb: {fileID: 0}
