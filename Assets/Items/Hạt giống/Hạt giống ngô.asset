@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488eab75625b58c4fafd8806c219e86c, type: 3}
   m_Name: "H\u1EA1t gi\u1ED1ng ng\xF4"
   m_EditorClassIdentifier: 
-  itemName: "h\u1EA1t gi\u1ED1ng ng\xF4"
+  itemName: "H\u1EA1t gi\u1ED1ng ng\xF4"
   icon: {fileID: 1504853863, guid: e5434ec9f9de23741a92afc0a1d38316, type: 3}
