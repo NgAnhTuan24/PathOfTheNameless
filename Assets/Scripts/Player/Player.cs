@@ -9,6 +9,20 @@ public class Player : MonoBehaviour
         inventory = GetComponent<InventoryManager>();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Vector3Int pos = new Vector3Int((int)transform.position.x, (int)transform.position.y, 0);
+
+            if(GameManager.instance.tileManager.IsInteractable(pos))
+            {
+                Debug.Log("Tile is interactable");
+                GameManager.instance.tileManager.SetInteracted(pos);
+            }
+        }    
+    }
+
     public void DropItem(Item item)
     {
         Vector2 spawnLocation = transform.position;
