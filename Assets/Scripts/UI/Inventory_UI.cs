@@ -20,7 +20,6 @@ public class Inventory_UI : MonoBehaviour
     private void Start()
     {
         inventory = GameManager.instance.player.inventory.GetInventoryByName(inventoryName);
-        //inventoryPanel.SetActive(false);
         SetupSlots();
         Refresh();
     }

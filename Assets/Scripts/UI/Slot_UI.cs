@@ -18,7 +18,15 @@ public class Slot_UI : MonoBehaviour
         {
             itemIcon.sprite = slot.icon;
             itemIcon.color = new Color(1, 1, 1, 1);
-            quantityText.text = slot.count.ToString();
+
+            if (IsTool(slot.itemName))
+            {
+                quantityText.text = "";
+            }
+            else
+            {
+                quantityText.text = slot.count.ToString();
+            }
         }
     }
 
@@ -32,5 +40,10 @@ public class Slot_UI : MonoBehaviour
     public void SetHighlight(bool isOn)
     {
         highlight.SetActive(isOn);
+    }
+
+    private bool IsTool(string itemName)
+    {
+        return itemName == "Kiếm" || itemName == "Rìu" || itemName == "Cuốc";
     }
 }
