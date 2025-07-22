@@ -69,4 +69,9 @@ public class Toolbar_UI : MonoBehaviour
             SelectSlot(8);
         }
     }
+
+    public Inventory.Slot GetSelectedSlot()
+    {
+        return selectedSlot?.inventory?.slots[selectedSlot.slotID];
+    }
 }

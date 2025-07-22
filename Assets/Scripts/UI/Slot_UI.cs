@@ -12,6 +12,8 @@ public class Slot_UI : MonoBehaviour
 
     [SerializeField] private GameObject highlight;
 
+    public ItemData itemData;
+
     public void SetItem(Inventory.Slot slot)
     {
         if(slot != null)
@@ -28,6 +30,8 @@ public class Slot_UI : MonoBehaviour
                 quantityText.text = slot.count.ToString();
             }
         }
+
+        this.itemData = GameManager.instance.itemManager.GetItemByName(slot.itemName)?.data;
     }
 
     public void SetEmpty()
