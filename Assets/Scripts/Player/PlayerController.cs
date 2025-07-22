@@ -89,6 +89,12 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("đã sử dụng rìu");
             }
         }
+
+        // Trồng hạt giống
+        else if (itemData.itemType == ItemType.hatGiong)
+        {
+
+        }
     }
 
     private void FixedUpdate()
