@@ -81,7 +81,8 @@ public class PlayerController : MonoBehaviour
                     isAction = true;
                     actionTimer = .5f;
                     animator.SetTrigger("IsHoeing");
-                    GameManager.instance.tileManager.SetInteracted(pos);
+                    //GameManager.instance.tileManager.SetInteracted(pos);
+                    GameManager.instance.tileManager.TillTile(pos);
                 }
             }
             else if (itemData.toolType == ToolType.Axe)
@@ -93,7 +94,26 @@ public class PlayerController : MonoBehaviour
         // Trồng hạt giống
         else if (itemData.itemType == ItemType.hatGiong)
         {
+            Vector3Int pos = new Vector3Int((int)transform.position.x, (int)transform.position.y, 0);
 
+            // Kiểm tra nếu ô đất đã được cuốc
+            if (GameManager.instance.tileManager.IsInteracted(pos))
+            {
+                // Kiểm tra đã có cây trồng chưa (tránh trồng chồng lên)
+                if (!GameManager.instance.tileManager.HasCrop(pos))
+                {
+                    isAction = true;
+                    actionTimer = .5f;
+
+                    // Gieo hạt (tạo cây)
+                    GameObject crop = Instantiate(itemData.cropPrefab, pos + new Vector3(0.5f, 0.5f), Quaternion.identity);
+                    GameManager.instance.tileManager.AddCrop(pos, crop);
+
+                    // Giảm số lượng hạt giống
+                    toolbarUI?.GetSelectedSlot()?.RemoveItem();
+                    GameManager.instance.uiManager.RefreshAll();
+                }
+            }
         }
     }
 

@@ -16,3 +16,4 @@ MonoBehaviour:
   icon: {fileID: 1724801449, guid: e5434ec9f9de23741a92afc0a1d38316, type: 3}
   itemType: 3
   toolType: 0
+  cropPrefab: {fileID: 6012042503020666978, guid: 3e6aba1ac147c724ab3a3d649422ed92, type: 3}

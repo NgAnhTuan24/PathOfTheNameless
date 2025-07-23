@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "Item Data", menuName = "Item Data", order = 50)]
 public class ItemData : ScriptableObject
@@ -8,6 +8,8 @@ public class ItemData : ScriptableObject
 
     public ItemType itemType = ItemType.None;
     public ToolType toolType = ToolType.None;
+
+    public GameObject cropPrefab; // Prefab cây để sinh ra khi trồng
 }
 
 public enum ItemType 
