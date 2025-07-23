@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -21,6 +20,31 @@ public class InventoryManager : MonoBehaviour
 
         inventoryByName.Add("Backpack", backpack);
         inventoryByName.Add("Toolbar", toolbar);
+    }
+
+    private void Start()
+    {
+        DefaultTool();
+    }
+
+    private void DefaultTool()
+    {
+        Item kiem = GameManager.instance.itemManager.GetItemByName("Kiếm");
+        Item riu = GameManager.instance.itemManager.GetItemByName("Rìu");
+        Item cuoc = GameManager.instance.itemManager.GetItemByName("Cuốc");
+
+        if(kiem != null)
+        {
+            toolbar.Add(kiem);
+        }
+        if(riu != null)
+        {
+            toolbar.Add(riu);
+        }
+        if(cuoc != null)
+        {
+            toolbar.Add(cuoc);
+        }
     }
 
     public void Add(string inventoryName, Item item)

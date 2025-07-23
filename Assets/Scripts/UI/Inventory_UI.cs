@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Inventory_UI : MonoBehaviour
 {
@@ -20,7 +19,6 @@ public class Inventory_UI : MonoBehaviour
     private void Start()
     {
         inventory = GameManager.instance.player.inventory.GetInventoryByName(inventoryName);
-        //inventoryPanel.SetActive(false);
         SetupSlots();
         Refresh();
     }

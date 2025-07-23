@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: "H\u1EA1t gi\u1ED1ng ng\xF4"
   icon: {fileID: 1504853863, guid: e5434ec9f9de23741a92afc0a1d38316, type: 3}
+  itemType: 3
+  toolType: 0
+  cropPrefab: {fileID: 5684481495012499843, guid: 3f46ea21143f8d74a96452c821633a1f, type: 3}
