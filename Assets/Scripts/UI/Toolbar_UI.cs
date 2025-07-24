@@ -6,6 +6,7 @@ public class Toolbar_UI : MonoBehaviour
     [SerializeField] private List<Slot_UI> toolbarSlots = new List<Slot_UI>();
 
     private Slot_UI selectedSlot;
+    private int currentIndex = 0;
 
     private void Start()
     {
@@ -15,6 +16,7 @@ public class Toolbar_UI : MonoBehaviour
     private void Update()
     {
         CheckAlphaNumericKeys();
+        CheckScrollWheel();
     }
     public void SelectSlot(int index)
     {
@@ -25,7 +27,8 @@ public class Toolbar_UI : MonoBehaviour
                 selectedSlot.SetHighlight(false);
             }
 
-            selectedSlot = toolbarSlots[index];
+            currentIndex = Mathf.Clamp(index, 0, toolbarSlots.Count - 1); // Giữ index trong giới hạn
+            selectedSlot = toolbarSlots[currentIndex];
             selectedSlot.SetHighlight(true);
         }
     }
@@ -67,6 +70,23 @@ public class Toolbar_UI : MonoBehaviour
         else if(Input.GetKeyDown(KeyCode.Alpha9))
         {
             SelectSlot(8);
+        }
+    }
+
+    private void CheckScrollWheel()
+    {
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (scroll < 0f)
+        {
+            // Cuộn xuống
+            int newIndex = (currentIndex + 1) % toolbarSlots.Count;
+            SelectSlot(newIndex);
+        }
+        else if (scroll > 0f)
+        {
+            // Cuộn lên
+            int newIndex = (currentIndex - 1 + toolbarSlots.Count) % toolbarSlots.Count;
+            SelectSlot(newIndex);
         }
     }
 
