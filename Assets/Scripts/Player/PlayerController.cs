@@ -86,6 +86,10 @@ public class PlayerController : MonoBehaviour
                     GameManager.instance.tileManager.TillTile(pos);
                     Debug.Log("đã sử dụng cuốc");
                 }
+                else
+                {
+                    Debug.Log("Không thể cuốc ở vị trí này");
+                }
             }
             else if (itemData.toolType == ToolType.Axe)
             {
@@ -106,7 +110,7 @@ public class PlayerController : MonoBehaviour
                         actionTimer = .5f;
                         animator.SetTrigger("IsAxeing");
                         tree.Chop(); // Gọi chặt cây
-                        Debug.Log("đã sử dụng rìu để chặt cây");
+                        Debug.Log("đã sử dụng rìu");
                     }
                 }
                 else
