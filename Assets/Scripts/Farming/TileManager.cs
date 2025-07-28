@@ -31,12 +31,19 @@ public class TileManager : MonoBehaviour
 
     void Start()
     {
-        foreach(var pos in interactableMap.cellBounds.allPositionsWithin)
+        try
         {
-            if (interactableMap.HasTile(pos))
+            foreach (var pos in interactableMap.cellBounds.allPositionsWithin)
             {
-                interactableMap.SetTile(pos, hiddenInteractableTile);
+                if (interactableMap.HasTile(pos))
+                {
+                    interactableMap.SetTile(pos, hiddenInteractableTile);
+                }
             }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogError("Lỗi trong TileManager.Start(), Lỗi null: " + ex.Message);
         }
     }
 
