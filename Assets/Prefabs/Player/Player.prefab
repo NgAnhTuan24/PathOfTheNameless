@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f003d53c7f06bcb41b1a0aaa39ba212b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 0
+  damageAmount: 10
 --- !u!1 &6821054288239675578
 GameObject:
   m_ObjectHideFlags: 0

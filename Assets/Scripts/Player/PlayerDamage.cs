@@ -8,10 +8,10 @@ public class PlayerDamage : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.GetComponent<PlayerHealth>())
+        if (col.gameObject.GetComponent<EnemyHealth>())
         {
-            PlayerHealth pl = col.gameObject.GetComponent<PlayerHealth>();
-            pl.TakeDamage(damageAmount);
+            EnemyHealth enemy = col.gameObject.GetComponent<EnemyHealth>();
+            enemy.TakeDamage(damageAmount);
         }
     }
 
