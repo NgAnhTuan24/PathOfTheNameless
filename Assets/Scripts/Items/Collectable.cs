@@ -5,7 +5,7 @@ public class Collectable : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collectable)
     {
-        Player player = collectable.GetComponent<Player>();
+        ItemDropper player = collectable.GetComponent<ItemDropper>();
 
         if (player)
         {

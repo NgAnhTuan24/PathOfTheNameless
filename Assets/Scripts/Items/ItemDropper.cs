@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Player : MonoBehaviour
+public class ItemDropper : MonoBehaviour
 {
     public InventoryManager inventory;
 
