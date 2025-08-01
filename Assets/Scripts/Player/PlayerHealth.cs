@@ -4,7 +4,7 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int maxHeath;
 
-    [SerializeField] private int currentHealth;
+    private int currentHealth;
 
     public HealthBar healthBar;
 

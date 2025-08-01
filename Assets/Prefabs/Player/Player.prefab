@@ -104,11 +104,11 @@ GameObject:
   - component: {fileID: 7884683242780714291}
   - component: {fileID: 4145512901564007829}
   - component: {fileID: 2939115055410343749}
-  - component: {fileID: 1777938120902969056}
-  - component: {fileID: 3295272271463273541}
   - component: {fileID: 8738897630310982363}
   - component: {fileID: 8107618474345209562}
-  m_Layer: 0
+  - component: {fileID: 1777938120902969056}
+  - component: {fileID: 3295272271463273541}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -276,35 +276,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1777938120902969056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6821054288239675578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00e142ac93bac4446a6a0c920b36a8b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tocDoDiChuyen: 10
-  thoiGianHoiChieu: 0.5
---- !u!114 &3295272271463273541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6821054288239675578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e0f0f6dfd142de4b906e4b95f837d15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHeath: 100
-  currentHealth: 0
-  healthBar: {fileID: 0}
 --- !u!114 &8738897630310982363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,3 +307,31 @@ MonoBehaviour:
   toolbar:
     slots: []
   toolbarSlotCount: 9
+--- !u!114 &1777938120902969056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6821054288239675578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00e142ac93bac4446a6a0c920b36a8b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tocDoDiChuyen: 10
+  thoiGianHoiChieu: 0.5
+--- !u!114 &3295272271463273541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6821054288239675578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e0f0f6dfd142de4b906e4b95f837d15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHeath: 100
+  healthBar: {fileID: 0}

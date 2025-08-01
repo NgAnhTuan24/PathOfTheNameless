@@ -23,7 +23,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void Die()
     {
-                if (currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             Debug.Log("Enemy died.");
             // Add death logic here, such as playing an animation or destroying the enemy object
