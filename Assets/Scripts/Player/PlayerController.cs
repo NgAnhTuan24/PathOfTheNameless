@@ -3,6 +3,7 @@
 public class PlayerController : MonoBehaviour
 {
     #region
+    public static PlayerController Instance;
 
     [Header("Properties")]
     [SerializeField] private float tocDoDiChuyen = 5f;
@@ -19,8 +20,9 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    void Start()
+    void Awake()
     {
+        Instance = this;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }

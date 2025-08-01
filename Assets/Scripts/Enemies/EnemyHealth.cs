@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +7,12 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private int maxHealth;
 
     private int currentHealth;
+    private Knockback knockback;
+
+    private void Awake()
+    {
+        knockback = GetComponent<Knockback>();
+    }
 
     private void Start()
     {
@@ -17,7 +23,8 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        Debug.Log("Enemy took damage: " + damage + ", Current Health: " + currentHealth);
+        Debug.Log("Enemy nhận: " + damage + " sát thương, máu hiện tại là: " + currentHealth);
+        knockback.GetKncockBack(PlayerController.Instance.transform, 15f);
         Die();
     }
 
