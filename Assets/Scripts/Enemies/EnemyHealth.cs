@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private int maxHealth;
+    [SerializeField] private GameObject deathVFX;
 
     private int currentHealth;
     private Knockback knockback;
@@ -34,6 +35,7 @@ public class EnemyHealth : MonoBehaviour
         {
             Debug.Log("Enemy died.");
             // Add death logic here, such as playing an animation or destroying the enemy object
+            Instantiate(deathVFX, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
     }

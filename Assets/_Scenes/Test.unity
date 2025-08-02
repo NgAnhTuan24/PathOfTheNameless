@@ -72953,6 +72953,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1730172420995140924, guid: 9763643015a53a345a6869e34e159faa, type: 3}
+      propertyPath: deathVFX
+      value: 
+      objectReference: {fileID: 6323569642449757148, guid: 8a2a5b013ff5bf74da9e3f0afbc8bd4a, type: 3}
+    - target: {fileID: 1730172420995140924, guid: 9763643015a53a345a6869e34e159faa, type: 3}
       propertyPath: maxHealth
       value: 100
       objectReference: {fileID: 0}
@@ -72962,7 +72966,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1969921668591063315, guid: 9763643015a53a345a6869e34e159faa, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3739339114937848635, guid: 9763643015a53a345a6869e34e159faa, type: 3}
       propertyPath: m_LocalPosition.x

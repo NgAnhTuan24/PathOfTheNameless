@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7819154293928675305}
   - component: {fileID: 6553783541304202915}
-  - component: {fileID: 4607227001046702356}
+  - component: {fileID: -1803907031575387605}
   - component: {fileID: 6590355137080801495}
   m_Layer: 6
   m_Name: tree1
@@ -85,9 +85,9 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!60 &4607227001046702356
-PolygonCollider2D:
+  m_SpriteSortPoint: 1
+--- !u!70 &-1803907031575387605
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -118,41 +118,9 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.54, y: 0}
-    oldSize: {x: 3.3125, y: 3.875}
-    newSize: {x: 3.3125, y: 3.875}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.19213772, y: 1.4885507}
-      - {x: -0.8194685, y: 1.5798659}
-      - {x: -1.7345119, y: 2.0366497}
-      - {x: -1.6802751, y: 1.5271187}
-      - {x: -1.3465867, y: 1.3042376}
-      - {x: -1.0685658, y: 1.1225655}
-      - {x: -0.9980717, y: 1.1084752}
-      - {x: -0.8123956, y: 1.2488663}
-      - {x: -0.5236752, y: 1.1375005}
-      - {x: -0.35768652, y: 0.90368223}
-      - {x: -0.64123774, y: 0.53111696}
-      - {x: -0.5013008, y: 0.24676919}
-      - {x: 0.22771621, y: 0.22515225}
-      - {x: 0.65280557, y: 0.39148664}
-      - {x: 0.5927541, y: 0.6242807}
-      - {x: 0.31817436, y: 0.82527375}
-      - {x: 0.6777389, y: 1.09585}
-      - {x: 0.92035985, y: 0.91394067}
-      - {x: 1.4992375, y: 1.2104459}
-      - {x: 1.5237503, y: 1.9483256}
-      - {x: 0.9479711, y: 1.5412984}
-      - {x: 0.29461575, y: 1.4974394}
-  m_UseDelaunayMesh: 0
+  m_Offset: {x: 0.016058002, y: 0.26596597}
+  m_Size: {x: 1.8719399, y: 0.7179211}
+  m_Direction: 1
 --- !u!114 &6590355137080801495
 MonoBehaviour:
   m_ObjectHideFlags: 0
