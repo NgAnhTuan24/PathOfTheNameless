@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1003216948054026349}
   - component: {fileID: 7266966686999202679}
   - component: {fileID: 5299712505119014701}
-  - component: {fileID: 5973269712067515549}
+  - component: {fileID: -4684808585669688316}
   m_Layer: 0
-  m_Name: Death VFX
+  m_Name: Bush VFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -224,7 +224,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 0.3019608, g: 0.5176471, b: 0.227451, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -4889,7 +4889,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &5973269712067515549
+--- !u!114 &-4684808585669688316
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
