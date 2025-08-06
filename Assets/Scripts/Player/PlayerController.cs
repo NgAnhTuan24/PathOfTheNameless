@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
     #region
+    //public static PlayerController Instance;
 
     [Header("Properties")]
     [SerializeField] private float tocDoDiChuyen = 5f;
@@ -19,8 +22,10 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    void Start()
+    protected override void Awake()
     {
+        base.Awake();
+        //Instance = this;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
@@ -66,6 +71,7 @@ public class PlayerController : MonoBehaviour
                 isAction = true;
                 actionTimer = thoiGianHoiChieu;
                 animator.SetTrigger("IsAttacking");
+                Debug.Log("đã sử dụng kiếm");
             }
         }
 
@@ -83,11 +89,39 @@ public class PlayerController : MonoBehaviour
                     animator.SetTrigger("IsHoeing");
                     //GameManager.instance.tileManager.SetInteracted(pos);
                     GameManager.instance.tileManager.TillTile(pos);
+                    Debug.Log("đã sử dụng cuốc");
+                }
+                else
+                {
+                    Debug.Log("Không thể cuốc ở vị trí này");
                 }
             }
             else if (itemData.toolType == ToolType.Axe)
             {
-                Debug.Log("đã sử dụng rìu");
+                Vector2 facing = huongHoatAnh;
+                Vector2 rayOrigin = transform.position;
+                float rayDistance = 1f;
+
+                Debug.DrawRay(rayOrigin, facing * rayDistance, Color.red, 0.5f);
+
+                RaycastHit2D hit = Physics2D.Raycast(rayOrigin, facing, rayDistance, LayerMask.GetMask("Tree"));
+
+                if (hit.collider != null)
+                {
+                    TreeObject tree = hit.collider.GetComponent<TreeObject>();
+                    if (tree != null)
+                    {
+                        isAction = true;
+                        actionTimer = .5f;
+                        animator.SetTrigger("IsAxeing");
+                        tree.Chop(); // Gọi chặt cây
+                        Debug.Log("đã sử dụng rìu");
+                    }
+                }
+                else
+                {
+                    Debug.Log("Không có cây ở phía trước để chặt");
+                }
             }
         }
 
@@ -120,7 +154,6 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         DiChuyen();
-        
     }
 
     void DiChuyen()
