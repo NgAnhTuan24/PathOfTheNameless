@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
     #region
-    public static PlayerController Instance;
+    //public static PlayerController Instance;
 
     [Header("Properties")]
     [SerializeField] private float tocDoDiChuyen = 5f;
@@ -20,9 +22,10 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
-    void Awake()
+    protected override void Awake()
     {
-        Instance = this;
+        base.Awake();
+        //Instance = this;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
