@@ -6,6 +6,10 @@ public class UI_Manager : MonoBehaviour
 {
     public Dictionary<string, Inventory_UI> inventoryUIByName = new Dictionary<string, Inventory_UI>();
 
+    public static UI_Manager Instance;
+
+    public GameObject uiRoot;
+
     public GameObject inventoryPanel;
     public GameObject balo;
 
@@ -17,6 +21,16 @@ public class UI_Manager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        if (uiRoot != null) DontDestroyOnLoad(uiRoot);
+
         Initialize();
     }
 

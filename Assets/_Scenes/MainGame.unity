@@ -61608,6 +61608,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3355002b60668fa42b647fde1eacfad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiRoot: {fileID: 1926974507}
   inventoryPanel: {fileID: 1054018019}
   balo: {fileID: 2079185205}
   inventoryUIs:
