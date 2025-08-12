@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 [System.Serializable]
@@ -28,12 +29,35 @@ public class TileManager : MonoBehaviour
 
     private Dictionary<Vector3Int, GameObject> crops = new Dictionary<Vector3Int, GameObject>();
 
-    void Start()
+    private void OnEnable()
     {
-        if (interactableMap == null)
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Chỉ tìm lại Tilemap nếu đang ở scene MainGame
+        if (scene.name == "MainGame")
         {
-            return;
+            GameObject mapObj = GameObject.FindGameObjectWithTag("InteractableMap");
+            if (mapObj != null)
+            {
+                interactableMap = mapObj.GetComponent<Tilemap>();
+
+                // Sau khi gán lại map -> chạy khởi tạo
+                InitMap();
+            }
         }
+    }
+
+    private void InitMap()
+    {
+        if (interactableMap == null) return;
 
         foreach (var pos in interactableMap.cellBounds.allPositionsWithin)
         {
@@ -42,7 +66,14 @@ public class TileManager : MonoBehaviour
                 interactableMap.SetTile(pos, hiddenInteractableTile);
             }
         }
+
+        // Nếu muốn load lại trạng thái đất đã cuốc từ tilledTiles:
+        foreach (var t in tilledTiles)
+        {
+            interactableMap.SetTile(t.position, interactedTile);
+        }
     }
+
 
     void Update()
     {
