@@ -1,20 +1,27 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UI_Manager : MonoBehaviour
 {
+    // ------------------- Singleton -------------------
+    public static UI_Manager Instance;
+    private static GameObject spawnedUIRoot;
+
+    // ------------------- Prefab & References -------------------
+    [Header("UI Root Prefab")]
+    public GameObject uiRootPrefab;
+
+    [Header("UI References")]
+    public GameObject uiRoot;
+    public GameObject inventoryPanel;
+    public HealthBar healthBar;
+
+    [Header("Inventory UI")]
+    public List<Inventory_UI> inventoryUIs;
     public Dictionary<string, Inventory_UI> inventoryUIByName = new Dictionary<string, Inventory_UI>();
 
-    public static UI_Manager Instance;
-
-    public GameObject uiRoot;
-
-    public GameObject inventoryPanel;
-    public GameObject balo;
-
-    public List<Inventory_UI> inventoryUIs;
-
+    // ------------------- Dragging -------------------
     public static Slot_UI draggedSlot;
     public static Image draggedIcon;
     public static bool dragSingle;
@@ -29,9 +36,32 @@ public class UI_Manager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        if (uiRoot != null) DontDestroyOnLoad(uiRoot);
+        if (spawnedUIRoot == null)
+        {
+            // Spawn prefab UI_Root 1 lần duy nhất
+            spawnedUIRoot = Instantiate(uiRootPrefab);
+            DontDestroyOnLoad(spawnedUIRoot);
 
-        Initialize();
+            uiRoot = spawnedUIRoot;
+
+            // Gán reference tới các object con
+            inventoryPanel = uiRoot.transform.Find("Kho đồ/InventoryPanel").gameObject;
+            healthBar = uiRoot.transform.Find("PlayerHUD/Thanh Máu").GetComponent<HealthBar>();
+
+            // Lấy hết Inventory_UI trong prefab
+            inventoryUIByName.Clear();
+            inventoryUIs.Clear();
+            foreach (Inventory_UI ui in uiRoot.GetComponentsInChildren<Inventory_UI>(true))
+            {
+                inventoryUIs.Add(ui);
+            }
+            Initialize();
+        }
+        else
+        {
+            // Nếu UI đã spawn rồi thì dùng lại
+            uiRoot = spawnedUIRoot;
+        }
     }
 
     private void Update()
@@ -58,13 +88,11 @@ public class UI_Manager : MonoBehaviour
             if (!inventoryPanel.activeSelf)
             {
                 inventoryPanel.SetActive(true);
-                balo.SetActive(false);
                 RefreshInventoryUI("Backpack");
             }
             else
             {
                 inventoryPanel.SetActive(false);
-                balo.SetActive(true);
             }
         }
     }

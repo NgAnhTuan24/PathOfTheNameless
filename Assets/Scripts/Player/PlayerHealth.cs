@@ -12,6 +12,9 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth = maxHeath;
 
+        if (healthBar == null)
+            healthBar = UI_Manager.Instance.healthBar;
+
         healthBar.SetMaxHealth(maxHeath);
     }
 
