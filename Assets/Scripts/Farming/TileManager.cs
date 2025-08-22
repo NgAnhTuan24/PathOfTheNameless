@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 [System.Serializable]
@@ -16,7 +17,6 @@ public class TilledTile
     }
 }
 
-
 public class TileManager : MonoBehaviour
 {
     [SerializeField] private Tilemap interactableMap;
@@ -29,13 +29,35 @@ public class TileManager : MonoBehaviour
 
     private Dictionary<Vector3Int, GameObject> crops = new Dictionary<Vector3Int, GameObject>();
 
-    void Start()
+    private void OnEnable()
     {
-        if (interactableMap == null)
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Chỉ tìm lại Tilemap nếu đang ở scene MainGame
+        if (scene.name == "MainGame")
         {
-            // Scene này không cần map, bỏ qua khởi tạo
-            return;
+            GameObject mapObj = GameObject.FindGameObjectWithTag("InteractableMap");
+            if (mapObj != null)
+            {
+                interactableMap = mapObj.GetComponent<Tilemap>();
+
+                // Sau khi gán lại map -> chạy khởi tạo
+                InitMap();
+            }
         }
+    }
+
+    private void InitMap()
+    {
+        if (interactableMap == null) return;
 
         foreach (var pos in interactableMap.cellBounds.allPositionsWithin)
         {
@@ -44,7 +66,14 @@ public class TileManager : MonoBehaviour
                 interactableMap.SetTile(pos, hiddenInteractableTile);
             }
         }
+
+        // Nếu muốn load lại trạng thái đất đã cuốc từ tilledTiles:
+        foreach (var t in tilledTiles)
+        {
+            interactableMap.SetTile(t.position, interactedTile);
+        }
     }
+
 
     void Update()
     {
@@ -69,6 +98,8 @@ public class TileManager : MonoBehaviour
 
     public bool IsInteractable(Vector3Int pos)
     {
+        if (interactableMap == null) return false;
+
         TileBase tile = interactableMap.GetTile(pos);
 
         if(tile != null)
@@ -84,11 +115,15 @@ public class TileManager : MonoBehaviour
 
     public void SetInteracted(Vector3Int pos)
     {
+        if (interactableMap == null) return;
+
         interactableMap.SetTile(pos, interactedTile);
     }
 
     public bool IsInteracted(Vector3Int pos)
     {
+        if (interactableMap == null) return false;
+
         TileBase tile = interactableMap.GetTile(pos);
         return tile == interactedTile;
     }
@@ -108,6 +143,8 @@ public class TileManager : MonoBehaviour
 
     public void ResetTile(Vector3Int pos)
     {
+        if (interactableMap == null) return;
+
         interactableMap.SetTile(pos, hiddenInteractableTile);
         if (crops.ContainsKey(pos))
         {
@@ -117,6 +154,8 @@ public class TileManager : MonoBehaviour
 
     public void TillTile(Vector3Int pos)
     {
+        if (interactableMap == null) return;
+
         interactableMap.SetTile(pos, interactedTile);
 
         // Thêm vào danh sách đất đã cuốc (nếu chưa có)

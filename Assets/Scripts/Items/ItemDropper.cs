@@ -15,6 +15,8 @@ public class ItemDropper : MonoBehaviour
 
         Vector2 spawnOffset = Random.insideUnitCircle * 1.25f;
 
+        ItemSaveManager.instance.UnmarkAsRemoved(item.GetID());
+
         Item droppedItem = Instantiate(
             item, 
             spawnLocation + spawnOffset, 

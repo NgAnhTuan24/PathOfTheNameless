@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour
 
     public SceneManagement sceneManagement;
 
+    public CameraController cameraController;
+
+    public ItemSaveManager itemSaveManager;
+
     public ItemDropper player;
 
     private void Awake()
@@ -31,6 +35,8 @@ public class GameManager : MonoBehaviour
         tileManager = GetComponent<TileManager>();
         uiManager = GetComponent<UI_Manager>();
         sceneManagement = GetComponent<SceneManagement>();
+        cameraController = GetComponent<CameraController>();
+        itemManager = GetComponent<ItemManager>();
 
         player = FindObjectOfType<ItemDropper>();
     }
