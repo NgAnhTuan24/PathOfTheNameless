@@ -293,7 +293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backpack:
     slots: []
-  backpackSlotCount: 20
+  backpackSlotCount: 24
   toolbar:
     slots: []
   toolbarSlotCount: 9
@@ -324,4 +324,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHeath: 100
-  healthBar: {fileID: 0}
+  healthBar: {fileID: 7579934343099938290, guid: 945608241e58d5d419b2481ffd8c413c, type: 3}
