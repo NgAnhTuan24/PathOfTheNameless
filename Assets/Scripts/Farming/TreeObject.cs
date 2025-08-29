@@ -20,6 +20,13 @@ public class TreeObject : MonoBehaviour
     private int soLanChat = 0; // Đếm số lần đã chặt
     private int dieukienDeCayDo;
 
+    private GenerateID newID;
+
+    private void Awake()
+    {
+        newID = GetComponent<GenerateID>();
+    }
+
     private void Start()
     {
         dieukienDeCayDo = Random.Range(soLanChatToiThieu, soLanChatToiDa + 1);
@@ -41,14 +48,20 @@ public class TreeObject : MonoBehaviour
     {
         foreach (DropItem drop in possibleDrops)
         {
-            // Xác suất rơi
             if (Random.value <= drop.tiLeRoi)
             {
                 int amount = Random.Range(drop.soLuongToiThieu, drop.soLuongToiDa + 1);
                 for (int i = 0; i < amount; i++)
                 {
                     Vector3 dropPos = transform.position + (Vector3)(Random.insideUnitCircle * 0.5f);
-                    Instantiate(drop.vatPhamRoi, dropPos, Quaternion.identity);
+                    GameObject obj = Instantiate(drop.vatPhamRoi, dropPos, Quaternion.identity);
+                    
+                   newID = obj.GetComponent<GenerateID>();
+                    if (newID != null) 
+                    {
+                        newID.CreateID();
+                        ItemSaveManager.instance?.UnmarkAsRemoved(newID.GetID());
+                    }
                 }
             }
         }

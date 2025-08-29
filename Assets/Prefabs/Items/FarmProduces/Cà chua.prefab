@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1079811150538211759}
   - component: {fileID: 1506913203201171043}
   - component: {fileID: 8628785799497582615}
+  - component: {fileID: 9155623413474864309}
   m_Layer: 0
   m_Name: "C\xE0 chua"
   m_TagString: Untagged
@@ -186,3 +187,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: f8940b5f5a3c68447ae2f525c335a1bc, type: 2}
   rb: {fileID: 0}
+--- !u!114 &9155623413474864309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8501477026242332035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 765da6be2678d2041aa0cdfb328ec441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueID: 

@@ -15,15 +15,18 @@ public class ItemDropper : MonoBehaviour
 
         Vector2 spawnOffset = Random.insideUnitCircle * 1.25f;
 
-        ItemSaveManager.instance.UnmarkAsRemoved(item.GetID());
-
         Item droppedItem = Instantiate(
             item, 
             spawnLocation + spawnOffset, 
             Quaternion.identity);
 
-        droppedItem.rb.AddForce(
-            spawnOffset * 2f, ForceMode2D.Impulse);
+        droppedItem.GenerateID();
+        if(ItemSaveManager.instance != null)
+        {
+            ItemSaveManager.instance.UnmarkAsRemoved(droppedItem.GetID());
+        }
+
+        droppedItem.rb.AddForce(spawnOffset * 2f, ForceMode2D.Impulse);
     }
 
     public void DropItem(Item item, int numToDrop)

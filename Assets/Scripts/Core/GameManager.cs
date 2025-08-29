@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
         uiManager = GetComponent<UI_Manager>();
         sceneManagement = GetComponent<SceneManagement>();
         cameraController = GetComponent<CameraController>();
-        itemManager = GetComponent<ItemManager>();
+        itemSaveManager = GetComponent<ItemSaveManager>();
 
         player = FindObjectOfType<ItemDropper>();
     }
