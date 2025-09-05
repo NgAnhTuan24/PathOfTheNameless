@@ -63,91 +63,110 @@ public class PlayerController : Singleton<PlayerController>
         var itemData = GameManager.instance.itemManager.GetItemByName(slot.itemName)?.data;
         if (itemData == null) return;
 
-        // Tấn công bằng kiếm
-        if (itemData.itemType == ItemType.kiem)
+        switch (itemData.itemType)
         {
-            if (!isAction)
+            case ItemType.kiem:
+                HandleSword();
+                break;
+
+            case ItemType.congCu:
+                HandleTool(itemData);
+                break;
+
+            case ItemType.hatGiong:
+                HandleSeed(itemData, toolbarUI);
+                break;
+        }
+    }
+
+    private void HandleSword()
+    {
+        isAction = true;
+        actionTimer = thoiGianHoiChieu;
+        animator.SetTrigger("IsAttacking");
+        Debug.Log("đã sử dụng kiếm");
+    }
+
+    private void HandleTool(ItemData itemData)
+    {
+        Vector3Int pos = new Vector3Int((int)transform.position.x, (int)transform.position.y, 0);
+
+        switch (itemData.toolType)
+        {
+            case ToolType.Hoe:
+                HandleHoe(pos);
+                break;
+
+            case ToolType.Axe:
+                HandleAxe();
+                break;
+        }
+    }
+
+    private void HandleHoe(Vector3Int pos)
+    {
+        if (GameManager.instance.tileManager.IsInteractable(pos))
+        {
+            isAction = true;
+            actionTimer = .5f;
+            animator.SetTrigger("IsHoeing");
+            GameManager.instance.tileManager.TillTile(pos);
+            Debug.Log("đã sử dụng cuốc");
+        }
+        else
+        {
+            Debug.Log("Không thể cuốc ở vị trí này");
+        }
+    }
+
+    private void HandleAxe()
+    {
+        Vector2 facing = huongHoatAnh;
+        Vector2 rayOrigin = transform.position;
+        float rayDistance = 1f;
+
+        Debug.DrawRay(rayOrigin, facing * rayDistance, Color.red, 0.5f);
+
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, facing, rayDistance, LayerMask.GetMask("Tree"));
+
+        if (hit.collider != null)
+        {
+            TreeObject tree = hit.collider.GetComponent<TreeObject>();
+            if (tree != null)
             {
                 isAction = true;
-                actionTimer = thoiGianHoiChieu;
-                animator.SetTrigger("IsAttacking");
-                Debug.Log("đã sử dụng kiếm");
+                actionTimer = .5f;
+                animator.SetTrigger("IsAxeing");
+                tree.Chop();
+                Debug.Log("đã sử dụng rìu");
             }
         }
-
-        // Xử lý công cụ (cuốc, rìu, v.v.)
-        else if (itemData.itemType == ItemType.congCu)
+        else
         {
-            Vector3Int pos = new Vector3Int((int)transform.position.x, (int)transform.position.y, 0);
-
-            if (itemData.toolType == ToolType.Hoe)
-            {
-                if (GameManager.instance.tileManager.IsInteractable(pos))
-                {
-                    isAction = true;
-                    actionTimer = .5f;
-                    animator.SetTrigger("IsHoeing");
-                    //GameManager.instance.tileManager.SetInteracted(pos);
-                    GameManager.instance.tileManager.TillTile(pos);
-                    Debug.Log("đã sử dụng cuốc");
-                }
-                else
-                {
-                    Debug.Log("Không thể cuốc ở vị trí này");
-                }
-            }
-            else if (itemData.toolType == ToolType.Axe)
-            {
-                Vector2 facing = huongHoatAnh;
-                Vector2 rayOrigin = transform.position;
-                float rayDistance = 1f;
-
-                Debug.DrawRay(rayOrigin, facing * rayDistance, Color.red, 0.5f);
-
-                RaycastHit2D hit = Physics2D.Raycast(rayOrigin, facing, rayDistance, LayerMask.GetMask("Tree"));
-
-                if (hit.collider != null)
-                {
-                    TreeObject tree = hit.collider.GetComponent<TreeObject>();
-                    if (tree != null)
-                    {
-                        isAction = true;
-                        actionTimer = .5f;
-                        animator.SetTrigger("IsAxeing");
-                        tree.Chop(); // Gọi chặt cây
-                        Debug.Log("đã sử dụng rìu");
-                    }
-                }
-                else
-                {
-                    Debug.Log("Không có cây ở phía trước để chặt");
-                }
-            }
+            Debug.Log("Không có cây ở phía trước để chặt");
         }
+    }
 
-        // Trồng hạt giống
-        else if (itemData.itemType == ItemType.hatGiong)
+    private void HandleSeed(ItemData itemData, Toolbar_UI toolbarUI)
+    {
+        Vector3Int pos = new Vector3Int((int)transform.position.x, (int)transform.position.y, 0);
+
+        if (GameManager.instance.tileManager.IsInteracted(pos) &&
+            !GameManager.instance.tileManager.HasCrop(pos))
         {
-            Vector3Int pos = new Vector3Int((int)transform.position.x, (int)transform.position.y, 0);
+            isAction = true;
+            actionTimer = .5f;
 
-            // Kiểm tra nếu ô đất đã được cuốc
-            if (GameManager.instance.tileManager.IsInteracted(pos))
-            {
-                // Kiểm tra đã có cây trồng chưa (tránh trồng chồng lên)
-                if (!GameManager.instance.tileManager.HasCrop(pos))
-                {
-                    isAction = true;
-                    actionTimer = .5f;
+            GameObject crop = Instantiate(itemData.cropPrefab, pos + new Vector3(0.5f, 0.5f), Quaternion.identity);
+            GameManager.instance.tileManager.AddCrop(pos, crop);
 
-                    // Gieo hạt (tạo cây)
-                    GameObject crop = Instantiate(itemData.cropPrefab, pos + new Vector3(0.5f, 0.5f), Quaternion.identity);
-                    GameManager.instance.tileManager.AddCrop(pos, crop);
-
-                    // Giảm số lượng hạt giống
-                    toolbarUI?.GetSelectedSlot()?.RemoveItem();
-                    GameManager.instance.uiManager.RefreshAll();
-                }
-            }
+            toolbarUI?.GetSelectedSlot()?.RemoveItem();
+            GameManager.instance.uiManager.RefreshAll();
+            Debug.Log("Đã gieo hạt giống");
+        }
+        else
+        {
+            Debug.Log("Không thể gieo hạt tại đây");
         }
     }
 

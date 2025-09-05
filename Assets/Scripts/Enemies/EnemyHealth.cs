@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class EnemyHealth : MonoBehaviour
 
     private int currentHealth;
     private Knockback knockback;
+
+    public event Action OnEnemyDeath;
 
     private void Awake()
     {
@@ -34,6 +37,9 @@ public class EnemyHealth : MonoBehaviour
             Debug.Log("Enemy died.");
             // Add death logic here, such as playing an animation or destroying the enemy object
             Instantiate(deathVFX, transform.position, Quaternion.identity);
+
+            OnEnemyDeath?.Invoke();
+
             Destroy(gameObject);
         }
     }
