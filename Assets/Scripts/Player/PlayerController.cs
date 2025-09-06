@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : Singleton<PlayerController>
 {
@@ -89,7 +87,8 @@ public class PlayerController : Singleton<PlayerController>
 
     private void HandleTool(ItemData itemData)
     {
-        Vector3Int pos = new Vector3Int((int)transform.position.x, (int)transform.position.y, 0);
+        Vector3Int pos = GameManager.instance.tileManager.interactableMap.WorldToCell(transform.position);
+
 
         switch (itemData.toolType)
         {

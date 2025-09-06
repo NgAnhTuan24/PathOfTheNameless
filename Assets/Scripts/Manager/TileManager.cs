@@ -19,7 +19,7 @@ public class TilledTile
 
 public class TileManager : MonoBehaviour
 {
-    [SerializeField] private Tilemap interactableMap;
+    public Tilemap interactableMap;
 
     [SerializeField] private Tile hiddenInteractableTile;
     [SerializeField] private Tile interactedTile;

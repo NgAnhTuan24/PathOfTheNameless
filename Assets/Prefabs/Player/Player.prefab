@@ -310,7 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tocDoDiChuyen: 10
-  thoiGianHoiChieu: 0.5
+  thoiGianHoiChieu: 0.32
 --- !u!114 &3295272271463273541
 MonoBehaviour:
   m_ObjectHideFlags: 0
