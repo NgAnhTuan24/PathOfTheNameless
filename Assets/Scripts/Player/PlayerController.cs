@@ -18,6 +18,7 @@ public class PlayerController : Singleton<PlayerController>
     private bool isAction = false;
     private float actionTimer = 0f;
 
+    [SerializeField] private ParticleSystem dustEffect;
     #endregion
 
     protected override void Awake()
@@ -179,10 +180,24 @@ public class PlayerController : Singleton<PlayerController>
         if (isAction)
         {
             rb.velocity = Vector2.zero;
+            if (dustEffect.isPlaying) dustEffect.Stop();
             return;
         }
 
         rb.velocity = huongDiChuyen * tocDoDiChuyen;
+
+        DustEffect();
+    }
+
+    void DustEffect()
+    {
+        if(huongDiChuyen.magnitude > .1f){
+            if(!dustEffect.isPlaying) dustEffect.Play();
+        }
+        else
+        {
+            if(dustEffect.isPlaying) dustEffect.Stop();
+        }
     }
 
     void UpdateAnimation()
