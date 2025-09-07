@@ -13537,7 +13537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90aa07d4ab98d16478e3071273ea3749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: MainGame
+  sceneToLoad: Map2
   sceneTransitionName: Home
 --- !u!4 &1213450182104517214
 Transform:
@@ -14181,7 +14181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6de8988d618079a4688755dec2edf83d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transitionName: MainGame
+  transitionName: Map2
 --- !u!4 &9181546870073344294
 Transform:
   m_ObjectHideFlags: 0

@@ -88,12 +88,13 @@ public class PlayerController : Singleton<PlayerController>
 
     private void HandleTool(ItemData itemData)
     {
-        Vector3Int pos = GameManager.instance.tileManager.interactableMap.WorldToCell(transform.position);
-
+        var tileManager = GameManager.instance.tileManager;
 
         switch (itemData.toolType)
         {
             case ToolType.Hoe:
+                if (tileManager == null || tileManager.interactableMap == null) return;
+                Vector3Int pos = GameManager.instance.tileManager.interactableMap.WorldToCell(transform.position);
                 HandleHoe(pos);
                 break;
 
@@ -149,7 +150,7 @@ public class PlayerController : Singleton<PlayerController>
 
     private void HandleSeed(ItemData itemData, Toolbar_UI toolbarUI)
     {
-        Vector3Int pos = new Vector3Int((int)transform.position.x, (int)transform.position.y, 0);
+        Vector3Int pos = GameManager.instance.tileManager.interactableMap.WorldToCell(transform.position);
 
         if (GameManager.instance.tileManager.IsInteracted(pos) &&
             !GameManager.instance.tileManager.HasCrop(pos))
