@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f003d53c7f06bcb41b1a0aaa39ba212b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 10
+  damageAmount: 1
 --- !u!1 &6022356600168043807
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 3863421521589872426}
   - component: {fileID: 6737491500506497104}
   - component: {fileID: 8370320556775472234}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: DustEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4938,7 +4938,8 @@ GameObject:
   - component: {fileID: 8107618474345209562}
   - component: {fileID: 1777938120902969056}
   - component: {fileID: 3295272271463273541}
-  m_Layer: 7
+  - component: {fileID: 9114981590142787459}
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -5157,3 +5158,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHeath: 100
   healthBar: {fileID: 7579934343099938290, guid: 945608241e58d5d419b2481ffd8c413c, type: 3}
+--- !u!114 &9114981590142787459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6821054288239675578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 426cf3055f9b7f745bd1b1c1284ffe68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeKnock: 0.1

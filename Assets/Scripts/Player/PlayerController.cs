@@ -19,12 +19,15 @@ public class PlayerController : Singleton<PlayerController>
     private float actionTimer = 0f;
 
     [SerializeField] private ParticleSystem dustEffect;
+
+    private Knockback knockback;
     #endregion
 
     protected override void Awake()
     {
         base.Awake();
         //Instance = this;
+        knockback = GetComponent<Knockback>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
@@ -173,6 +176,7 @@ public class PlayerController : Singleton<PlayerController>
 
     private void FixedUpdate()
     {
+        if (knockback.gettingKnockedBack) return;
         DiChuyen();
     }
 

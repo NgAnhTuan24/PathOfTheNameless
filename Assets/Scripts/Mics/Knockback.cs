@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class Knockback : MonoBehaviour
 {
-    public bool gettingKncokedBack
+    public bool gettingKnockedBack
     {
         get; private set;
     }
 
-    [SerializeField] private float thoigianDay;
+    [SerializeField] private float timeKnock;
 
     private Rigidbody2D rb;
 
@@ -19,7 +19,7 @@ public class Knockback : MonoBehaviour
 
     public void GetKncockBack(Transform dameSource, float knockBackThrust)
     {
-        gettingKncokedBack = true;
+        gettingKnockedBack = true;
         Vector2 diference = (transform.position - dameSource.position).normalized * knockBackThrust * rb.mass;
         rb.AddForce(diference, ForceMode2D.Impulse);
         StartCoroutine(KnockRoutine());
@@ -27,8 +27,8 @@ public class Knockback : MonoBehaviour
 
     private IEnumerator KnockRoutine()
     {
-        yield return new WaitForSeconds(thoigianDay);
+        yield return new WaitForSeconds(timeKnock);
         rb.velocity = Vector2.zero;
-        gettingKncokedBack = false;
+        gettingKnockedBack = false;
     }
 }

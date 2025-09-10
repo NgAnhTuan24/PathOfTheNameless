@@ -8,6 +8,13 @@ public class PlayerHealth : MonoBehaviour
 
     public HealthBar healthBar;
 
+    private Knockback knockback;
+
+    private void Awake()
+    {
+        knockback = GetComponent<Knockback>();
+    }
+
     private void Start()
     {
         currentHealth = maxHeath;
@@ -23,6 +30,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0);
         Debug.Log("Player nhận: " + damage + " sát thương, máu còn lại: " + currentHealth);
+        knockback.GetKncockBack(EnemyController.instance.transform, 15f);
         healthBar.SetHealth(currentHealth);
         Die();
     }
