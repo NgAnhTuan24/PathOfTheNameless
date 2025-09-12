@@ -10,8 +10,15 @@ public class PlayerHealth : MonoBehaviour
 
     private Knockback knockback;
 
+    private Animator anim;
+    private Rigidbody2D rb;
+
+    public bool isDead = false;
+
     private void Awake()
     {
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         knockback = GetComponent<Knockback>();
     }
 
@@ -27,20 +34,29 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (isDead) return;
+
         currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0);
         Debug.Log("Player nhận: " + damage + " sát thương, máu còn lại: " + currentHealth);
         knockback.GetKncockBack(EnemyController.instance.transform, 15f);
         healthBar.SetHealth(currentHealth);
-        Die();
+
+        if (currentHealth <= 0) Die();
     }
 
     public void Die()
     {
-        if (currentHealth <= 0)
-        {
-            Debug.Log("Player đã chết");
-            // Thực hiện các hành động khi player chết
-        }
+        if (isDead) return;
+        isDead = true;
+
+        anim.SetTrigger("IsDie");
+
+        GetComponent<PlayerController>().enabled = false;
+        rb.velocity = Vector2.zero;
+
+        EnemyController.instance.ClearTarget();
+
+        Destroy(gameObject, 1f);
     }
 }

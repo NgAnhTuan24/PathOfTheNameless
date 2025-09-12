@@ -58,22 +58,32 @@ public class EnemyController : MonoBehaviour
         Collider2D hit = Physics2D.OverlapCircle(transform.position, detectionRadius, playerLayer);
         if (hit != null)
         {
-            player = hit.transform;
-            float dis = Vector2.Distance(transform.position, player.position);
-
-            if (dis <= attackRadius && hasAttack)
+            PlayerHealth ph = hit.GetComponent<PlayerHealth>();
+            if (ph != null && !ph.isDead)
             {
-                ChangeState(State.Attack);
+                player = hit.transform;
+                float dis = Vector2.Distance(transform.position, player.position);
+
+                if (dis <= attackRadius && hasAttack)
+                {
+                    ChangeState(State.Attack);
+                }
+                else
+                {
+                    ChangeState(State.Chase);
+                }
             }
             else
             {
-                ChangeState(State.Chase);
+                player = null;
+                ChangeState(State.Idle);
             }
         }
         else
         {
             if (currentState == State.Chase || currentState == State.Attack)
             {
+                player = null;
                 ChangeState(State.Idle);
             }
         }
@@ -133,6 +143,12 @@ public class EnemyController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRadius);
+    }
+
+    public void ClearTarget()
+    {
+        player = null;
+        ChangeState(State.Idle);
     }
 
     void UpdateAnimator()
