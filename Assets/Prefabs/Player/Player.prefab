@@ -4939,6 +4939,7 @@ GameObject:
   - component: {fileID: 1777938120902969056}
   - component: {fileID: 3295272271463273541}
   - component: {fileID: 9114981590142787459}
+  - component: {fileID: 9219626343248904543}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -5156,8 +5157,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e0f0f6dfd142de4b906e4b95f837d15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHeath: 100
+  maxHeath: 10
   healthBar: {fileID: 7579934343099938290, guid: 945608241e58d5d419b2481ffd8c413c, type: 3}
+  isDead: 0
 --- !u!114 &9114981590142787459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5170,4 +5172,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 426cf3055f9b7f745bd1b1c1284ffe68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeKnock: 0.1
+  timeKnock: 0.2
+--- !u!114 &9219626343248904543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6821054288239675578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09714964e34a12f43be1263aeeede619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whiteFlashMat: {fileID: 2100000, guid: 9aa798868d97fc744a677b2d9234175f, type: 2}
+  restoreDefaultMatTime: 0.2

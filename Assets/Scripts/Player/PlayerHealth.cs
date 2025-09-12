@@ -2,6 +2,7 @@
 
 public class PlayerHealth : MonoBehaviour
 {
+    #region
     [SerializeField] private int maxHeath;
 
     private int currentHealth;
@@ -9,17 +10,23 @@ public class PlayerHealth : MonoBehaviour
     public HealthBar healthBar;
 
     private Knockback knockback;
+    private Flash flash;
 
     private Animator anim;
     private Rigidbody2D rb;
 
-    public bool isDead = false;
+    private bool isDead = false;
+
+    public bool IsDead => isDead;
+
+    #endregion
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         knockback = GetComponent<Knockback>();
+        flash = GetComponent<Flash>();
     }
 
     private void Start()
@@ -40,6 +47,7 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = Mathf.Max(currentHealth, 0);
         Debug.Log("Player nhận: " + damage + " sát thương, máu còn lại: " + currentHealth);
         knockback.GetKncockBack(EnemyController.instance.transform, 15f);
+        StartCoroutine(flash.FlashRoutine());
         healthBar.SetHealth(currentHealth);
 
         if (currentHealth <= 0) Die();
@@ -57,6 +65,6 @@ public class PlayerHealth : MonoBehaviour
 
         EnemyController.instance.ClearTarget();
 
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, .7f);
     }
 }

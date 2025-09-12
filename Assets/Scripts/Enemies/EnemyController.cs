@@ -59,7 +59,7 @@ public class EnemyController : MonoBehaviour
         if (hit != null)
         {
             PlayerHealth ph = hit.GetComponent<PlayerHealth>();
-            if (ph != null && !ph.isDead)
+            if (ph != null && !ph.IsDead)
             {
                 player = hit.transform;
                 float dis = Vector2.Distance(transform.position, player.position);
