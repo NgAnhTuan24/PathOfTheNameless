@@ -2,8 +2,6 @@
 
 public class EnemyController : MonoBehaviour
 {
-    public static EnemyController instance;
-
     [Header("Move Settings")]
     [SerializeField] float walkSpeed = 2f;
     [SerializeField] float runSpeed = 5f;
@@ -33,7 +31,6 @@ public class EnemyController : MonoBehaviour
 
     void Awake()
     {
-        instance = this;
         knockback = GetComponent<Knockback>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -143,12 +140,6 @@ public class EnemyController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRadius);
-    }
-
-    public void ClearTarget()
-    {
-        player = null;
-        ChangeState(State.Idle);
     }
 
     void UpdateAnimator()

@@ -39,14 +39,16 @@ public class PlayerHealth : MonoBehaviour
         healthBar.SetMaxHealth(maxHeath);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Transform enemyTransform)
     {
         if (isDead) return;
 
         currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0);
-        Debug.Log("Player nhận: " + damage + " sát thương, máu còn lại: " + currentHealth);
-        knockback.GetKncockBack(EnemyController.instance.transform, 15f);
+        //Debug.Log("Player nhận: " + damage + " sát thương, máu còn lại: " + currentHealth);
+
+        if (enemyTransform != null) knockback.GetKncockBack(enemyTransform, 15f);
+
         StartCoroutine(flash.FlashRoutine());
         healthBar.SetHealth(currentHealth);
 
@@ -62,8 +64,6 @@ public class PlayerHealth : MonoBehaviour
 
         GetComponent<PlayerController>().enabled = false;
         rb.velocity = Vector2.zero;
-
-        EnemyController.instance.ClearTarget();
 
         Destroy(gameObject, .7f);
     }

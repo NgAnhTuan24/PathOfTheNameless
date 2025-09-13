@@ -29,7 +29,9 @@ public class EnemyHealth : MonoBehaviour
     {
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        Debug.Log("Enemy nhận: " + damage + " sát thương, máu hiện tại là: " + currentHealth);
+
+        //Debug.Log("Enemy nhận: " + damage + " sát thương, máu hiện tại là: " + currentHealth);
+
         knockback.GetKncockBack(PlayerController.Instance.transform, 15f);
         StartCoroutine(flash.FlashRoutine());
         Die();
@@ -39,8 +41,6 @@ public class EnemyHealth : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
-            Debug.Log("Enemy died.");
-
             Instantiate(deathVFX, transform.position, Quaternion.identity);
 
             OnEnemyDeath?.Invoke();
