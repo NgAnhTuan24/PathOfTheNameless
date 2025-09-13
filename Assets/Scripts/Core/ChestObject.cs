@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ChestObject : MonoBehaviour
@@ -16,14 +13,19 @@ public class ChestObject : MonoBehaviour
     private bool isOpened = false;
     private Transform player;
 
+    private PlayerHealth playerHealth;
+
     void Start()
     {
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerHealth = player.GetComponent<PlayerHealth>();
     }
 
     void Update()
     {
+        if(player == null || (playerHealth != null && playerHealth.IsDead)) return;
+
         OpenChest();
     }
 
