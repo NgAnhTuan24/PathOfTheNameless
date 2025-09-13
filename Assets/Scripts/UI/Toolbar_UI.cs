@@ -18,6 +18,7 @@ public class Toolbar_UI : MonoBehaviour
         CheckAlphaNumericKeys();
         CheckScrollWheel();
     }
+
     public void SelectSlot(int index)
     {
         if (toolbarSlots.Count == 9)

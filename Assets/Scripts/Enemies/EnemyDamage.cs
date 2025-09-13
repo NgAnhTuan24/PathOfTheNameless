@@ -8,7 +8,11 @@ public class EnemyDamage : MonoBehaviour
         if(col.gameObject.GetComponent<PlayerHealth>())
         {
             PlayerHealth pl = col.gameObject.GetComponent<PlayerHealth>();
-            pl.TakeDamage(damageAmount);
+
+            if (pl != null)
+            {
+                pl.TakeDamage(damageAmount, transform);
+            }
         }
     }
 }

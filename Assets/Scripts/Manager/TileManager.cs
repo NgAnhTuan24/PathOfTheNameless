@@ -19,7 +19,7 @@ public class TilledTile
 
 public class TileManager : MonoBehaviour
 {
-    [SerializeField] private Tilemap interactableMap;
+    public Tilemap interactableMap;
 
     [SerializeField] private Tile hiddenInteractableTile;
     [SerializeField] private Tile interactedTile;
@@ -42,16 +42,17 @@ public class TileManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // Chỉ tìm lại Tilemap nếu đang ở scene MainGame
-        if (scene.name == "MainGame")
+        GameObject mapObj = GameObject.FindGameObjectWithTag("InteractableMap");
+        if (mapObj != null)
         {
-            GameObject mapObj = GameObject.FindGameObjectWithTag("InteractableMap");
-            if (mapObj != null)
-            {
-                interactableMap = mapObj.GetComponent<Tilemap>();
+            interactableMap = mapObj.GetComponent<Tilemap>();
 
-                // Sau khi gán lại map -> chạy khởi tạo
-                InitMap();
-            }
+            // Sau khi gán lại map -> chạy khởi tạo
+            InitMap();
+        }
+        else
+        {
+            interactableMap = null;
         }
     }
 

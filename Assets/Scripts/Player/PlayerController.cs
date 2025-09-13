@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : Singleton<PlayerController>
 {
@@ -20,12 +18,16 @@ public class PlayerController : Singleton<PlayerController>
     private bool isAction = false;
     private float actionTimer = 0f;
 
+    [SerializeField] private ParticleSystem dustEffect;
+
+    private Knockback knockback;
     #endregion
 
     protected override void Awake()
     {
         base.Awake();
         //Instance = this;
+        knockback = GetComponent<Knockback>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
@@ -89,11 +91,13 @@ public class PlayerController : Singleton<PlayerController>
 
     private void HandleTool(ItemData itemData)
     {
-        Vector3Int pos = new Vector3Int((int)transform.position.x, (int)transform.position.y, 0);
+        var tileManager = GameManager.instance.tileManager;
 
         switch (itemData.toolType)
         {
             case ToolType.Hoe:
+                if (tileManager == null || tileManager.interactableMap == null) return;
+                Vector3Int pos = GameManager.instance.tileManager.interactableMap.WorldToCell(transform.position);
                 HandleHoe(pos);
                 break;
 
@@ -149,7 +153,7 @@ public class PlayerController : Singleton<PlayerController>
 
     private void HandleSeed(ItemData itemData, Toolbar_UI toolbarUI)
     {
-        Vector3Int pos = new Vector3Int((int)transform.position.x, (int)transform.position.y, 0);
+        Vector3Int pos = GameManager.instance.tileManager.interactableMap.WorldToCell(transform.position);
 
         if (GameManager.instance.tileManager.IsInteracted(pos) &&
             !GameManager.instance.tileManager.HasCrop(pos))
@@ -172,6 +176,7 @@ public class PlayerController : Singleton<PlayerController>
 
     private void FixedUpdate()
     {
+        if (knockback.gettingKnockedBack) return;
         DiChuyen();
     }
 
@@ -180,10 +185,24 @@ public class PlayerController : Singleton<PlayerController>
         if (isAction)
         {
             rb.velocity = Vector2.zero;
+            if (dustEffect.isPlaying) dustEffect.Stop();
             return;
         }
 
         rb.velocity = huongDiChuyen * tocDoDiChuyen;
+
+        DustEffect();
+    }
+
+    void DustEffect()
+    {
+        if(huongDiChuyen.magnitude > .1f){
+            if(!dustEffect.isPlaying) dustEffect.Play();
+        }
+        else
+        {
+            if(dustEffect.isPlaying) dustEffect.Stop();
+        }
     }
 
     void UpdateAnimation()
