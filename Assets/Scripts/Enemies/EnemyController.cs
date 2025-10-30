@@ -28,6 +28,8 @@ public class EnemyController : MonoBehaviour
 
     float stateTimer;
     Vector2 moveDir;
+    Vector2 lastMoveDir;
+
 
     void Awake()
     {
@@ -122,8 +124,15 @@ public class EnemyController : MonoBehaviour
 
             case State.Attack:
                 rb.velocity = Vector2.zero;
+                if (player != null)
+                {
+                    Vector2 dirToPlayer = (player.position - transform.position).normalized;
+                    anim.SetFloat("Move X", dirToPlayer.x);
+                    anim.SetFloat("Move Y", dirToPlayer.y);
+                }
                 if (hasAttack) anim.SetTrigger("IsAttacking");
                 break;
+
         }
     }
 
@@ -145,8 +154,20 @@ public class EnemyController : MonoBehaviour
     void UpdateAnimator()
     {
         Vector2 vel = rb.velocity;
-        anim.SetFloat("Move X", vel.x);
-        anim.SetFloat("Move Y", vel.y);
+
+        if (vel.sqrMagnitude > 0.01f)
+        {
+            lastMoveDir = vel.normalized;
+            anim.SetFloat("Move X", lastMoveDir.x);
+            anim.SetFloat("Move Y", lastMoveDir.y);
+        }
+        else
+        {
+            anim.SetFloat("Move X", lastMoveDir.x);
+            anim.SetFloat("Move Y", lastMoveDir.y);
+        }
+
         anim.SetFloat("Speed", vel.magnitude);
     }
+
 }
