@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviour
 
     private Animator anim;
     private Rigidbody2D rb;
+    private InvincibilitySkill skill;
 
     private bool isDead = false;
 
@@ -27,6 +28,7 @@ public class PlayerHealth : MonoBehaviour
         anim = GetComponent<Animator>();
         knockback = GetComponent<Knockback>();
         flash = GetComponent<Flash>();
+        skill = GetComponent<InvincibilitySkill>();
     }
 
     private void Start()
@@ -42,6 +44,12 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int damage, Transform enemyTransform)
     {
         if (isDead) return;
+
+        if (skill != null && skill.IsInvincible())
+        {
+            Debug.Log("Đang bất tử — không nhận sát thương!");
+            return;
+        }
 
         currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0);
