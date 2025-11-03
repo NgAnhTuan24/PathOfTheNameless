@@ -26,17 +26,14 @@ public class EnemySpawnZone : MonoBehaviour
     private int currentWave = 0;
     private bool zoneFinished = false;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Start()
     {
-        if (!zoneFinished && collision.CompareTag("Player") && currentWave == 0)
-        {
-            StartWave(1);
-        }
+        StartWave(1);
     }
 
     private void StartWave(int waveNumber)
     {
-        if (waveNumber > waves.Length) return;
+        if (waveNumber > waves.Length || zoneFinished) return;
 
         currentWave = waveNumber;
         Wave wave = waves[waveNumber - 1];

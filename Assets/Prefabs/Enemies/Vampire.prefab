@@ -188,8 +188,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 2
   runSpeed: 5
-  detectionRadius: 8
-  attackRadius: 3
+  detectionRadius: 15
+  attackRadius: 5
   playerLayer:
     serializedVersion: 2
     m_Bits: 256
