@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class EnemyController : MonoBehaviour
 
     [Header("Enemy Abilities")]
     [SerializeField] bool hasAttack = true;
+    bool isAttacking = false;
 
     Rigidbody2D rb;
     Animator anim;
@@ -30,12 +32,14 @@ public class EnemyController : MonoBehaviour
     Vector2 moveDir;
     Vector2 lastMoveDir;
 
+    private IEnemyAttack enemyAttack;
 
     void Awake()
     {
         knockback = GetComponent<Knockback>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        enemyAttack = GetComponent<IEnemyAttack>();
     }
 
     void Start()
@@ -50,10 +54,13 @@ public class EnemyController : MonoBehaviour
         CheckState();
         HandleState();
         UpdateAnimator();
+        UpdateLookDirection();
     }
 
     void CheckState()
     {
+        if (isAttacking) return;
+
         Collider2D hit = Physics2D.OverlapCircle(transform.position, detectionRadius, playerLayer);
         if (hit != null)
         {
@@ -124,15 +131,38 @@ public class EnemyController : MonoBehaviour
 
             case State.Attack:
                 rb.velocity = Vector2.zero;
-                if (player != null)
+                if (!isAttacking && player != null)
                 {
-                    Vector2 dirToPlayer = (player.position - transform.position).normalized;
-                    anim.SetFloat("Move X", dirToPlayer.x);
-                    anim.SetFloat("Move Y", dirToPlayer.y);
+                    StartCoroutine(PerformAttack());
                 }
-                if (hasAttack) anim.SetTrigger("IsAttacking");
                 break;
+        }
+    }
 
+    IEnumerator PerformAttack()
+    {
+        isAttacking = true;
+        enemyAttack?.Attack(player); // gọi hàm bắn đạn + trigger animation
+
+        // Giả sử animation attack dài khoảng 1 giây
+        yield return new WaitForSeconds(.5f);
+
+        isAttacking = false;
+
+        // Sau khi tấn công xong, kiểm tra lại player để đổi trạng thái
+        if (player != null)
+        {
+            float distance = Vector2.Distance(transform.position, player.position);
+            if (distance <= attackRadius)
+                ChangeState(State.Attack);
+            else if (distance <= detectionRadius)
+                ChangeState(State.Chase);
+            else
+                ChangeState(State.Idle);
+        }
+        else
+        {
+            ChangeState(State.Idle);
         }
     }
 
@@ -168,6 +198,15 @@ public class EnemyController : MonoBehaviour
         }
 
         anim.SetFloat("Speed", vel.magnitude);
+    }
+
+    void UpdateLookDirection()
+    {
+        if (player == null) return; // Không có player thì khỏi update
+
+        Vector2 dirToPlayer = (player.position - transform.position).normalized;
+        anim.SetFloat("Move X", dirToPlayer.x);
+        anim.SetFloat("Move Y", dirToPlayer.y);
     }
 
 }
