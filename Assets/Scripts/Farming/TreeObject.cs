@@ -19,6 +19,7 @@ public class TreeObject : MonoBehaviour
     [SerializeField] private int soLanChatToiDa = 5;
     private int soLanChat = 0; // Đếm số lần đã chặt
     private int dieukienDeCayDo;
+    [SerializeField] private GameObject deathVFX;
 
     private GenerateID newID;
 
@@ -39,6 +40,7 @@ public class TreeObject : MonoBehaviour
 
         if (soLanChat >= dieukienDeCayDo)
         {
+            Instantiate(deathVFX, transform.position, Quaternion.identity);
             DropItems();
             Destroy(gameObject);
         }
