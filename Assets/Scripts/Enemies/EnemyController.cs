@@ -231,7 +231,8 @@ public class EnemyController : MonoBehaviour
         isReturningToZone = true;
         rb.velocity = Vector2.zero;
         StopAllCoroutines();
-        StartCoroutine(ReturnToZone());
+        if (gameObject.activeInHierarchy) // ✅ Chỉ chạy nếu object còn active
+            StartCoroutine(ReturnToZone());
     }
 
     public void OnEnterZone(EnemyZone z)

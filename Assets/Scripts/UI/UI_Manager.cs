@@ -21,6 +21,9 @@ public class UI_Manager : MonoBehaviour
     public List<Inventory_UI> inventoryUIs;
     public Dictionary<string, Inventory_UI> inventoryUIByName = new Dictionary<string, Inventory_UI>();
 
+    [Header("Player Stats UI")]
+    public PlayerStatsUI playerStatsUI;
+
     // ------------------- Dragging -------------------
     public static Slot_UI draggedSlot;
     public static Image draggedIcon;
@@ -47,6 +50,19 @@ public class UI_Manager : MonoBehaviour
             // Gán reference tới các object con
             inventoryPanel = uiRoot.transform.Find("Kho đồ/InventoryPanel").gameObject;
             healthBar = uiRoot.transform.Find("PlayerHUD/Thanh Máu").GetComponent<HealthBar>();
+
+            playerStatsUI = uiRoot.transform.Find("PlayerStatsPanel").GetComponent<PlayerStatsUI>();
+            playerStatsUI.gameObject.SetActive(false);
+
+            var togglebtn = uiRoot.transform.Find("PlayerHUD/SettingButton/Button")?.GetComponent<Button>();
+            if(togglebtn != null)
+            {
+                togglebtn.onClick.AddListener(() => TogglePlayerStats());
+            }
+            else
+            {
+                Debug.LogWarning("Không tìm thấy nút SettingButton để gán sự kiện TogglePlayerStats()");
+            }
 
             // Lấy hết Inventory_UI trong prefab
             inventoryUIByName.Clear();
@@ -79,6 +95,12 @@ public class UI_Manager : MonoBehaviour
         {
             dragSingle = false;
         }
+    }
+
+    public void TogglePlayerStats()
+    {
+        if (playerStatsUI != null)
+            playerStatsUI.Toggle();
     }
 
     public void OpenCloseInventoryUI()
