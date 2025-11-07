@@ -21,6 +21,8 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] private ParticleSystem dustEffect;
 
     private Knockback knockback;
+
+    public float GetMovementSpeed() => tocDoDiChuyen;
     #endregion
 
     protected override void Awake()

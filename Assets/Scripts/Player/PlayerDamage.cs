@@ -4,6 +4,8 @@ public class PlayerDamage : MonoBehaviour
 {
     [SerializeField] private int damageAmount;
 
+    public int GetDamageAmount() => damageAmount;
+
     private void OnTriggerEnter2D(Collider2D col)
     {
         var enemy = col.GetComponent<EnemyHealth>();

@@ -22,6 +22,11 @@ public class PlayerHealth : MonoBehaviour
     private bool isDead = false;
 
     public bool IsDead => isDead;
+
+    public int GetCurrentHealth() => currentHealth;
+    public int GetMaxHealth() => maxHeath;
+    public int GetCurrentArmor() => currentArmor;
+    public int GetMaxArmor() => maxArmor;
     #endregion
 
     private void Awake()

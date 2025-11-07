@@ -10,10 +10,28 @@ public class PlayerStatsUI : MonoBehaviour
     public TMP_Text damageText;
     public TMP_Text defenseText;
     public TMP_Text speedText;
-    public TMP_Text knockBackResistText;
     public TMP_Text skillPointText;
     public TMP_Text levelText;
     public TMP_Text expText;
+
+    private PlayerController playerController;
+    private PlayerHealth playerHealth;
+    private PlayerDamage playerDamage;
+
+    private void Awake()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            playerHealth = player.GetComponent<PlayerHealth>();
+            playerController = player.GetComponent<PlayerController>();
+            playerDamage = player.GetComponentInChildren<PlayerDamage>();
+        }
+        else
+        {
+            Debug.LogError("Player GameObject not found. Ensure it has the 'Player' tag.");
+        }
+    }
 
     private void Start()
     {
@@ -22,11 +40,38 @@ public class PlayerStatsUI : MonoBehaviour
 
     void Refresh()
     {
-        healthText.text = "Máu: (đang chưa có)";
-        defenseText.text = "Giáp: (đang chưa có)";
-        damageText.text = "Sát thương: (đang chưa có)";
-        speedText.text = "Tốc độ di chuyển: (đang chưa có)";
-        knockBackResistText.text = "Kháng đẩy lùi: (đang chưa có)";
+        if (playerHealth != null)
+        {
+            // Get current and max health/armor from PlayerHealth
+            healthText.text = $"Máu: {playerHealth.GetCurrentHealth()}/{playerHealth.GetMaxHealth()}";
+            defenseText.text = $"Giáp: {playerHealth.GetCurrentArmor()}/{playerHealth.GetMaxArmor()}";
+        }
+        else
+        {
+            healthText.text = "Máu: (Không tìm thấy)";
+            defenseText.text = "Giáp: (Không tìm thấy)";
+        }
+
+        if (playerDamage != null)
+        {
+            // Get damage from PlayerDamage
+            damageText.text = $"Sát thương: {playerDamage.GetDamageAmount()}";
+        }
+        else
+        {
+            damageText.text = "Sát thương: (Không tìm thấy)";
+        }
+
+        if (playerController != null)
+        {
+            // Get movement speed from PlayerController
+            speedText.text = $"Tốc độ di chuyển: {playerController.GetMovementSpeed()}";
+        }
+        else
+        {
+            speedText.text = "Tốc độ di chuyển: (Không tìm thấy)";
+        }
+
         skillPointText.text = "Điểm nâng kỹ năng: (đang chưa có)";
         levelText.text = "Cấp: (đang chưa có)";
         expText.text = "Kinh nghiệm: (đang chưa có)";
