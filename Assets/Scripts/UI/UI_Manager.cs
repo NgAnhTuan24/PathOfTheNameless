@@ -16,6 +16,7 @@ public class UI_Manager : MonoBehaviour
     public GameObject uiRoot;
     public GameObject inventoryPanel;
     public HealthBar healthBar;
+    public ArmorBar armorBar;
 
     [Header("Inventory UI")]
     public List<Inventory_UI> inventoryUIs;
@@ -50,6 +51,7 @@ public class UI_Manager : MonoBehaviour
             // Gán reference tới các object con
             inventoryPanel = uiRoot.transform.Find("Kho đồ/InventoryPanel").gameObject;
             healthBar = uiRoot.transform.Find("PlayerHUD/Thanh Máu").GetComponent<HealthBar>();
+            armorBar = uiRoot.transform.Find("PlayerHUD/Giáp").GetComponent<ArmorBar>();
 
             playerStatsUI = uiRoot.transform.Find("PlayerStatsPanel").GetComponent<PlayerStatsUI>();
             playerStatsUI.gameObject.SetActive(false);

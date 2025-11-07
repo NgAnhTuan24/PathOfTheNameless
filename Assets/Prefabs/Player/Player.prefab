@@ -5159,7 +5159,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHeath: 10
+  maxArmor: 3
   healthBar: {fileID: 7579934343099938290, guid: 945608241e58d5d419b2481ffd8c413c, type: 3}
+  armorBar: {fileID: 0}
 --- !u!114 &687619727361740538
 MonoBehaviour:
   m_ObjectHideFlags: 0

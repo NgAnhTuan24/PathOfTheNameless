@@ -4,22 +4,24 @@ public class PlayerHealth : MonoBehaviour
 {
     #region
     [SerializeField] private int maxHeath;
-
     private int currentHealth;
 
+    [SerializeField] private int maxArmor;
+    private int currentArmor;
+
     public HealthBar healthBar;
+    public ArmorBar armorBar;
 
     private Knockback knockback;
     private Flash flash;
+    private InvincibilitySkill skill;
 
     private Animator anim;
     private Rigidbody2D rb;
-    private InvincibilitySkill skill;
 
     private bool isDead = false;
 
     public bool IsDead => isDead;
-
     #endregion
 
     private void Awake()
@@ -34,11 +36,15 @@ public class PlayerHealth : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHeath;
+        currentArmor = maxArmor;
 
         if (healthBar == null)
             healthBar = UI_Manager.Instance.healthBar;
+        if (armorBar == null)
+            armorBar = UI_Manager.Instance.armorBar;
 
         healthBar.SetMaxHealth(maxHeath);
+        armorBar.SetMaxArmor(maxArmor);
     }
 
     public void TakeDamage(int damage, Transform enemyTransform)
@@ -51,16 +57,28 @@ public class PlayerHealth : MonoBehaviour
             return;
         }
 
-        currentHealth -= damage;
-        currentHealth = Mathf.Max(currentHealth, 0);
+        if (currentArmor > 0)
+        {
+            int armorDamage = Mathf.Min(damage, currentArmor);
+            currentArmor -= armorDamage;
+            damage -= armorDamage;
+            armorBar.SetArmor(currentArmor);
+        }
+
+        if (damage > 0)
+        {
+            currentHealth -= damage;
+            currentHealth = Mathf.Max(currentHealth, 0);
+            healthBar.SetHealth(currentHealth);
+            StartCoroutine(flash.FlashRoutine());
+            if (enemyTransform != null) knockback.GetKncockBack(enemyTransform, 15f);
+            if (currentHealth <= 0) Die();
+        }
+
         //Debug.Log("Player nhận: " + damage + " sát thương, máu còn lại: " + currentHealth);
 
-        if (enemyTransform != null) knockback.GetKncockBack(enemyTransform, 15f);
 
-        StartCoroutine(flash.FlashRoutine());
-        healthBar.SetHealth(currentHealth);
 
-        if (currentHealth <= 0) Die();
     }
 
     public void Die()
