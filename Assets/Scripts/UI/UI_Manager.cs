@@ -4,11 +4,9 @@ using UnityEngine.UI;
 
 public class UI_Manager : MonoBehaviour
 {
-    // ------------------- Singleton -------------------
     public static UI_Manager Instance;
     private static GameObject spawnedUIRoot;
 
-    // ------------------- Prefab & References -------------------
     [Header("UI Root Prefab")]
     public GameObject uiRootPrefab;
 
@@ -25,7 +23,6 @@ public class UI_Manager : MonoBehaviour
     [Header("Player Stats UI")]
     public PlayerStatsUI playerStatsUI;
 
-    // ------------------- Dragging -------------------
     public static Slot_UI draggedSlot;
     public static Image draggedIcon;
     public static bool dragSingle;
