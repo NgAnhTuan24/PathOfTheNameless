@@ -553,6 +553,7 @@ GameObject:
   - component: {fileID: 4808535577842991123}
   - component: {fileID: 5683128286728190709}
   - component: {fileID: 507629725395010635}
+  - component: {fileID: 2210577070169869954}
   m_Layer: 0
   m_Name: ExpBar
   m_TagString: Untagged
@@ -642,6 +643,21 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2210577070169869954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151755563652207557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b8c60582dbd6144bb0c068c84ef6284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 507629725395010635}
+  levelText: {fileID: 4881703751332589849}
+  expAmountText: {fileID: 1626542764059109041}
 --- !u!1 &1253243458022096009
 GameObject:
   m_ObjectHideFlags: 0

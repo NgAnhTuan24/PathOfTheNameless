@@ -4938,6 +4938,7 @@ GameObject:
   - component: {fileID: 8107618474345209562}
   - component: {fileID: 1777938120902969056}
   - component: {fileID: 3295272271463273541}
+  - component: {fileID: 8672588115712043546}
   - component: {fileID: 687619727361740538}
   - component: {fileID: 9114981590142787459}
   - component: {fileID: 9219626343248904543}
@@ -5162,6 +5163,21 @@ MonoBehaviour:
   maxArmor: 3
   healthBar: {fileID: 7579934343099938290, guid: 945608241e58d5d419b2481ffd8c413c, type: 3}
   armorBar: {fileID: 0}
+--- !u!114 &8672588115712043546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6821054288239675578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00432801b225efb43ab582c718960392, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  expBar: {fileID: 0}
+  levelText: {fileID: 0}
+  expAmountText: {fileID: 0}
 --- !u!114 &687619727361740538
 MonoBehaviour:
   m_ObjectHideFlags: 0
