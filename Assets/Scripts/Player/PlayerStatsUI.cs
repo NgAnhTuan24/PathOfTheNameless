@@ -17,15 +17,23 @@ public class PlayerStatsUI : MonoBehaviour
     private PlayerController playerController;
     private PlayerHealth playerHealth;
     private PlayerDamage playerDamage;
+    private PlayerLevelSystem playerLevelSystem;
 
     private void Awake()
     {
+        // Kiểm tra các thành phần giao diện
+        if (!healthText || !damageText || !defenseText || !speedText || !skillPointText || !levelText || !expText)
+        {
+            Debug.LogError("Một hoặc nhiều thành phần TextMeshProUGUI chưa được gán trong PlayerStatsUI.");
+        }
+
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
             playerHealth = player.GetComponent<PlayerHealth>();
             playerController = player.GetComponent<PlayerController>();
             playerDamage = player.GetComponentInChildren<PlayerDamage>();
+            playerLevelSystem = player.GetComponent<PlayerLevelSystem>();
         }
         else
         {
@@ -40,7 +48,7 @@ public class PlayerStatsUI : MonoBehaviour
 
     void Refresh()
     {
-        if (playerHealth != null)
+        if (playerHealth != null && healthText != null && defenseText != null)
         {
             // Get current and max health/armor from PlayerHealth
             healthText.text = $"Máu: {playerHealth.GetCurrentHealth()}/{playerHealth.GetMaxHealth()}";
@@ -52,7 +60,7 @@ public class PlayerStatsUI : MonoBehaviour
             defenseText.text = "Giáp: (Không tìm thấy)";
         }
 
-        if (playerDamage != null)
+        if (playerDamage != null && damageText != null)
         {
             // Get damage from PlayerDamage
             damageText.text = $"Sát thương: {playerDamage.GetDamageAmount()}";
@@ -62,7 +70,7 @@ public class PlayerStatsUI : MonoBehaviour
             damageText.text = "Sát thương: (Không tìm thấy)";
         }
 
-        if (playerController != null)
+        if (playerController != null && speedText != null)
         {
             // Get movement speed from PlayerController
             speedText.text = $"Tốc độ di chuyển: {playerController.GetMovementSpeed()}";
@@ -72,9 +80,18 @@ public class PlayerStatsUI : MonoBehaviour
             speedText.text = "Tốc độ di chuyển: (Không tìm thấy)";
         }
 
-        skillPointText.text = "Điểm nâng kỹ năng: (đang chưa có)";
-        levelText.text = "Cấp: (đang chưa có)";
-        expText.text = "Kinh nghiệm: (đang chưa có)";
+        if (playerLevelSystem != null && levelText != null && expText != null && skillPointText != null)
+        {
+            levelText.text = $"Cấp: {playerLevelSystem.GetCurrentLevel()}";
+            expText.text = $"Kinh nghiệm: {playerLevelSystem.GetTotalExp()}";
+            skillPointText.text = $"Điểm kỹ năng: {playerLevelSystem.GetSkillPoints()}";
+        }
+        else
+        {
+            levelText.text = "Cấp: (Không tìm thấy)";
+            expText.text = "Kinh nghiệm: (Không tìm thấy)";
+            skillPointText.text = "Điểm kỹ năng: (Không tìm thấy)";
+        }
     }
 
     public void Toggle()

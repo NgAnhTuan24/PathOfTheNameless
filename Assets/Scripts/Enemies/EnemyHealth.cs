@@ -14,10 +14,17 @@ public class EnemyHealth : MonoBehaviour
 
     public event Action OnEnemyDeath;
 
+    [Header("Exp system")]
+    [SerializeField] private int minExp = 10;
+    [SerializeField] private int maxExp = 50;
+    private PlayerLevelSystem playerLevelSystem;
+
     private void Awake()
     {
         flash = GetComponent<Flash>();
         knockback = GetComponent<Knockback>();
+
+        playerLevelSystem = FindObjectOfType<PlayerLevelSystem>();
     }
 
     private void Start()
@@ -45,6 +52,12 @@ public class EnemyHealth : MonoBehaviour
             Instantiate(deathVFX, transform.position, Quaternion.identity);
 
             OnEnemyDeath?.Invoke();
+
+            if (playerLevelSystem != null)
+            {
+                int randomExp = UnityEngine.Random.Range(minExp, maxExp + 1);
+                playerLevelSystem.AddExperience(randomExp);
+            }
 
             Destroy(gameObject);
         }

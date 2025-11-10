@@ -2,11 +2,22 @@
 
 public class PlayerLevelSystem : MonoBehaviour
 {
+    private const int MAX_LEVEL = 5;
+    private const int SKILL_POINTS = 5;
+
     private int currentLevel = 1;
-    private float currentExp = 0f;
-    private float expToNextLevel = 100f;
+    private int currentExp = 0;
+    private int expToNextLevel = 100;
+    private int skillPoints = 0;
+    private int totalExp = 0;
 
     private ExpBar expBar;
+
+    public int GetCurrentLevel() => currentLevel;
+    public int GetCurrentExp() => currentExp;
+    public int GetExpToNextLevel() => expToNextLevel;
+    public int GetTotalExp() => totalExp;
+    public int GetSkillPoints() => skillPoints;
 
     void Start()
     {
@@ -28,11 +39,11 @@ public class PlayerLevelSystem : MonoBehaviour
         }
     }
 
-    public void AddExperience(float exp)
+    public void AddExperience(int exp)
     {
         currentExp += exp;
-        while (currentExp >= expToNextLevel)
-            LevelUp();
+        totalExp += exp;
+        while (currentExp >= expToNextLevel && currentLevel < MAX_LEVEL) LevelUp();
 
         UpdateUI();
     }
@@ -41,7 +52,9 @@ public class PlayerLevelSystem : MonoBehaviour
     {
         currentExp -= expToNextLevel;
         currentLevel++;
-        expToNextLevel *= 1.5f;
+        skillPoints += SKILL_POINTS;
+        expToNextLevel = 100 * (int)Mathf.Pow(2f, currentLevel);
+
         UpdateUI();
     }
 
@@ -51,15 +64,6 @@ public class PlayerLevelSystem : MonoBehaviour
         {
             expBar.SetExp(currentExp, expToNextLevel);
             expBar.SetLevel(currentLevel);
-        }
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            AddExperience(50f);
-            Debug.Log("Đã cộng 50 EXP!");
         }
     }
 }

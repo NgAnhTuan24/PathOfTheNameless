@@ -9,7 +9,7 @@ public class ExpBar : MonoBehaviour
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI expAmountText;
 
-    public void SetExp(float currentExp, float expToNextLevel)
+    public void SetExp(int currentExp, int expToNextLevel)
     {
         if (slider != null)
         {
