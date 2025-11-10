@@ -27,6 +27,8 @@ public class UI_Manager : MonoBehaviour
     public static Image draggedIcon;
     public static bool dragSingle;
 
+    public bool IsInventoryOpen => inventoryPanel != null && inventoryPanel.activeSelf;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -99,7 +101,10 @@ public class UI_Manager : MonoBehaviour
     public void TogglePlayerStats()
     {
         if (playerStatsUI != null)
+        {
+            if (IsInventoryOpen) inventoryPanel.SetActive(false);
             playerStatsUI.Toggle();
+        }
     }
 
     public void OpenCloseInventoryUI()
@@ -108,6 +113,11 @@ public class UI_Manager : MonoBehaviour
         {
             if (!inventoryPanel.activeSelf)
             {
+                if (playerStatsUI != null && playerStatsUI.gameObject.activeSelf)
+                {
+                    playerStatsUI.gameObject.SetActive(false);
+                }
+
                 inventoryPanel.SetActive(true);
                 RefreshInventoryUI("Backpack");
             }

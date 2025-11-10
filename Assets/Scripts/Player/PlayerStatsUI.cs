@@ -103,6 +103,8 @@ public class PlayerStatsUI : MonoBehaviour
 
     public void Toggle()
     {
+        if (UI_Manager.Instance != null && UI_Manager.Instance.IsInventoryOpen) UI_Manager.Instance.OpenCloseInventoryUI();
+
         gameObject.SetActive(!gameObject.activeSelf);
         if (gameObject.activeSelf)
             Refresh();
