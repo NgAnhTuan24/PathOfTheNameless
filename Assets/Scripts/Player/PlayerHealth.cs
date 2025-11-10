@@ -50,6 +50,8 @@ public class PlayerHealth : MonoBehaviour
 
         healthBar.SetMaxHealth(maxHeath);
         armorBar.SetMaxArmor(maxArmor);
+
+        GameEvents.ChangedStats();
     }
 
     public void TakeDamage(int damage, Transform enemyTransform)
@@ -81,9 +83,7 @@ public class PlayerHealth : MonoBehaviour
         }
 
         //Debug.Log("Player nhận: " + damage + " sát thương, máu còn lại: " + currentHealth);
-
-
-
+        GameEvents.ChangedStats();
     }
 
     public void Die()
@@ -97,5 +97,7 @@ public class PlayerHealth : MonoBehaviour
         rb.velocity = Vector2.zero;
 
         Destroy(gameObject, .7f);
+
+        GameEvents.ChangedStats();
     }
 }

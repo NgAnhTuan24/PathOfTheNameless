@@ -23,6 +23,7 @@ public class PlayerLevelSystem : MonoBehaviour
     {
         AutoAssignUI();
         UpdateUI();
+        GameEvents.ChangedStats();
     }
 
     void AutoAssignUI()
@@ -46,6 +47,8 @@ public class PlayerLevelSystem : MonoBehaviour
         while (currentExp >= expToNextLevel && currentLevel < MAX_LEVEL) LevelUp();
 
         UpdateUI();
+
+        GameEvents.ChangedStats();
     }
 
     void LevelUp()
@@ -56,6 +59,8 @@ public class PlayerLevelSystem : MonoBehaviour
         expToNextLevel = 100 * (int)Mathf.Pow(2f, currentLevel);
 
         UpdateUI();
+
+        GameEvents.ChangedStats();
     }
 
     void UpdateUI()

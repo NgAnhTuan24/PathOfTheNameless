@@ -6,6 +6,17 @@ public class PlayerDamage : MonoBehaviour
 
     public int GetDamageAmount() => damageAmount;
 
+    private void Start()
+    {
+        GameEvents.ChangedStats();
+    }
+
+    public void SetDamageAmount(int newDamage)
+    {
+        damageAmount = newDamage;
+        GameEvents.ChangedStats();
+    }
+
     private void OnTriggerEnter2D(Collider2D col)
     {
         var enemy = col.GetComponent<EnemyHealth>();

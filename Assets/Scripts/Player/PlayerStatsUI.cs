@@ -39,6 +39,13 @@ public class PlayerStatsUI : MonoBehaviour
         {
             Debug.LogError("Player GameObject not found. Ensure it has the 'Player' tag.");
         }
+
+        GameEvents.OnChangedStats += Refresh;
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.OnChangedStats -= Refresh;
     }
 
     private void Start()

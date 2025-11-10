@@ -34,6 +34,17 @@ public class PlayerController : Singleton<PlayerController>
         animator = GetComponent<Animator>();
     }
 
+    private void Start()
+    {
+        GameEvents.ChangedStats();
+    }
+
+    public void SetMovementSpeed(float newSpeed)
+    {
+        tocDoDiChuyen = newSpeed;
+        GameEvents.ChangedStats(); // Kích hoạt sự kiện
+    }
+
     void Update()
     {
         huongDiChuyen = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
