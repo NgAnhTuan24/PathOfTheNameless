@@ -71,4 +71,14 @@ public class PlayerLevelSystem : MonoBehaviour
             expBar.SetLevel(currentLevel);
         }
     }
+
+    public void SpendSkillPoints(int cost)
+    {
+        if (skillPoints >= cost)
+        {
+            skillPoints -= cost;
+            UpdateUI();
+            GameEvents.ChangedStats();
+        }
+    }
 }

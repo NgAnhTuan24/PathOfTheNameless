@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStatsUI : MonoBehaviour
 {
@@ -14,6 +15,12 @@ public class PlayerStatsUI : MonoBehaviour
     public TMP_Text levelText;
     public TMP_Text expText;
 
+    [Header("Upgrade Buttons")]
+    public Button healthButton;
+    public Button defenseButton;
+    public Button damageButton;
+    public Button speedButton;
+
     private PlayerController playerController;
     private PlayerHealth playerHealth;
     private PlayerDamage playerDamage;
@@ -22,7 +29,7 @@ public class PlayerStatsUI : MonoBehaviour
     private void Awake()
     {
         // Kiểm tra các thành phần giao diện
-        if (!healthText || !damageText || !defenseText || !speedText || !skillPointText || !levelText || !expText)
+        if (!healthText || !damageText || !defenseText || !speedText || !skillPointText || !levelText || !expText || !healthButton || !defenseButton || !damageButton || !speedButton)
         {
             Debug.LogError("Một hoặc nhiều thành phần TextMeshProUGUI chưa được gán trong PlayerStatsUI.");
         }
@@ -39,6 +46,11 @@ public class PlayerStatsUI : MonoBehaviour
         {
             Debug.LogError("Player GameObject not found. Ensure it has the 'Player' tag.");
         }
+
+        healthButton.onClick.AddListener(() => UpgradeStat("health", 5, 1)); // Tăng 10 máu, tốn 1 điểm
+        defenseButton.onClick.AddListener(() => UpgradeStat("defense", 1, 1)); // Tăng 5 giáp
+        damageButton.onClick.AddListener(() => UpgradeStat("damage", 1, 1)); // Tăng 5 sát thương
+        speedButton.onClick.AddListener(() => UpgradeStat("speed", 1, 1)); // Tăng 1 tốc độ
 
         GameEvents.OnChangedStats += Refresh;
     }
@@ -57,7 +69,6 @@ public class PlayerStatsUI : MonoBehaviour
     {
         if (playerHealth != null && healthText != null && defenseText != null)
         {
-            // Get current and max health/armor from PlayerHealth
             healthText.text = $"Máu: {playerHealth.GetCurrentHealth()}/{playerHealth.GetMaxHealth()}";
             defenseText.text = $"Giáp: {playerHealth.GetCurrentArmor()}/{playerHealth.GetMaxArmor()}";
         }
@@ -69,7 +80,6 @@ public class PlayerStatsUI : MonoBehaviour
 
         if (playerDamage != null && damageText != null)
         {
-            // Get damage from PlayerDamage
             damageText.text = $"Sát thương: {playerDamage.GetDamageAmount()}";
         }
         else
@@ -79,12 +89,11 @@ public class PlayerStatsUI : MonoBehaviour
 
         if (playerController != null && speedText != null)
         {
-            // Get movement speed from PlayerController
-            speedText.text = $"Tốc độ di chuyển: {playerController.GetMovementSpeed()}";
+            speedText.text = $"Tốc độ: {playerController.GetMovementSpeed()}";
         }
         else
         {
-            speedText.text = "Tốc độ di chuyển: (Không tìm thấy)";
+            speedText.text = "Tốc độ: (Không tìm thấy)";
         }
 
         if (playerLevelSystem != null && levelText != null && expText != null && skillPointText != null)
@@ -99,6 +108,41 @@ public class PlayerStatsUI : MonoBehaviour
             expText.text = "Kinh nghiệm: (Không tìm thấy)";
             skillPointText.text = "Điểm kỹ năng: (Không tìm thấy)";
         }
+
+        UpdateUpgradeButtons();
+    }
+
+    void UpgradeStat(string statType, float amount, int skillCost)
+    {
+        if (playerLevelSystem == null || playerLevelSystem.GetSkillPoints() < skillCost) return;
+
+        switch (statType)
+        {
+            case "health":
+                playerHealth.IncreaseMaxHealth(amount);
+                break;
+            case "damage":
+                playerDamage.IncreaseDamage(amount);
+                break;
+            case "defense":
+                playerHealth.IncreaseMaxArmor(amount);
+                break;
+            case "speed":
+                playerController.IncreaseMovementSpeed(amount);
+                break;
+        }
+
+        playerLevelSystem.SpendSkillPoints(skillCost);
+        Refresh();
+    }
+
+    void UpdateUpgradeButtons()
+    {
+        int skillPoints = playerLevelSystem?.GetSkillPoints() ?? 0;
+        healthButton.gameObject.SetActive(skillPoints > 0);
+        defenseButton.gameObject.SetActive(skillPoints > 0);
+        damageButton.gameObject.SetActive(skillPoints > 0);
+        speedButton.gameObject.SetActive(skillPoints > 0);
     }
 
     public void Toggle()

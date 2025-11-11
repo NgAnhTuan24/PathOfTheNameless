@@ -224,4 +224,10 @@ public class PlayerController : Singleton<PlayerController>
         animator.SetFloat("LookY", huongHoatAnh.y);
         animator.SetFloat("Speed", huongDiChuyen.magnitude);
     }
+
+    public void IncreaseMovementSpeed(float amount)
+    {
+        tocDoDiChuyen += amount;
+        GameEvents.ChangedStats();
+    }
 }

@@ -28,5 +28,9 @@ public class PlayerDamage : MonoBehaviour
             dummy.TakeDamage(damageAmount);
     }
 
-
+    public void IncreaseDamage(float amount)
+    {
+        damageAmount += (int)amount;
+        GameEvents.ChangedStats();
+    }
 }

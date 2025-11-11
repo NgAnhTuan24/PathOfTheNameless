@@ -119280,7 +119280,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 14
-      m_TileSpriteIndex: 20
+      m_TileSpriteIndex: 22
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -119290,7 +119290,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 13
-      m_TileSpriteIndex: 19
+      m_TileSpriteIndex: 21
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -119577,14 +119577,14 @@ Tilemap:
     m_Data: {fileID: -2063164689, guid: d3a9edf117ac4d744a03333ddcf9b391, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 1
     m_Data: {fileID: -2095120494, guid: b7facf71eddaeb6468ad9e534ed3d469, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 81890593, guid: b7facf71eddaeb6468ad9e534ed3d469, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   - m_RefCount: 2
     m_Data: {fileID: -2129840662, guid: b7facf71eddaeb6468ad9e534ed3d469, type: 3}
   - m_RefCount: 2
@@ -120357,9 +120357,11 @@ MonoBehaviour:
   uiRoot: {fileID: 0}
   inventoryPanel: {fileID: 0}
   healthBar: {fileID: 0}
+  armorBar: {fileID: 0}
   inventoryUIs:
   - {fileID: 0}
   - {fileID: 0}
+  playerStatsUI: {fileID: 0}
 --- !u!114 &1937937538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131346,7 +131348,7 @@ Transform:
   m_GameObject: {fileID: 2157369909736396457}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.03, y: -20.03, z: 0}
+  m_LocalPosition: {x: -13.03, y: -20.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
