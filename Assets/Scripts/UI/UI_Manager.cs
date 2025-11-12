@@ -88,6 +88,11 @@ public class UI_Manager : MonoBehaviour
             OpenCloseInventoryUI();
         }
 
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            TogglePlayerStats();
+        }
+
         if (Input.GetKey(KeyCode.LeftShift))
         {
             dragSingle = true;
