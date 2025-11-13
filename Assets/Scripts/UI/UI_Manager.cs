@@ -23,6 +23,9 @@ public class UI_Manager : MonoBehaviour
     [Header("Player Stats UI")]
     public PlayerStatsUI playerStatsUI;
 
+    [Header("Setting Game Play")]
+    public GameObject settingGame;
+
     public static Slot_UI draggedSlot;
     public static Image draggedIcon;
     public static bool dragSingle;
@@ -65,6 +68,16 @@ public class UI_Manager : MonoBehaviour
                 Debug.LogWarning("Không tìm thấy nút SettingButton để gán sự kiện TogglePlayerStats()");
             }
 
+            settingGame = uiRoot.transform.Find("SettingGame")?.gameObject;
+            if (settingGame == null)
+            {
+                Debug.LogWarning("Không tìm thấy SettingGamePanel trong UI Root!");
+            }
+            else
+            {
+                settingGame.SetActive(false);
+            }
+
             // Lấy hết Inventory_UI trong prefab
             inventoryUIByName.Clear();
             inventoryUIs.Clear();
@@ -93,6 +106,11 @@ public class UI_Manager : MonoBehaviour
             TogglePlayerStats();
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape) && settingGame != null)
+        {
+            ToggleSettingGame();
+        }
+
         if (Input.GetKey(KeyCode.LeftShift))
         {
             dragSingle = true;
@@ -103,14 +121,33 @@ public class UI_Manager : MonoBehaviour
         }
     }
 
+    public void ToggleSettingGame()
+    {
+        if (settingGame != null)
+        {
+            if (inventoryPanel != null && inventoryPanel.activeSelf) inventoryPanel.SetActive(false);
+            if (playerStatsUI != null && playerStatsUI.gameObject.activeSelf) playerStatsUI.gameObject.SetActive(false);
+
+            settingGame.SetActive(!settingGame.activeSelf);
+        }
+    }
+
     public void TogglePlayerStats()
     {
         if (playerStatsUI != null)
         {
-            if (IsInventoryOpen) inventoryPanel.SetActive(false);
+            if (!playerStatsUI.gameObject.activeSelf)
+            {
+                if (inventoryPanel != null && inventoryPanel.activeSelf)
+                    inventoryPanel.SetActive(false);
+                if (settingGame != null && settingGame.activeSelf)
+                    settingGame.SetActive(false);
+            }
+
             playerStatsUI.Toggle();
         }
     }
+
 
     public void OpenCloseInventoryUI()
     {
@@ -119,9 +156,11 @@ public class UI_Manager : MonoBehaviour
             if (!inventoryPanel.activeSelf)
             {
                 if (playerStatsUI != null && playerStatsUI.gameObject.activeSelf)
-                {
                     playerStatsUI.gameObject.SetActive(false);
-                }
+
+                if (settingGame != null && settingGame.activeSelf)
+                    settingGame.SetActive(false);
+
 
                 inventoryPanel.SetActive(true);
                 RefreshInventoryUI("Backpack");
