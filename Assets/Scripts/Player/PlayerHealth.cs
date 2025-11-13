@@ -104,16 +104,26 @@ public class PlayerHealth : MonoBehaviour
     public void IncreaseMaxHealth(float amount)
     {
         maxHeath += (int)amount;
-        currentHealth = Mathf.Min(currentHealth + (int)amount, maxHeath);
-        if (healthBar != null) healthBar.SetMaxHealth(maxHeath);
+        currentHealth = Mathf.Min(currentHealth, maxHeath);
+
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(maxHeath);
+            healthBar.SetHealth(currentHealth);
+        }
+
         GameEvents.ChangedStats();
     }
 
     public void IncreaseMaxArmor(float amount)
     {
         maxArmor += (int)amount;
-        currentArmor = Mathf.Min(currentArmor + (int)amount, maxArmor);
-        if (armorBar != null) armorBar.SetMaxArmor(maxArmor);
+        currentArmor = Mathf.Min(currentArmor, maxArmor);
+        if (armorBar != null)
+        {
+            armorBar.SetMaxArmor(maxArmor);
+            armorBar.SetArmor(currentArmor);
+        }
         GameEvents.ChangedStats();
     }
 }

@@ -120362,6 +120362,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   playerStatsUI: {fileID: 0}
+  settingGame: {fileID: 0}
 --- !u!114 &1937937538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131046,6 +131047,8 @@ GameObject:
   - component: {fileID: 2369488105171867737}
   - component: {fileID: 2311904078477843456}
   - component: {fileID: 709111488993645024}
+  - component: {fileID: 2369488105171867739}
+  - component: {fileID: 2369488105171867738}
   m_Layer: 0
   m_Name: "Ng\u01B0\u1EDDi R\u01A1m"
   m_TagString: Untagged
@@ -131354,6 +131357,65 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1818909969}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2369488105171867738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2157369909736396457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f66b04152c4086c4dbc3985e0e15a261, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueLines:
+  - "H\xFA h\xFA\u2026 Cu\u1ED1i c\xF9ng c\u0169ng c\xF3 ng\u01B0\u1EDDi \u0111\u1EBFn."
+  - "Ta l\xE0 b\xF9 nh\xECn, k\u1EBB canh gi\u1EEF khu v\u01B0\u1EDDn \u0111\xE3
+    ng\u1EE7 y\xEAn b\u1EA5y l\xE2u."
+  - "\u0110\u1EA5t v\u1EABn c\xF2n s\u1EE9c s\u1ED1ng \u2014 ch\u1EC9 ch\u1EDD b\xE0n
+    tay ng\u01B0\u1EDDi gieo m\u1EA7m."
+  - "H\xE3y l\u1EA5y cu\u1ED1c v\xE0 h\u1EA1t gi\u1ED1ng\u2026 \u0111\xE1nh th\u1EE9c
+    khu v\u01B0\u1EDDn n\xE0y \u0111i!"
+  wordSpeed: 0.03
+  autoTrigger: 1
+  playerIsClose: 0
+  oneTimeOnly: 1
+--- !u!58 &2369488105171867739
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2157369909736396457}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 1.1899996}
+  serializedVersion: 2
+  m_Radius: 3
 --- !u!4 &2369488105691358255
 Transform:
   m_ObjectHideFlags: 0

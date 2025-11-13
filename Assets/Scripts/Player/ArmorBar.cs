@@ -9,7 +9,7 @@ public class ArmorBar : MonoBehaviour
     public void SetMaxArmor(int armor)
     {
         slider.maxValue = armor;
-        slider.value = armor;
+        //slider.value = armor;
         SetArmorText(armor);
     }
 
