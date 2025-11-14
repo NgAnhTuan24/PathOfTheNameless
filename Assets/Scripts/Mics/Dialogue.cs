@@ -82,9 +82,14 @@ public class Dialogue : MonoBehaviour
 
     private void zezoText()
     {
-        dialogueText.text = "";
+        if (dialogueText != null)
+            dialogueText.text = "";
+
         index = 0;
-        dialoguePanel.SetActive(false);
+
+        if (dialoguePanel != null)
+            dialoguePanel.SetActive(false);
+
         if (Instance == this)
             Instance = null;
     }
