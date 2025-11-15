@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class AlchemySlot_UI : MonoBehaviour, IDropHandler, IPointerClickHandler
 {
@@ -48,6 +49,16 @@ public class AlchemySlot_UI : MonoBehaviour, IDropHandler, IPointerClickHandler
             Inventory.Slot draggedInventorySlot = UI_Manager.draggedSlot.inventory.slots[UI_Manager.draggedSlot.slotID];
             if (!draggedInventorySlot.IsEmpty)
             {
+                ItemData itemData = GameManager.instance.itemManager.GetItemByName(draggedInventorySlot.itemName)?.data;
+                if (itemData == null)
+                    return;
+
+                if (itemData.itemType != ItemType.None)
+                {
+                    Debug.Log($"{itemData.itemName} loại {itemData.itemType} không thể bỏ vào lò luyện kim!");
+                    return;
+                }
+
                 if (!IsEmpty)
                 {
                     Debug.Log("Slot đã có item!");
