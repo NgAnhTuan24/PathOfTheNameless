@@ -37,7 +37,7 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-        //Debug.Log("Enemy nhận: " + damage + " sát thương, máu hiện tại là: " + currentHealth);
+        Debug.Log("Enemy nhận: " + damage + " sát thương, máu hiện tại là: " + currentHealth);
         DamagePopup.Create(transform.position, damage, transform);
 
         knockback.GetKncockBack(PlayerController.Instance.transform, 15f);

@@ -82,7 +82,7 @@ public class PlayerHealth : MonoBehaviour
             if (currentHealth <= 0) Die();
         }
 
-        //Debug.Log("Player nhận: " + damage + " sát thương, máu còn lại: " + currentHealth);
+        Debug.Log("Player nhận: " + damage + " sát thương, máu còn lại: " + currentHealth);
         GameEvents.ChangedStats();
     }
 
@@ -124,6 +124,15 @@ public class PlayerHealth : MonoBehaviour
             armorBar.SetMaxArmor(maxArmor);
             armorBar.SetArmor(currentArmor);
         }
+        GameEvents.ChangedStats();
+    }
+
+    public void Heal(int amount)
+    {
+        if (isDead) return;
+        currentHealth = Mathf.Min(currentHealth + amount, maxHeath);
+        healthBar.SetHealth(currentHealth);
+        Debug.Log($"Hồi máu: +{amount}, máu hiện tại: {currentHealth}");
         GameEvents.ChangedStats();
     }
 }

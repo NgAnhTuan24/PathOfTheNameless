@@ -10,6 +10,10 @@ public class ItemData : ScriptableObject
     public ToolType toolType = ToolType.None;
 
     public GameObject cropPrefab; // Prefab cây để sinh ra khi trồng
+
+    public ConsumableType consumableType = ConsumableType.None;
+    public float effectValue;
+    public float effectDuration;
 }
 
 public enum ItemType 
@@ -17,7 +21,8 @@ public enum ItemType
     None, 
     congCu, 
     kiem, 
-    hatGiong, 
+    hatGiong,
+    tieuThu,
 }
 
 public enum ToolType
@@ -25,4 +30,12 @@ public enum ToolType
     None,
     Hoe,
     Axe,
+}
+
+public enum ConsumableType
+{
+    None,
+    HealthPotion,
+    StrengthPotion,
+    SpeedPotion,
 }
