@@ -8,8 +8,14 @@ public class AlchemyUI : MonoBehaviour
 
     public Button mixButton;
 
+    private AlchemyRecipeData recipeData;
+
     private void Awake()
     {
+        recipeData = Resources.Load<AlchemyRecipeData>("Công thức");
+        if (recipeData == null)
+            Debug.LogError("Không load được AlchemyRecipeData từ Resources");
+
         if (ingredientSlots == null || ingredientSlots.Length != 3)
             Debug.LogError("IngredientSlots không được gán đúng hoặc không đủ 3 slot", gameObject);
         if (resultSlot == null)
@@ -39,7 +45,7 @@ public class AlchemyUI : MonoBehaviour
         }
 
         // Kiểm tra công thức
-        ItemData resultItem = AlchemyRecipeData.Instance.GetResult(ingredients);
+        ItemData resultItem = recipeData.GetResult(ingredients);
 
         if (resultItem == null)
         {

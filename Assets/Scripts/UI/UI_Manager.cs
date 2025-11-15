@@ -20,6 +20,9 @@ public class UI_Manager : MonoBehaviour
     public List<Inventory_UI> inventoryUIs;
     public Dictionary<string, Inventory_UI> inventoryUIByName = new Dictionary<string, Inventory_UI>();
 
+    [Header("Alchemy UI")]
+    public GameObject alchemyPanel;
+
     [Header("Player Stats UI")]
     public PlayerStatsUI playerStatsUI;
 
@@ -66,6 +69,16 @@ public class UI_Manager : MonoBehaviour
             else
             {
                 Debug.LogWarning("Không tìm thấy nút SettingButton để gán sự kiện TogglePlayerStats()");
+            }
+
+            alchemyPanel = uiRoot.transform.Find("AlchemyPanel")?.gameObject;
+            if (alchemyPanel == null)
+            {
+                Debug.LogWarning("Không tìm thấy AlchemyPanel trong UI Root!");
+            }
+            else
+            {
+                alchemyPanel.SetActive(false);
             }
 
             settingGame = uiRoot.transform.Find("SettingGame")?.gameObject;
@@ -121,16 +134,35 @@ public class UI_Manager : MonoBehaviour
         }
     }
 
+    public void OpenUI(GameObject uiToOpen)
+    {
+        // Ẩn tất cả UI khác
+        if (alchemyPanel != null && alchemyPanel != uiToOpen) alchemyPanel.SetActive(false);
+        if (inventoryPanel != null && inventoryPanel != uiToOpen) inventoryPanel.SetActive(false);
+        if (playerStatsUI != null && playerStatsUI.gameObject != uiToOpen) playerStatsUI.gameObject.SetActive(false);
+        if (settingGame != null && settingGame != uiToOpen) settingGame.SetActive(false);
+
+        // Bật UI cần mở
+        if (uiToOpen != null)
+            uiToOpen.SetActive(true);
+    }
+
+
     public void ToggleSettingGame()
     {
         if (settingGame != null)
         {
-            if (inventoryPanel != null && inventoryPanel.activeSelf) inventoryPanel.SetActive(false);
-            if (playerStatsUI != null && playerStatsUI.gameObject.activeSelf) playerStatsUI.gameObject.SetActive(false);
-
-            settingGame.SetActive(!settingGame.activeSelf);
+            if (!settingGame.activeSelf)
+            {
+                OpenUI(settingGame);
+            }
+            else
+            {
+                settingGame.SetActive(false);
+            }
         }
     }
+
 
     public void TogglePlayerStats()
     {
@@ -138,13 +170,12 @@ public class UI_Manager : MonoBehaviour
         {
             if (!playerStatsUI.gameObject.activeSelf)
             {
-                if (inventoryPanel != null && inventoryPanel.activeSelf)
-                    inventoryPanel.SetActive(false);
-                if (settingGame != null && settingGame.activeSelf)
-                    settingGame.SetActive(false);
+                OpenUI(playerStatsUI.gameObject);
             }
-
-            playerStatsUI.Toggle();
+            else
+            {
+                playerStatsUI.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -155,14 +186,7 @@ public class UI_Manager : MonoBehaviour
         {
             if (!inventoryPanel.activeSelf)
             {
-                if (playerStatsUI != null && playerStatsUI.gameObject.activeSelf)
-                    playerStatsUI.gameObject.SetActive(false);
-
-                if (settingGame != null && settingGame.activeSelf)
-                    settingGame.SetActive(false);
-
-
-                inventoryPanel.SetActive(true);
+                OpenUI(inventoryPanel);
                 RefreshInventoryUI("Backpack");
             }
             else
