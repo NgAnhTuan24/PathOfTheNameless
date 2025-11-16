@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -69,44 +67,44 @@ public class PlayerStatsUI : MonoBehaviour
     {
         if (playerHealth != null && healthText != null && defenseText != null)
         {
-            healthText.text = $"Máu: {playerHealth.GetCurrentHealth()}/{playerHealth.GetMaxHealth()}";
-            defenseText.text = $"Giáp: {playerHealth.GetCurrentArmor()}/{playerHealth.GetMaxArmor()}";
+            healthText.text = $"HP: {playerHealth.GetCurrentHealth()}/{playerHealth.GetMaxHealth()}";
+            defenseText.text = $"Armor: {playerHealth.GetCurrentArmor()}/{playerHealth.GetMaxArmor()}";
         }
         else
         {
-            healthText.text = "Máu: (Không tìm thấy)";
-            defenseText.text = "Giáp: (Không tìm thấy)";
+            healthText.text = "HP: (Không tìm thấy)";
+            defenseText.text = "Armor: (Không tìm thấy)";
         }
 
         if (playerDamage != null && damageText != null)
         {
-            damageText.text = $"Sát thương: {playerDamage.GetDamageAmount()}";
+            damageText.text = $"Damage: {playerDamage.GetDamageAmount()}";
         }
         else
         {
-            damageText.text = "Sát thương: (Không tìm thấy)";
+            damageText.text = "Damage: (Không tìm thấy)";
         }
 
         if (playerController != null && speedText != null)
         {
-            speedText.text = $"Tốc độ: {playerController.GetMovementSpeed()}";
+            speedText.text = $"Speed: {playerController.GetMovementSpeed()}";
         }
         else
         {
-            speedText.text = "Tốc độ: (Không tìm thấy)";
+            speedText.text = "Speed: (Không tìm thấy)";
         }
 
         if (playerLevelSystem != null && levelText != null && expText != null && skillPointText != null)
         {
-            levelText.text = $"Cấp: {playerLevelSystem.GetCurrentLevel()}";
-            expText.text = $"Kinh nghiệm: {playerLevelSystem.GetTotalExp()}";
-            skillPointText.text = $"Điểm kỹ năng: {playerLevelSystem.GetSkillPoints()}";
+            levelText.text = $"Level: {playerLevelSystem.GetCurrentLevel()}";
+            expText.text = $"Exp: {playerLevelSystem.GetTotalExp()}";
+            skillPointText.text = $"Skill Points: {playerLevelSystem.GetSkillPoints()}";
         }
         else
         {
-            levelText.text = "Cấp: (Không tìm thấy)";
-            expText.text = "Kinh nghiệm: (Không tìm thấy)";
-            skillPointText.text = "Điểm kỹ năng: (Không tìm thấy)";
+            levelText.text = "Level: (Không tìm thấy)";
+            expText.text = "Exp: (Không tìm thấy)";
+            skillPointText.text = "Skill Points: (Không tìm thấy)";
         }
 
         UpdateUpgradeButtons();

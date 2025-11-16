@@ -1,15 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class AlchemySlot_UI : MonoBehaviour, IDropHandler, IPointerClickHandler
 {
     public Image icon;
+
+    [SerializeField] private bool isResultSlot = false;
+
     private string itemName = "";
-    private Inventory.Slot inventorySlot;
 
     public string ItemName => itemName;
 
@@ -28,7 +27,6 @@ public class AlchemySlot_UI : MonoBehaviour, IDropHandler, IPointerClickHandler
         itemName = name;
         icon.sprite = sprite;
         icon.color = Color.white;
-        inventorySlot = slot;
     }
 
     public void Clear()
@@ -36,7 +34,6 @@ public class AlchemySlot_UI : MonoBehaviour, IDropHandler, IPointerClickHandler
         itemName = "";
         icon.sprite = null;
         icon.color = new Color(1, 1, 1, 0);
-        inventorySlot = null;
     }
 
     public bool IsEmpty => itemName == "";
@@ -44,6 +41,12 @@ public class AlchemySlot_UI : MonoBehaviour, IDropHandler, IPointerClickHandler
     // Xử lý khi thả item vào slot
     public void OnDrop(PointerEventData eventData)
     {
+        if (isResultSlot)
+        {
+            Debug.Log("Không thể kéo thả vật phẩm vào result slot!");
+            return;
+        }
+
         if (UI_Manager.draggedSlot != null)
         {
             Inventory.Slot draggedInventorySlot = UI_Manager.draggedSlot.inventory.slots[UI_Manager.draggedSlot.slotID];
@@ -55,7 +58,7 @@ public class AlchemySlot_UI : MonoBehaviour, IDropHandler, IPointerClickHandler
 
                 if (itemData.itemType != ItemType.None)
                 {
-                    Debug.Log($"{itemData.itemName} loại {itemData.itemType} không thể bỏ vào lò luyện kim!");
+                    Debug.Log($"{itemData.itemName} - {itemData.itemType} không thể bỏ vào lò luyện kim!");
                     return;
                 }
 
@@ -69,14 +72,7 @@ public class AlchemySlot_UI : MonoBehaviour, IDropHandler, IPointerClickHandler
                 SetItem(draggedInventorySlot.itemName, draggedInventorySlot.icon, draggedInventorySlot);
 
                 // Giảm số lượng item trong inventory
-                if (UI_Manager.dragSingle)
-                {
-                    UI_Manager.draggedSlot.inventory.Remove(UI_Manager.draggedSlot.slotID, 1);
-                }
-                else
-                {
-                    UI_Manager.draggedSlot.inventory.Remove(UI_Manager.draggedSlot.slotID, draggedInventorySlot.count);
-                }
+                UI_Manager.draggedSlot.inventory.Remove(UI_Manager.draggedSlot.slotID, 1);
 
                 // Refresh inventory UI
                 GameManager.instance.uiManager.RefreshAll();
@@ -86,7 +82,7 @@ public class AlchemySlot_UI : MonoBehaviour, IDropHandler, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!IsEmpty && inventorySlot == null)
+        if (!IsEmpty)
         {
             Item item = GameManager.instance.itemManager.GetItemByName(itemName);
             if (item != null)
@@ -103,10 +99,10 @@ public class AlchemySlot_UI : MonoBehaviour, IDropHandler, IPointerClickHandler
                 }
                 if (canAdd)
                 {
-                    GameManager.instance.player.inventory.Add("Backpack", item);
+                    GameManager.instance.player.inventory.Add("Toolbar", item);
                     Clear();
                     GameManager.instance.uiManager.RefreshAll();
-                    Debug.Log($"Đã lấy {itemName} vào inventory");
+                    Debug.Log($"Đã lấy vật phẩm vào toolbar");
                 }
                 else
                 {
