@@ -4,13 +4,17 @@ public class PlayerHealth : MonoBehaviour
 {
     #region
     [SerializeField] private int maxHeath;
-
     private int currentHealth;
 
+    [SerializeField] private int maxArmor;
+    private int currentArmor;
+
     public HealthBar healthBar;
+    public ArmorBar armorBar;
 
     private Knockback knockback;
     private Flash flash;
+    private InvincibilitySkill skill;
 
     private Animator anim;
     private Rigidbody2D rb;
@@ -19,6 +23,10 @@ public class PlayerHealth : MonoBehaviour
 
     public bool IsDead => isDead;
 
+    public int GetCurrentHealth() => currentHealth;
+    public int GetMaxHealth() => maxHeath;
+    public int GetCurrentArmor() => currentArmor;
+    public int GetMaxArmor() => maxArmor;
     #endregion
 
     private void Awake()
@@ -27,32 +35,55 @@ public class PlayerHealth : MonoBehaviour
         anim = GetComponent<Animator>();
         knockback = GetComponent<Knockback>();
         flash = GetComponent<Flash>();
+        skill = GetComponent<InvincibilitySkill>();
     }
 
     private void Start()
     {
         currentHealth = maxHeath;
+        currentArmor = maxArmor;
 
         if (healthBar == null)
             healthBar = UI_Manager.Instance.healthBar;
+        if (armorBar == null)
+            armorBar = UI_Manager.Instance.armorBar;
 
         healthBar.SetMaxHealth(maxHeath);
+        armorBar.SetMaxArmor(maxArmor);
+
+        GameEvents.ChangedStats();
     }
 
     public void TakeDamage(int damage, Transform enemyTransform)
     {
         if (isDead) return;
 
-        currentHealth -= damage;
-        currentHealth = Mathf.Max(currentHealth, 0);
-        //Debug.Log("Player nhận: " + damage + " sát thương, máu còn lại: " + currentHealth);
+        if (skill != null && skill.IsInvincible())
+        {
+            Debug.Log("Đang bất tử — không nhận sát thương!");
+            return;
+        }
 
-        if (enemyTransform != null) knockback.GetKncockBack(enemyTransform, 15f);
+        if (currentArmor > 0)
+        {
+            int armorDamage = Mathf.Min(damage, currentArmor);
+            currentArmor -= armorDamage;
+            damage -= armorDamage;
+            armorBar.SetArmor(currentArmor);
+        }
 
-        StartCoroutine(flash.FlashRoutine());
-        healthBar.SetHealth(currentHealth);
+        if (damage > 0)
+        {
+            currentHealth -= damage;
+            currentHealth = Mathf.Max(currentHealth, 0);
+            healthBar.SetHealth(currentHealth);
+            StartCoroutine(flash.FlashRoutine());
+            if (enemyTransform != null) knockback.GetKncockBack(enemyTransform, 15f);
+            if (currentHealth <= 0) Die();
+        }
 
-        if (currentHealth <= 0) Die();
+        Debug.Log("Player nhận: " + damage + " sát thương, máu còn lại: " + currentHealth);
+        GameEvents.ChangedStats();
     }
 
     public void Die()
@@ -66,5 +97,42 @@ public class PlayerHealth : MonoBehaviour
         rb.velocity = Vector2.zero;
 
         Destroy(gameObject, .7f);
+
+        GameEvents.ChangedStats();
+    }
+
+    public void IncreaseMaxHealth(float amount)
+    {
+        maxHeath += (int)amount;
+        currentHealth = Mathf.Min(currentHealth, maxHeath);
+
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(maxHeath);
+            healthBar.SetHealth(currentHealth);
+        }
+
+        GameEvents.ChangedStats();
+    }
+
+    public void IncreaseMaxArmor(float amount)
+    {
+        maxArmor += (int)amount;
+        currentArmor = Mathf.Min(currentArmor, maxArmor);
+        if (armorBar != null)
+        {
+            armorBar.SetMaxArmor(maxArmor);
+            armorBar.SetArmor(currentArmor);
+        }
+        GameEvents.ChangedStats();
+    }
+
+    public void Heal(int amount)
+    {
+        if (isDead) return;
+        currentHealth = Mathf.Min(currentHealth + amount, maxHeath);
+        healthBar.SetHealth(currentHealth);
+        Debug.Log($"Hồi máu: +{amount}, máu hiện tại: {currentHealth}");
+        GameEvents.ChangedStats();
     }
 }

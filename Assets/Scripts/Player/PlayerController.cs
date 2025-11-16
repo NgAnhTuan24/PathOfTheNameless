@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlayerController : Singleton<PlayerController>
 {
@@ -21,6 +22,8 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] private ParticleSystem dustEffect;
 
     private Knockback knockback;
+
+    public float GetMovementSpeed() => tocDoDiChuyen;
     #endregion
 
     protected override void Awake()
@@ -30,6 +33,17 @@ public class PlayerController : Singleton<PlayerController>
         knockback = GetComponent<Knockback>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        GameEvents.ChangedStats();
+    }
+
+    public void SetMovementSpeed(float newSpeed)
+    {
+        tocDoDiChuyen = newSpeed;
+        GameEvents.ChangedStats(); // Kích hoạt sự kiện
     }
 
     void Update()
@@ -77,6 +91,9 @@ public class PlayerController : Singleton<PlayerController>
 
             case ItemType.hatGiong:
                 HandleSeed(itemData, toolbarUI);
+                break;
+            case ItemType.tieuThu:
+                HandleConsumable(itemData, toolbarUI);
                 break;
         }
     }
@@ -174,6 +191,54 @@ public class PlayerController : Singleton<PlayerController>
         }
     }
 
+    private void HandleConsumable(ItemData itemData, Toolbar_UI toolbarUI)
+    {
+        isAction = true;
+        actionTimer = 0.5f;
+
+        switch (itemData.consumableType)
+        {
+            case ConsumableType.HealthPotion:
+                GameManager.instance.player.GetComponent<PlayerHealth>().Heal((int)itemData.effectValue);
+                break;
+            case ConsumableType.StrengthPotion:
+                StartCoroutine(ApplyStrengthBoost((int)itemData.effectValue, itemData.effectDuration));
+                break;
+            case ConsumableType.SpeedPotion:
+                StartCoroutine(ApplySpeedBoost((int)itemData.effectValue, itemData.effectDuration));
+                break;
+        }
+
+        // Xóa vật phẩm khỏi inventory sau khi sử dụng
+        toolbarUI?.GetSelectedSlot()?.RemoveItem();
+        GameManager.instance.uiManager.RefreshAll();
+        Debug.Log($"Đã sử dụng {itemData.itemName}");
+    }
+
+    private IEnumerator ApplyStrengthBoost(int strengthAmount, float duration)
+    {
+        var playerDamage = GetComponentInChildren<PlayerDamage>();
+        playerDamage.IncreaseDamage(strengthAmount);
+        Debug.Log($"Tăng sức mạnh thêm {strengthAmount} trong {duration} giây.");
+
+        yield return new WaitForSeconds(duration);
+
+        playerDamage.IncreaseDamage(-strengthAmount);
+        Debug.Log($"Sức mạnh trở về bình thường.");
+    }
+
+    private IEnumerator ApplySpeedBoost(int speedBoost, float duration)
+    {
+        IncreaseMovementSpeed(speedBoost);
+        Debug.Log($"Tăng tốc độ di chuyển thêm {speedBoost} trong {duration} giây.");
+
+        yield return new WaitForSeconds(duration);
+
+        IncreaseMovementSpeed(-speedBoost);
+        Debug.Log($"Tốc độ di chuyển trở về bình thường.");
+
+    }
+
     private void FixedUpdate()
     {
         if (knockback.gettingKnockedBack) return;
@@ -210,5 +275,11 @@ public class PlayerController : Singleton<PlayerController>
         animator.SetFloat("LookX", huongHoatAnh.x);
         animator.SetFloat("LookY", huongHoatAnh.y);
         animator.SetFloat("Speed", huongDiChuyen.magnitude);
+    }
+
+    public void IncreaseMovementSpeed(float amount)
+    {
+        tocDoDiChuyen += amount;
+        GameEvents.ChangedStats();
     }
 }

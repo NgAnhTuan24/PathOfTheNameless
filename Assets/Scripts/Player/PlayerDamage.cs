@@ -4,14 +4,33 @@ public class PlayerDamage : MonoBehaviour
 {
     [SerializeField] private int damageAmount;
 
-    private void OnTriggerEnter2D(Collider2D col)
+    public int GetDamageAmount() => damageAmount;
+
+    private void Start()
     {
-        if (col.gameObject.GetComponent<EnemyHealth>())
-        {
-            EnemyHealth enemy = col.gameObject.GetComponent<EnemyHealth>();
-            enemy.TakeDamage(damageAmount);
-        }
+        GameEvents.ChangedStats();
     }
 
+    public void SetDamageAmount(int newDamage)
+    {
+        damageAmount = newDamage;
+        GameEvents.ChangedStats();
+    }
 
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        var enemy = col.GetComponent<EnemyHealth>();
+        var dummy = col.GetComponent<DummyTraining>();
+
+        if (enemy != null)
+            enemy.TakeDamage(damageAmount);
+        else if (dummy != null)
+            dummy.TakeDamage(damageAmount);
+    }
+
+    public void IncreaseDamage(float amount)
+    {
+        damageAmount += (int)amount;
+        GameEvents.ChangedStats();
+    }
 }

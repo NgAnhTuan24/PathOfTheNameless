@@ -270,7 +270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 2
   runSpeed: 4
-  detectionRadius: 5
+  detectionRadius: 10
   attackRadius: 2
   playerLayer:
     serializedVersion: 2
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8473ed609a452a34886d372f341949c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
+  maxHealth: 3
   deathVFX: {fileID: 6323569642449757148, guid: 0bac72b7b1df43b41b4054be03b9e751, type: 3}
 --- !u!114 &4683365264981054795
 MonoBehaviour:
