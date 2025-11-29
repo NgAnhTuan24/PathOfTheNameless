@@ -9,6 +9,10 @@ public class ChestObject : MonoBehaviour
     [SerializeField] private float dropForce;
     [SerializeField] private float interactDistance = 1.5f;
 
+    [Header("Sound")]
+    [SerializeField] private AudioClip openSound;
+    [SerializeField] private AudioSource audioSource;
+
     private Vector2 facingDir = Vector2.down;
     private bool isOpened = false;
     private Transform player;
@@ -20,6 +24,11 @@ public class ChestObject : MonoBehaviour
         animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerHealth = player.GetComponent<PlayerHealth>();
+
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     void Update()
@@ -37,6 +46,12 @@ public class ChestObject : MonoBehaviour
         {
             isOpened = true;
             animator.SetTrigger("IsOpen");
+
+            if (audioSource != null && openSound != null)
+            {
+                audioSource.PlayOneShot(openSound);
+            }
+
             Invoke(nameof(DropItem), 0.5f);
         }
     }

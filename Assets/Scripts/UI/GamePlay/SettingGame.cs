@@ -89,6 +89,8 @@ public class SettingGame : MonoBehaviour
 
     void GoToMainMenu()
     {
+        GameSaver.SaveGame();
+
         ClosePanel();
         Time.timeScale = 1f;
 

@@ -24,35 +24,64 @@ public class MainMenu : MonoBehaviour
         CheckSaveGameExists();
     }
 
+    private void OnEnable()
+    {
+        CheckSaveGameExists();
+    }
+
     void CheckSaveGameExists()
     {
-        bool hasSave = PlayerPrefs.HasKey("PlayerSaveData") || System.IO.File.Exists(Application.persistentDataPath + "/save.gamesave");
-        // Thay dòng trên tùy cách bạn lưu game (PlayerPrefs, JSON, binary...)
+        bool hasSave = GameSaver.HasSaveData();
 
         if (continueButton != null)
         {
-            continueButton.interactable = hasSave; // tắt nút nếu chưa có save
+            continueButton.interactable = hasSave;
 
             // Optional: đổi màu chữ khi bị tắt
             var text = continueButton.GetComponentInChildren<TextMeshProUGUI>();
             if (text != null)
-                text.color = hasSave ? Color.white : new Color(1, 1, 1, 0.3f);
+            {
+                if (hasSave)
+                {
+                    text.color = new Color32(0xFF, 0xA9, 0x00, 0xFF);
+                }
+                else
+                {
+                    text.color = new Color(1f, 0.66f, 0f, 0.5f);
+                }
+            }
         }
     }
 
     public void NewGame()
     {
-        // Xóa save cũ (nếu muốn bắt đầu lại hoàn toàn)
-        PlayerPrefs.DeleteAll();
-        // hoặc xóa file save tùy cách bạn lưu
+       GameSaver.DeleteSave();
 
         SceneManager.LoadScene(gameSceneName);
     }
 
     public void ContinueGame()
     {
-        // Load thẳng scene game, trong scene game bạn sẽ tự load dữ liệu save
-        SceneManager.LoadScene(gameSceneName);
+        if (!GameSaver.HasSaveData())
+        {
+            Debug.LogWarning("Không có dữ liệu save để tiếp tục!");
+            return;
+        }
+
+        SaveData data = GameSaver.LoadGame();
+
+        if (string.IsNullOrEmpty(data.currentScene))
+        {
+            Debug.LogError("Scene lưu bị lỗi, chuyển về New Game");
+            NewGame();
+            return;
+        }
+
+        PlayerPrefs.SetInt("IsContinuing", 1);
+        PlayerPrefs.Save();
+
+        // Load đúng scene đã lưu
+        SceneManager.LoadScene(data.currentScene);
     }
 
     public void ExitGame()
