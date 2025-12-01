@@ -1,14 +1,41 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[System.Serializable]
+[Serializable]
 public class SaveData
 {
     public string currentScene;
     public float playerPosX;
     public float playerPosY;
     public float playerPosZ;
-    // Thêm dữ liệu khác nếu cần: coin, level, inventory...
+
+    // Inventory Backpack
+    public List<InventorySlotData> backpackSlots = new List<InventorySlotData>();
+
+    // Inventory Toolbar
+    public List<InventorySlotData> toolbarSlots = new List<InventorySlotData>();
+}
+
+[Serializable]
+public class InventorySlotData
+{
+    public string itemName = "";
+    public int count = 0;
+    public int maxAllowed = 99;
+
+    public InventorySlotData() { }
+
+    public InventorySlotData(Inventory.Slot slot)
+    {
+        if (slot != null && !slot.IsEmpty)
+        {
+            itemName = slot.itemName;
+            count = slot.count;
+            maxAllowed = slot.maxAllowed;
+        }
+    }
 }
 
 public static class GameSaver
@@ -22,6 +49,7 @@ public static class GameSaver
             currentScene = SceneManager.GetActiveScene().name
         };
 
+        // Lưu vị trí player
         if (PlayerController.Instance != null)
         {
             Vector3 pos = PlayerController.Instance.transform.position;
@@ -30,11 +58,33 @@ public static class GameSaver
             data.playerPosZ = pos.z;
         }
 
-        string json = JsonUtility.ToJson(data);
+        // Lưu Backpack
+        var backpack = GameManager.instance?.player?.inventory?.GetInventoryByName("Backpack");
+        if (backpack != null)
+        {
+            data.backpackSlots.Clear();
+            foreach (var slot in backpack.slots)
+            {
+                data.backpackSlots.Add(new InventorySlotData(slot));
+            }
+        }
+
+        // Lưu Toolbar
+        var toolbar = GameManager.instance?.player?.inventory?.GetInventoryByName("Toolbar");
+        if (toolbar != null)
+        {
+            data.toolbarSlots.Clear();
+            foreach (var slot in toolbar.slots)
+            {
+                data.toolbarSlots.Add(new InventorySlotData(slot));
+            }
+        }
+
+        string json = JsonUtility.ToJson(data, true);
         PlayerPrefs.SetString(SAVE_KEY, json);
         PlayerPrefs.Save();
 
-        Debug.Log($"Đã lưu game: {data.currentScene} - Player pos: {data.playerPosX}, {data.playerPosY}");
+        Debug.Log("ĐÃ LƯU GAME THÀNH CÔNG! (Backpack + Toolbar + Vị trí Player + Scene hiện tại)");
     }
 
     public static SaveData LoadGame()
@@ -54,5 +104,7 @@ public static class GameSaver
         PlayerPrefs.DeleteKey(SAVE_KEY);
         PlayerPrefs.DeleteKey("IsContinuing");
         PlayerPrefs.Save();
+        Debug.Log("ĐÃ XÓA SAVE GAME CŨ");
     }
+
 }
