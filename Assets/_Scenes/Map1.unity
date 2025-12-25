@@ -471286,6 +471286,7 @@ GameObject:
   - component: {fileID: 2726716436744554593}
   - component: {fileID: 8052000681135352880}
   - component: {fileID: 8052000681135352877}
+  - component: {fileID: 8052000681135352881}
   - component: {fileID: 8052000681135352878}
   m_Layer: 0
   m_Name: Chest
@@ -472111,6 +472112,7 @@ MonoBehaviour:
   dropSpacing: 1
   dropForce: 1
   interactDistance: 1.5
+  id: {fileID: 8052000681135352881}
   openSound: {fileID: 0}
   audioSource: {fileID: 8052000681135352880}
 --- !u!114 &8052000681135352878
@@ -472263,6 +472265,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8052000681135352881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5666882501491393395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9368b0b4f2cc2443a7991d1c822baf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: f5ad7ae5-a5fd-40eb-bad9-e3b66ab3e044
 --- !u!212 &8114775974054613518
 SpriteRenderer:
   m_ObjectHideFlags: 0

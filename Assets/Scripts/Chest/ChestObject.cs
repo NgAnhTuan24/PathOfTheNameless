@@ -9,6 +9,8 @@ public class ChestObject : MonoBehaviour
     [SerializeField] private float dropForce;
     [SerializeField] private float interactDistance = 1.5f;
 
+    [SerializeField] private ChestID id;
+
     [Header("Sound")]
     [SerializeField] private AudioClip openSound;
     [SerializeField] private AudioSource audioSource;
@@ -28,6 +30,12 @@ public class ChestObject : MonoBehaviour
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        if (id != null && ChestSaveManager.Instance != null && ChestSaveManager.Instance.IsChestOpened(id.ID))
+        {
+            isOpened = true;
+            animator.SetTrigger("IsOpen");
         }
     }
 
@@ -50,6 +58,11 @@ public class ChestObject : MonoBehaviour
             if (audioSource != null && openSound != null)
             {
                 audioSource.PlayOneShot(openSound);
+            }
+
+            if (id != null && ChestSaveManager.Instance != null)
+            {
+                ChestSaveManager.Instance.MarkChestAsOpened(id.ID);
             }
 
             Invoke(nameof(DropItem), 0.5f);
