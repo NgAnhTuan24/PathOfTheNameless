@@ -35,7 +35,7 @@ public class ChestObject : MonoBehaviour
         if (id != null && ChestSaveManager.Instance != null && ChestSaveManager.Instance.IsChestOpened(id.ID))
         {
             isOpened = true;
-            animator.SetTrigger("IsOpen");
+            animator.Play("Open", -1, 1f);
         }
     }
 

@@ -16,6 +16,8 @@ public class SaveData
 
     // Inventory Toolbar
     public List<InventorySlotData> toolbarSlots = new List<InventorySlotData>();
+
+    public List<string> openedChestIDs = new List<string>();
 }
 
 [Serializable]
@@ -78,6 +80,12 @@ public static class GameSaver
             {
                 data.toolbarSlots.Add(new InventorySlotData(slot));
             }
+        }
+
+        if (ChestSaveManager.Instance != null)
+        {
+            data.openedChestIDs.Clear();
+            data.openedChestIDs.AddRange(ChestSaveManager.Instance.GetOpenedChestIDs());
         }
 
         string json = JsonUtility.ToJson(data, true);

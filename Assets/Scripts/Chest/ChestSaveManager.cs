@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,5 +29,23 @@ public class ChestSaveManager : MonoBehaviour
     public void MarkChestAsOpened(string id)
     {
         openedChestIDs.Add(id);
+    }
+
+    public IEnumerable<string> GetOpenedChestIDs()
+    {
+        return openedChestIDs;
+    }
+
+    public void LoadOpenedChests(List<string> ids)
+    {
+        openedChestIDs.Clear();
+        if (ids != null)
+        {
+            foreach (var id in ids)
+            {
+                openedChestIDs.Add(id);
+            }
+        }
+        Debug.Log($"Đã load {openedChestIDs.Count} rương đã mở từ save");
     }
 }
