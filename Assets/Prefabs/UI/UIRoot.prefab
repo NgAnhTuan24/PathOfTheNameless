@@ -404,6 +404,7 @@ GameObject:
   - component: {fileID: 436259851239163246}
   - component: {fileID: 4607415599011477299}
   - component: {fileID: 1587717894751721945}
+  - component: {fileID: 873501485279884598}
   m_Layer: 0
   m_Name: SettingGame
   m_TagString: Untagged
@@ -470,6 +471,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &873501485279884598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587770565370697910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d63cc20844245bc4eb41ca5324bc20e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicBtn: {fileID: 6439560435282283948}
+  soundFXBtn: {fileID: 4103686904016566205}
+  returnBtn: {fileID: 630003160417777191}
+  fullScreenBtn: {fileID: 518890291119201916}
+  homeBtn: {fileID: 6810492609297293509}
 --- !u!1 &672623544946856124
 GameObject:
   m_ObjectHideFlags: 0
@@ -6749,14 +6767,14 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1326048646631356035}
-  - {fileID: 3106968251356580634}
   - {fileID: 8890427559273837887}
   - {fileID: 4808535577842991123}
   - {fileID: 4502394566594621928}
-  - {fileID: 436259851239163246}
-  - {fileID: 5728197918873530189}
-  - {fileID: 5334725677466077627}
   - {fileID: 2415411000191715882}
+  - {fileID: 5334725677466077627}
+  - {fileID: 3106968251356580634}
+  - {fileID: 5728197918873530189}
+  - {fileID: 436259851239163246}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

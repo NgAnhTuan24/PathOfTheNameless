@@ -34,6 +34,7 @@ public class UI_Manager : MonoBehaviour
     public static bool dragSingle;
 
     public bool IsInventoryOpen => inventoryPanel != null && inventoryPanel.activeSelf;
+    public bool IsSettingOpen => settingGame != null && settingGame.activeSelf;
 
     private void Awake()
     {
@@ -109,19 +110,34 @@ public class UI_Manager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B))
         {
-            OpenCloseInventoryUI();
+            if (!IsSettingOpen) OpenCloseInventoryUI(); 
         }
 
-        if(Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C))
         {
-            TogglePlayerStats();
+            if (!IsSettingOpen) TogglePlayerStats();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && settingGame != null)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ToggleSettingGame();
+            if (IsSettingOpen)
+            {
+                ToggleSettingGame();      
+            }
+            else if (playerStatsUI.gameObject.activeSelf)
+            {
+                TogglePlayerStats();
+            }
+            else if (inventoryPanel.activeSelf)
+            {
+                OpenCloseInventoryUI();
+            }
+            else
+            {
+                ToggleSettingGame();
+            }
         }
 
         if (Input.GetKey(KeyCode.LeftShift))
@@ -150,22 +166,41 @@ public class UI_Manager : MonoBehaviour
 
     public void ToggleSettingGame()
     {
-        if (settingGame != null)
+        if (settingGame == null) return;
+
+        if (!settingGame.activeSelf)
         {
-            if (!settingGame.activeSelf)
-            {
-                OpenUI(settingGame);
-            }
-            else
-            {
-                settingGame.SetActive(false);
-            }
+            if (inventoryPanel != null) inventoryPanel.SetActive(false);
+            if (playerStatsUI != null) playerStatsUI.gameObject.SetActive(false);
+            if (alchemyPanel != null) alchemyPanel.SetActive(false);
+
+            OpenUI(settingGame);
+            PauseGame();
         }
+        else
+        {
+            settingGame.SetActive(false);
+            ResumeGame();
+        }
+    }
+
+    private void PauseGame()
+    {
+        Time.timeScale = 0f;
+        //AudioListener.pause = true;             // (Tùy chọn) Dừng tất cả âm thanh
+    }
+
+    private void ResumeGame()
+    {
+        Time.timeScale = 1f;
+        //AudioListener.pause = false;            // (Tùy chọn) Bật lại âm thanh
     }
 
 
     public void TogglePlayerStats()
     {
+        if (IsSettingOpen) return;
+
         if (playerStatsUI != null)
         {
             if (!playerStatsUI.gameObject.activeSelf)
@@ -182,6 +217,8 @@ public class UI_Manager : MonoBehaviour
 
     public void OpenCloseInventoryUI()
     {
+        if (IsSettingOpen) return;
+
         if (inventoryPanel != null)
         {
             if (!inventoryPanel.activeSelf)

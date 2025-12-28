@@ -421049,6 +421049,7 @@ MonoBehaviour:
   inventoryUIs:
   - {fileID: 0}
   - {fileID: 0}
+  alchemyPanel: {fileID: 0}
   playerStatsUI: {fileID: 0}
   settingGame: {fileID: 0}
 --- !u!114 &1393461408
