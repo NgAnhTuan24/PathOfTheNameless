@@ -472113,7 +472113,7 @@ MonoBehaviour:
   dropForce: 1
   interactDistance: 1.5
   id: {fileID: 8052000681135352881}
-  openSound: {fileID: 0}
+  openSound: {fileID: 8300000, guid: 7cded6b69c307284b87a2ade94a96583, type: 3}
   audioSource: {fileID: 8052000681135352880}
 --- !u!114 &8052000681135352878
 MonoBehaviour:
