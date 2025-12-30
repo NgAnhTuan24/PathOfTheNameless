@@ -18,6 +18,8 @@ public class SaveData
     public List<InventorySlotData> toolbarSlots = new List<InventorySlotData>();
 
     public List<string> openedChestIDs = new List<string>();
+
+    public List<string> completedDialogueIDs = new List<string>();
 }
 
 [Serializable]
@@ -88,11 +90,19 @@ public static class GameSaver
             data.openedChestIDs.AddRange(ChestSaveManager.Instance.GetOpenedChestIDs());
         }
 
+        if (DialogueSaveManager.Instance != null)
+        {
+            data.completedDialogueIDs.Clear();
+            data.completedDialogueIDs.AddRange(
+                DialogueSaveManager.Instance.GetCompletedDialogueIDs()
+            );
+        }
+
         string json = JsonUtility.ToJson(data, true);
         PlayerPrefs.SetString(SAVE_KEY, json);
         PlayerPrefs.Save();
 
-        Debug.Log("ĐÃ LƯU GAME THÀNH CÔNG! (Backpack + Toolbar + Vị trí Player + Scene hiện tại)");
+        Debug.Log("ĐÃ LƯU GAME THÀNH CÔNG! (Backpack + Toolbar + Vị trí Player + Scene hiện tại + trạng thái mở rương + trạng thái hội thoại chỉ chạy được 1 lần)");
     }
 
     public static SaveData LoadGame()

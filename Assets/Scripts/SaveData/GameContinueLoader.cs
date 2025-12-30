@@ -18,6 +18,13 @@ public class GameContinueLoader : MonoBehaviour
                 ChestSaveManager.Instance.LoadOpenedChests(data.openedChestIDs);
             }
 
+            if (DialogueSaveManager.Instance != null)
+            {
+                DialogueSaveManager.Instance.LoadCompletedDialogues(
+                    data.completedDialogueIDs
+                );
+            }
+
             // 1. Đặt lại vị trí player trước (an toàn)
             if (PlayerController.Instance != null)
             {
@@ -49,7 +56,7 @@ public class GameContinueLoader : MonoBehaviour
         // Bây giờ mới dám refresh UI – chắc chắn không null nữa
         UI_Manager.Instance.RefreshAll();
 
-        Debug.Log("LOAD GAME HOÀN TẤT – Inventory + Player Position + Current Scene + Trạng thái mở rương");
+        Debug.Log("LOAD GAME HOÀN TẤT – Inventory + Player Position + Current Scene + Trạng thái mở rương + trạng thái hội thoại chỉ chạy được 1 lần");
     }
 
     void LoadInventory(SaveData data)
