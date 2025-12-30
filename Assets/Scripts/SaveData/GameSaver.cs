@@ -20,6 +20,8 @@ public class SaveData
     public List<string> openedChestIDs = new List<string>();
 
     public List<string> completedDialogueIDs = new List<string>();
+
+    public List<string> removedTreeIDs = new List<string>();
 }
 
 [Serializable]
@@ -98,11 +100,18 @@ public static class GameSaver
             );
         }
 
+        if (TreeSaveManager.Instance != null)
+        {
+            data.removedTreeIDs.Clear();
+            data.removedTreeIDs.AddRange(TreeSaveManager.Instance.GetRemovedTreeIDs());
+        }
+
+
         string json = JsonUtility.ToJson(data, true);
         PlayerPrefs.SetString(SAVE_KEY, json);
         PlayerPrefs.Save();
 
-        Debug.Log("ĐÃ LƯU GAME THÀNH CÔNG! (Backpack + Toolbar + Vị trí Player + Scene hiện tại + trạng thái mở rương + trạng thái hội thoại chỉ chạy được 1 lần)");
+        Debug.Log("ĐÃ LƯU GAME THÀNH CÔNG! (Backpack + Toolbar + Vị trí Player + Scene hiện tại + trạng thái mở rương + trạng thái hội thoại chỉ chạy được 1 lần + trạng thái cây bị chặt)");
     }
 
     public static SaveData LoadGame()

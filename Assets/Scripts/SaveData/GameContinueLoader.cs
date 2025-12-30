@@ -25,6 +25,12 @@ public class GameContinueLoader : MonoBehaviour
                 );
             }
 
+            if (TreeSaveManager.Instance != null)
+            {
+                TreeSaveManager.Instance.LoadRemovedTrees(data.removedTreeIDs);
+            }
+
+
             // 1. Đặt lại vị trí player trước (an toàn)
             if (PlayerController.Instance != null)
             {
@@ -56,7 +62,7 @@ public class GameContinueLoader : MonoBehaviour
         // Bây giờ mới dám refresh UI – chắc chắn không null nữa
         UI_Manager.Instance.RefreshAll();
 
-        Debug.Log("LOAD GAME HOÀN TẤT – Inventory + Player Position + Current Scene + Trạng thái mở rương + trạng thái hội thoại chỉ chạy được 1 lần");
+        Debug.Log("LOAD GAME HOÀN TẤT – Inventory + Player Position + Current Scene + Trạng thái mở rương + trạng thái hội thoại chỉ chạy được 1 lần + trạng thái cây bị chặt");
     }
 
     void LoadInventory(SaveData data)

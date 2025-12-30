@@ -21,15 +21,18 @@ public class TreeObject : MonoBehaviour
     private int dieukienDeCayDo;
     [SerializeField] private GameObject deathVFX;
 
-    private GenerateID newID;
-
-    private void Awake()
-    {
-        newID = GetComponent<GenerateID>();
-    }
+    private GenerateID treeID;
 
     private void Start()
     {
+        treeID = GetComponent<GenerateID>();
+
+        if (TreeSaveManager.Instance != null && TreeSaveManager.Instance.IsTreeRemoved(treeID.GetID()))
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         dieukienDeCayDo = Random.Range(soLanChatToiThieu, soLanChatToiDa + 1);
     }
 
@@ -40,6 +43,8 @@ public class TreeObject : MonoBehaviour
 
         if (soLanChat >= dieukienDeCayDo)
         {
+            TreeSaveManager.Instance.MarkTreeAsRemoved(treeID.GetID());
+
             Instantiate(deathVFX, transform.position, Quaternion.identity);
             DropItems();
             Destroy(gameObject);
@@ -58,11 +63,11 @@ public class TreeObject : MonoBehaviour
                     Vector3 dropPos = transform.position + (Vector3)(Random.insideUnitCircle * 0.5f);
                     GameObject obj = Instantiate(drop.vatPhamRoi, dropPos, Quaternion.identity);
                     
-                   newID = obj.GetComponent<GenerateID>();
-                    if (newID != null) 
+                    GenerateID itemID = obj.GetComponent<GenerateID>();
+                    if (itemID != null) 
                     {
-                        newID.CreateID();
-                        ItemSaveManager.instance?.UnmarkAsRemoved(newID.GetID());
+                        itemID.CreateID();
+                        ItemSaveManager.instance?.UnmarkAsRemoved(itemID.GetID());
                     }
                 }
             }

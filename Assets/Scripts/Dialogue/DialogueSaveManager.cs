@@ -44,5 +44,6 @@ public class DialogueSaveManager : MonoBehaviour
     {
         completedDialogueIDs.Clear();
         if (ids != null) completedDialogueIDs.AddRange(ids);
+        Debug.Log($"Đã load {completedDialogueIDs.Count} hội thoại chạy 1 lần từ save");
     }
 }
