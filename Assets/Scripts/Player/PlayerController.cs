@@ -196,6 +196,17 @@ public class PlayerController : Singleton<PlayerController>
             GameObject crop = Instantiate(itemData.cropPrefab, pos + new Vector3(0.5f, 0.5f), Quaternion.identity);
             GameManager.instance.tileManager.AddCrop(pos, crop);
 
+            Crop cropComp = crop.GetComponent<Crop>();
+
+            TileManager.Instance.savedCrops.Add(new CropSaveData
+            {
+                position = pos,
+                cropId = itemData.itemName,
+                growStage = cropComp.growStage,
+                timer = cropComp.GetRemainingTime()
+            });
+
+
             toolbarUI?.GetSelectedSlot()?.RemoveItem();
             GameManager.instance.uiManager.RefreshAll();
             PLaySound(plantClip);

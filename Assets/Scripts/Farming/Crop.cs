@@ -14,6 +14,7 @@ public class Crop : MonoBehaviour
 
     private bool isFullyGrown => growStage == growSprites.Length - 1;
 
+    private Vector3Int gridPos;
 
     void Start()
     {
@@ -25,6 +26,8 @@ public class Crop : MonoBehaviour
         }
 
         timer = growTime;
+
+        gridPos = new Vector3Int(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y), 0);
     }
 
     void Update()
@@ -39,28 +42,48 @@ public class Crop : MonoBehaviour
                 timer = growTime;
             }
         }
+
+        TileManager.Instance.UpdateCropSaveData(gridPos, growStage, timer);
     }
 
     private void OnMouseDown()
     {
         if (!isFullyGrown) return;
 
-        // Tìm itemData từ tên
         Item itemToAdd = GameManager.instance.itemManager.GetItemByName(harvestItemName);
-        if (itemToAdd != null)
+        if (itemToAdd == null) return;
+
+        for (int i = 0; i < yieldAmount; i++)
         {
-            for (int i = 0; i < yieldAmount; i++)
-            {
-                GameManager.instance.player.inventory.Add("Backpack", itemToAdd);
-            }
-
-            // ✅ Reset nền đất
-            Vector3 worldPos = transform.position;
-            Vector3Int gridPos = new Vector3Int(Mathf.FloorToInt(worldPos.x), Mathf.FloorToInt(worldPos.y), 0);
-            GameManager.instance.tileManager.ResetTile(gridPos);
-
-            // ✅ Xoá cây
-            Destroy(gameObject);
+            GameManager.instance.player.inventory.Add("Backpack", itemToAdd);
         }
+
+        Vector3 worldPos = transform.position;
+        Vector3Int gridPos = new Vector3Int(
+            Mathf.FloorToInt(worldPos.x),
+            Mathf.FloorToInt(worldPos.y),
+            0
+        );
+
+        TileManager.Instance.savedCrops.RemoveAll(c => c.position == gridPos);
+
+        // Reset đất
+        GameManager.instance.tileManager.ResetTile(gridPos);
+
+        Destroy(gameObject);
     }
+
+    public void Load(int stage, float remainingTime)
+    {
+        growStage = stage;
+        timer = remainingTime;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = growSprites[growStage];
+    }
+
+    public float GetRemainingTime()
+    {
+        return timer;
+    }
+
 }

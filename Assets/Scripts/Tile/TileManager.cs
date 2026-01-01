@@ -17,17 +17,43 @@ public class TilledTile
     }
 }
 
+[System.Serializable]
+public class CropSaveData
+{
+    public Vector3Int position;
+    public string cropId;
+    public int growStage;
+    public float timer;
+}
+
 public class TileManager : MonoBehaviour
 {
+    public static TileManager Instance;
+
     public Tilemap interactableMap;
 
     [SerializeField] private Tile hiddenInteractableTile;
     [SerializeField] private Tile interactedTile;
 
     public float tillResetTime = 10f; // thời gian reset
-    private List<TilledTile> tilledTiles = new List<TilledTile>();
+    [SerializeField] private List<TilledTile> tilledTiles = new List<TilledTile>();
 
     private Dictionary<Vector3Int, GameObject> crops = new Dictionary<Vector3Int, GameObject>();
+
+    public List<CropSaveData> savedCrops = new();
+
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     private void OnEnable()
     {
@@ -41,19 +67,17 @@ public class TileManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Chỉ tìm lại Tilemap nếu đang ở scene MainGame
         GameObject mapObj = GameObject.FindGameObjectWithTag("InteractableMap");
-        if (mapObj != null)
-        {
-            interactableMap = mapObj.GetComponent<Tilemap>();
-
-            // Sau khi gán lại map -> chạy khởi tạo
-            InitMap();
-        }
-        else
+        if (mapObj == null)
         {
             interactableMap = null;
+            return;
         }
+
+        interactableMap = mapObj.GetComponent<Tilemap>();
+
+        InitMap();            
+        RestoreCrops();
     }
 
     private void InitMap()
@@ -165,4 +189,40 @@ public class TileManager : MonoBehaviour
             tilledTiles.Add(new TilledTile(pos, tillResetTime));
         }
     }
+
+    private void RestoreCrops()
+    {
+        if (interactableMap == null) return;
+
+        crops.Clear();
+
+        foreach (var data in savedCrops)
+        {
+            Item item = GameManager.instance.itemManager.GetItemByName(data.cropId);
+            if (item == null) continue;
+
+            GameObject crop = Instantiate(
+                item.data.cropPrefab,
+                data.position + new Vector3(0.5f, 0.5f),
+                Quaternion.identity
+            );
+
+            Crop cropComp = crop.GetComponent<Crop>();
+            cropComp.Load(data.growStage, data.timer);
+
+            crops[data.position] = crop;
+            interactableMap.SetTile(data.position, interactedTile);
+        }
+    }
+
+    public void UpdateCropSaveData(Vector3Int pos, int stage, float timer)
+    {
+        var data = savedCrops.FirstOrDefault(c => c.position == pos);
+        if (data != null)
+        {
+            data.growStage = stage;
+            data.timer = timer;
+        }
+    }
+
 }
