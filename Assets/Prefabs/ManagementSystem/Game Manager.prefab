@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 2830661238462398180}
   - component: {fileID: 6214833411223066263}
+  - component: {fileID: 4933537887091128366}
+  - component: {fileID: 5336869343023301483}
   - component: {fileID: 3872770789127660366}
   - component: {fileID: 2653538758102578130}
   - component: {fileID: 4708172409239338603}
   - component: {fileID: 4904311632222987221}
-  - component: {fileID: 4933537887091128366}
-  - component: {fileID: 5336869343023301483}
   - component: {fileID: 2455567429226903124}
   - component: {fileID: 5428467553771939264}
   - component: {fileID: 2068622521543947122}
@@ -60,6 +60,30 @@ MonoBehaviour:
   cameraController: {fileID: 0}
   itemSaveManager: {fileID: 0}
   player: {fileID: 0}
+--- !u!114 &4933537887091128366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5399904341384440788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e68de2fa11d80a4f8cb187f3c7a0e04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5336869343023301483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5399904341384440788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4d77bb1d7a172443818152a966b1940, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3872770789127660366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,7 +99,7 @@ MonoBehaviour:
   interactableMap: {fileID: 0}
   hiddenInteractableTile: {fileID: 11400000, guid: 73ed3a427592734458d8e05c239833ec, type: 2}
   interactedTile: {fileID: 11400000, guid: 97c0b77eb42b6704085b16006111d4a4, type: 2}
-  tillResetTime: 10
+  tillResetTime: 25
 --- !u!114 &2653538758102578130
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,30 +172,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectedList: []
---- !u!114 &4933537887091128366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5399904341384440788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e68de2fa11d80a4f8cb187f3c7a0e04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5336869343023301483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5399904341384440788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d4d77bb1d7a172443818152a966b1940, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2455567429226903124
 MonoBehaviour:
   m_ObjectHideFlags: 0
