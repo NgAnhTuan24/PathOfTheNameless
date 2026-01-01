@@ -21,6 +21,13 @@ public class PlayerController : Singleton<PlayerController>
 
     [SerializeField] private ParticleSystem dustEffect;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource; // AudioSource chính trên player
+    [SerializeField] private AudioClip swordSwingClip; // Âm thanh vung kiếm
+    [SerializeField] private AudioClip hoeClip;        // Âm thanh cuốc đất
+    [SerializeField] private AudioClip axeClip;        // Âm thanh chặt cây
+    [SerializeField] private AudioClip plantClip;      // Âm thanh trồng hạt
+
     private Knockback knockback;
 
     public float GetMovementSpeed() => tocDoDiChuyen;
@@ -33,6 +40,11 @@ public class PlayerController : Singleton<PlayerController>
         knockback = GetComponent<Knockback>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     private void Start()
@@ -103,6 +115,7 @@ public class PlayerController : Singleton<PlayerController>
         isAction = true;
         actionTimer = thoiGianHoiChieu;
         animator.SetTrigger("IsAttacking");
+        PLaySound(swordSwingClip);
         Debug.Log("đã sử dụng kiếm");
     }
 
@@ -132,6 +145,7 @@ public class PlayerController : Singleton<PlayerController>
             actionTimer = .5f;
             animator.SetTrigger("IsHoeing");
             GameManager.instance.tileManager.TillTile(pos);
+            PLaySound(hoeClip);
             Debug.Log("đã sử dụng cuốc");
         }
         else
@@ -159,6 +173,7 @@ public class PlayerController : Singleton<PlayerController>
                 actionTimer = .5f;
                 animator.SetTrigger("IsAxeing");
                 tree.Chop();
+                PLaySound(axeClip);
                 Debug.Log("đã sử dụng rìu");
             }
         }
@@ -183,6 +198,7 @@ public class PlayerController : Singleton<PlayerController>
 
             toolbarUI?.GetSelectedSlot()?.RemoveItem();
             GameManager.instance.uiManager.RefreshAll();
+            PLaySound(plantClip);
             Debug.Log("Đã gieo hạt giống");
         }
         else
@@ -281,5 +297,13 @@ public class PlayerController : Singleton<PlayerController>
     {
         tocDoDiChuyen += amount;
         GameEvents.ChangedStats();
+    }
+
+    void PLaySound(AudioClip clip, float volume = 1f)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip, volume);
+        }
     }
 }
