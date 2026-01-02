@@ -106,6 +106,8 @@ MonoBehaviour:
   - {fileID: 1957360922, guid: e5434ec9f9de23741a92afc0a1d38316, type: 3}
   harvestItemName: "C\xE0 R\u1ED1t"
   yieldAmount: 1
+  harvestSound: {fileID: 8300000, guid: 252156daf22f0de409eba2f550fbe180, type: 3}
+  harvestVolume: 1
 --- !u!61 &2530077841928097117
 BoxCollider2D:
   m_ObjectHideFlags: 0

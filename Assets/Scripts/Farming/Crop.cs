@@ -12,6 +12,11 @@ public class Crop : MonoBehaviour
     public string harvestItemName; // tên vật phẩm thu được (trùng với itemData)
     public int yieldAmount = 1;    // số lượng thu hoạch
 
+    [Header("Audio")]
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip harvestSound;
+    [SerializeField] private float harvestVolume = 1f;
+
     private bool isFullyGrown => growStage == growSprites.Length - 1;
 
     private Vector3Int gridPos;
@@ -28,6 +33,16 @@ public class Crop : MonoBehaviour
         timer = growTime;
 
         gridPos = new Vector3Int(Mathf.FloorToInt(transform.position.x), Mathf.FloorToInt(transform.position.y), 0);
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        audioSource.playOnAwake = false;
+        audioSource.volume = harvestVolume;
+
     }
 
     void Update()
@@ -67,10 +82,17 @@ public class Crop : MonoBehaviour
 
         TileManager.Instance.savedCrops.RemoveAll(c => c.position == gridPos);
 
+        audioSource.PlayOneShot(harvestSound);
+
+        // Ẩn cây ngay lập tức
+        spriteRenderer.enabled = false;
+
         // Reset đất
         GameManager.instance.tileManager.ResetTile(gridPos);
 
-        Destroy(gameObject);
+        // Destroy trễ để âm thanh phát xong
+        Destroy(gameObject, harvestSound.length);
+
     }
 
     public void Load(int stage, float remainingTime)
