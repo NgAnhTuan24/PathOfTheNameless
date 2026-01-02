@@ -22,6 +22,9 @@ public class SaveData
     public List<string> completedDialogueIDs = new List<string>();
 
     public List<string> removedTreeIDs = new List<string>();
+
+    public List<TilledTile> tilledTiles = new();
+    public List<CropSaveData> crops = new();
 }
 
 [Serializable]
@@ -106,12 +109,23 @@ public static class GameSaver
             data.removedTreeIDs.AddRange(TreeSaveManager.Instance.GetRemovedTreeIDs());
         }
 
+        if (TileManager.Instance != null)
+        {
+            data.tilledTiles = new List<TilledTile>(
+                TileManager.Instance.GetTilledTiles()
+            );
+
+            data.crops = new List<CropSaveData>(
+                TileManager.Instance.savedCrops
+            );
+        }
+
 
         string json = JsonUtility.ToJson(data, true);
         PlayerPrefs.SetString(SAVE_KEY, json);
         PlayerPrefs.Save();
 
-        Debug.Log("ĐÃ LƯU GAME THÀNH CÔNG! (Backpack + Toolbar + Vị trí Player + Scene hiện tại + trạng thái mở rương + trạng thái hội thoại chỉ chạy được 1 lần + trạng thái cây bị chặt)");
+        Debug.Log("ĐÃ LƯU GAME THÀNH CÔNG! (Backpack + Toolbar + Vị trí Player + Scene hiện tại + trạng thái mở rương + trạng thái hội thoại chỉ chạy được 1 lần + trạng thái cây bị chặt + trạng thái đất cuốc và gieo hạt)");
     }
 
     public static SaveData LoadGame()

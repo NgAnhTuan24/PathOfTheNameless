@@ -29,6 +29,7 @@ public class CropSaveData
 public class TileManager : MonoBehaviour
 {
     public static TileManager Instance;
+    private bool isLoadingFromSave = false;
 
     public Tilemap interactableMap;
 
@@ -80,19 +81,27 @@ public class TileManager : MonoBehaviour
         RestoreCrops();
     }
 
+    public void SetLoadingFromSave(bool value)
+    {
+        isLoadingFromSave = value;
+    }
+
     private void InitMap()
     {
         if (interactableMap == null) return;
 
-        foreach (var pos in interactableMap.cellBounds.allPositionsWithin)
+        if (!isLoadingFromSave)
         {
-            if (interactableMap.HasTile(pos))
+            foreach (var pos in interactableMap.cellBounds.allPositionsWithin)
             {
-                interactableMap.SetTile(pos, hiddenInteractableTile);
+                if (interactableMap.HasTile(pos))
+                {
+                    interactableMap.SetTile(pos, hiddenInteractableTile);
+                }
             }
         }
 
-        // Nếu muốn load lại trạng thái đất đã cuốc từ tilledTiles:
+        // Luôn khôi phục các tile đã cuốc (có trong list)
         foreach (var t in tilledTiles)
         {
             interactableMap.SetTile(t.position, interactedTile);
@@ -225,4 +234,29 @@ public class TileManager : MonoBehaviour
         }
     }
 
+    public void LoadFromSave(
+    List<TilledTile> savedTilledTiles,
+    List<CropSaveData> savedCropsData)
+    {
+        isLoadingFromSave = true;
+
+        tilledTiles.Clear();
+        savedCrops.Clear();
+
+        if (savedTilledTiles != null)
+            tilledTiles.AddRange(savedTilledTiles);
+
+        if (savedCropsData != null)
+            savedCrops.AddRange(savedCropsData);
+
+        InitMap();
+        RestoreCrops();
+
+        isLoadingFromSave = false;
+    }
+
+    public List<TilledTile> GetTilledTiles()
+    {
+        return tilledTiles;
+    }
 }
