@@ -1159,6 +1159,7 @@ MonoBehaviour:
   newGameButton: {fileID: 1527504794}
   continueButton: {fileID: 358032560}
   exitButton: {fileID: 215935381}
+  buttonClickSound: {fileID: 8300000, guid: 5c03e9de55be20d4b9b26e04247b180e, type: 3}
 --- !u!1 &1487176999
 GameObject:
   m_ObjectHideFlags: 0

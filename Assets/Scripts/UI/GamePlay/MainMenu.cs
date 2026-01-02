@@ -13,8 +13,18 @@ public class MainMenu : MonoBehaviour
     public Button continueButton;
     public Button exitButton;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip buttonClickSound;
+    private AudioSource audioSource;
+
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
+        if(audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
         // Gắn sự kiện cho các nút
         if (newGameButton) newGameButton.onClick.AddListener(NewGame);
         if (continueButton) continueButton.onClick.AddListener(ContinueGame);
@@ -55,13 +65,17 @@ public class MainMenu : MonoBehaviour
 
     public void NewGame()
     {
-       GameSaver.DeleteSave();
+        PlayButtonSound();
+
+        GameSaver.DeleteSave();
 
         SceneManager.LoadScene(gameSceneName);
     }
 
     public void ContinueGame()
     {
+        PlayButtonSound();
+
         if (!GameSaver.HasSaveData())
         {
             Debug.LogWarning("Không có dữ liệu save để tiếp tục!");
@@ -86,10 +100,20 @@ public class MainMenu : MonoBehaviour
 
     public void ExitGame()
     {
+        PlayButtonSound();
+
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
 #endif
+    }
+
+    void PlayButtonSound()
+    {
+        if (audioSource != null && buttonClickSound != null)
+        {
+            audioSource.PlayOneShot(buttonClickSound);
+        }
     }
 }

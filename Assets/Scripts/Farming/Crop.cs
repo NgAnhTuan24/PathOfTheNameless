@@ -13,9 +13,9 @@ public class Crop : MonoBehaviour
     public int yieldAmount = 1;    // số lượng thu hoạch
 
     [Header("Audio")]
-    private AudioSource audioSource;
     [SerializeField] private AudioClip harvestSound;
     [SerializeField] private float harvestVolume = 1f;
+    private AudioSource audioSource;
 
     private bool isFullyGrown => growStage == growSprites.Length - 1;
 
