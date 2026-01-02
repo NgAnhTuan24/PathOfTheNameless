@@ -11,10 +11,21 @@ public class SaveData
     public float playerPosY;
     public float playerPosZ;
 
-    // Inventory Backpack
+    public int currentHealth;
+    public int maxHealth;
+    public int currentArmor;
+    public int maxArmor;
+    public float movementSpeed;
+    public int damageAmount;
+
+    public int currentLevel;
+    public int currentExp;
+    public int totalExp;
+    public int expToNextLevel;
+    public int skillPoints;
+
     public List<InventorySlotData> backpackSlots = new List<InventorySlotData>();
 
-    // Inventory Toolbar
     public List<InventorySlotData> toolbarSlots = new List<InventorySlotData>();
 
     public List<string> openedChestIDs = new List<string>();
@@ -65,6 +76,37 @@ public static class GameSaver
             data.playerPosX = pos.x;
             data.playerPosY = pos.y;
             data.playerPosZ = pos.z;
+        }
+
+        if (PlayerController.Instance != null)
+        {
+            var health = PlayerController.Instance.GetComponent<PlayerHealth>();
+            var damage = PlayerController.Instance.GetComponentInChildren<PlayerDamage>();
+            var levelSystem = PlayerController.Instance.GetComponent<PlayerLevelSystem>();
+
+            if (health != null)
+            {
+                data.currentHealth = health.GetCurrentHealth();
+                data.maxHealth = health.GetMaxHealth();
+                data.currentArmor = health.GetCurrentArmor();
+                data.maxArmor = health.GetMaxArmor();
+            }
+
+            if (damage != null)
+            {
+                data.damageAmount = damage.GetDamageAmount();
+            }
+
+            data.movementSpeed = PlayerController.Instance.GetMovementSpeed();
+
+            if (levelSystem != null)
+            {
+                data.currentLevel = levelSystem.GetCurrentLevel();
+                data.currentExp = levelSystem.GetCurrentExp();
+                data.totalExp = levelSystem.GetTotalExp();
+                data.expToNextLevel = levelSystem.GetExpToNextLevel();
+                data.skillPoints = levelSystem.GetSkillPoints();
+            }
         }
 
         // Lưu Backpack
@@ -125,7 +167,7 @@ public static class GameSaver
         PlayerPrefs.SetString(SAVE_KEY, json);
         PlayerPrefs.Save();
 
-        Debug.Log("ĐÃ LƯU GAME THÀNH CÔNG! (Backpack + Toolbar + Vị trí Player + Scene hiện tại + trạng thái mở rương + trạng thái hội thoại chỉ chạy được 1 lần + trạng thái cây bị chặt + trạng thái đất cuốc và gieo hạt)");
+        Debug.Log("ĐÃ LƯU GAME THÀNH CÔNG! (Backpack + Toolbar + Vị trí Player + Scene hiện tại + trạng thái mở rương + trạng thái hội thoại chỉ chạy được 1 lần + trạng thái cây bị chặt + trạng thái đất cuốc và gieo hạt + stats nhân vật (máu, giáp, tốc độ, damage, level, exp, skill points))");
     }
 
     public static SaveData LoadGame()
