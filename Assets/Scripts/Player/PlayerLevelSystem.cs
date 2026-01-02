@@ -11,6 +11,10 @@ public class PlayerLevelSystem : MonoBehaviour
     private int skillPoints = 0;
     private int totalExp = 0;
 
+    [Header("Audio")]
+    [SerializeField] private AudioClip levelUpSound;
+    private AudioSource audioSource;
+
     private ExpBar expBar;
 
     public int GetCurrentLevel() => currentLevel;
@@ -18,6 +22,15 @@ public class PlayerLevelSystem : MonoBehaviour
     public int GetExpToNextLevel() => expToNextLevel;
     public int GetTotalExp() => totalExp;
     public int GetSkillPoints() => skillPoints;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null )
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
 
     void Start()
     {
@@ -58,6 +71,8 @@ public class PlayerLevelSystem : MonoBehaviour
         skillPoints += SKILL_POINTS;
         expToNextLevel = 100 * (int)Mathf.Pow(2f, currentLevel);
 
+        LevelUpSound();
+
         UpdateUI();
 
         GameEvents.ChangedStats();
@@ -79,6 +94,14 @@ public class PlayerLevelSystem : MonoBehaviour
             skillPoints -= cost;
             UpdateUI();
             GameEvents.ChangedStats();
+        }
+    }
+
+    void LevelUpSound()
+    {
+        if (audioSource != null && levelUpSound != null)
+        {
+            audioSource.PlayOneShot(levelUpSound);
         }
     }
 }

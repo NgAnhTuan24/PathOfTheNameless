@@ -5277,6 +5277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00432801b225efb43ab582c718960392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelUpSound: {fileID: 8300000, guid: 57dedcefa83e161458b8f80c5b7fa1ca, type: 3}
 --- !u!114 &687619727361740538
 MonoBehaviour:
   m_ObjectHideFlags: 0
