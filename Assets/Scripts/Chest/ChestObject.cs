@@ -57,7 +57,7 @@ public class ChestObject : MonoBehaviour
 
             if (audioSource != null && openSound != null)
             {
-                audioSource.PlayOneShot(openSound);
+                AudioManager.Instance.PlaySFX(openSound);
             }
 
             if (id != null && ChestSaveManager.Instance != null)

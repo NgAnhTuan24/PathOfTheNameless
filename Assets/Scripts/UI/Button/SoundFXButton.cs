@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class MusicButton : MonoBehaviour
+public class SoundFXButton : MonoBehaviour
 {
     [Header("UI Components")]
     [SerializeField] private Button _buttonElement;
@@ -29,6 +29,7 @@ public class MusicButton : MonoBehaviour
     {
         _isActive = !_isActive;
         UpdateIcon();
+        AudioManager.Instance.ToggleSFX();
     }
 
     private void UpdateIcon()

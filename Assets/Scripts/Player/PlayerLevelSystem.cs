@@ -101,7 +101,7 @@ public class PlayerLevelSystem : MonoBehaviour
     {
         if (audioSource != null && levelUpSound != null)
         {
-            audioSource.PlayOneShot(levelUpSound);
+            AudioManager.Instance.PlaySFX(levelUpSound);
         }
     }
 }

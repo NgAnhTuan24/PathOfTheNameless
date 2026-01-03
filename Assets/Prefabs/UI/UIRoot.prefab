@@ -3577,7 +3577,7 @@ GameObject:
   - component: {fileID: 806973610011986237}
   - component: {fileID: 7267651532404598005}
   - component: {fileID: 4103686904016566205}
-  - component: {fileID: 4238835780520203557}
+  - component: {fileID: 2574582539871032780}
   m_Layer: 0
   m_Name: SoundFX
   m_TagString: Untagged
@@ -3686,7 +3686,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4238835780520203557
+--- !u!114 &2574582539871032780
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3695,7 +3695,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4293789130706456023}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56d2611423972254fb90420ed025d1df, type: 3}
+  m_Script: {fileID: 11500000, guid: d0384c09235929346b03af8a53806ae4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _buttonElement: {fileID: 4103686904016566205}

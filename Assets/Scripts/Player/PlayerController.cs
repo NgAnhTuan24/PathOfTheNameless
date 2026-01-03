@@ -312,9 +312,6 @@ public class PlayerController : Singleton<PlayerController>
 
     void PLaySound(AudioClip clip, float volume = 1f)
     {
-        if (clip != null && audioSource != null)
-        {
-            audioSource.PlayOneShot(clip, volume);
-        }
+        AudioManager.Instance.PlaySFX(clip, volume);
     }
 }
