@@ -15,8 +15,10 @@ public class EnemyHealth : MonoBehaviour
     public event Action OnEnemyDeath;
 
     [Header("Exp system")]
+    [SerializeField] private bool useRandomExp = true;
     [SerializeField] private int minExp = 10;
     [SerializeField] private int maxExp = 50;
+    [SerializeField] private int defaultExp = 20;
     private PlayerLevelSystem playerLevelSystem;
 
     private void Awake()
@@ -42,7 +44,9 @@ public class EnemyHealth : MonoBehaviour
 
         knockback.GetKncockBack(PlayerController.Instance.transform, 15f);
         StartCoroutine(flash.FlashRoutine());
-        Die();
+
+        if (currentHealth <= 0)
+            Die();
     }
 
     public void Die()
@@ -55,8 +59,18 @@ public class EnemyHealth : MonoBehaviour
 
             if (playerLevelSystem != null)
             {
-                int randomExp = UnityEngine.Random.Range(minExp, maxExp + 1);
-                playerLevelSystem.AddExperience(randomExp);
+                int exp;
+
+                if (useRandomExp)
+                {
+                    exp = UnityEngine.Random.Range(minExp, maxExp + 1);
+                }
+                else
+                {
+                    exp = defaultExp;
+                }
+
+                playerLevelSystem.AddExperience(exp);
             }
 
             Destroy(gameObject);
