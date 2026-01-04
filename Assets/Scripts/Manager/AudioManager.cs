@@ -14,12 +14,43 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         Instance = this;
+
+        EnsureAudioSources();
     }
 
     private void Start()
     {
         UpdateVolumes();
+    }
+
+    private void EnsureAudioSources()
+    {
+        // Nếu musicSource bị null → tìm child tên "Music"
+        if (musicSource == null)
+        {
+            Transform musicTrans = transform.Find("Music");
+            if (musicTrans != null)
+                musicSource = musicTrans.GetComponent<AudioSource>();
+        }
+
+        // Nếu sfxSource bị null → tìm child tên "SFX"
+        if (sfxSource == null)
+        {
+            Transform sfxTrans = transform.Find("SFX");
+            if (sfxTrans != null)
+                sfxSource = sfxTrans.GetComponent<AudioSource>();
+        }
+
+        // Nếu vẫn null (hiếm), log lỗi để dễ debug
+        if (musicSource == null) Debug.LogError("AudioManager: Không tìm thấy Music AudioSource!");
+        if (sfxSource == null) Debug.LogError("AudioManager: Không tìm thấy SFX AudioSource!");
     }
 
     public void ToggleMusic()
