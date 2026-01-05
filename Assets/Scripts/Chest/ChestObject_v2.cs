@@ -58,16 +58,20 @@ public class ChestObject_v2 : MonoBehaviour
 
     void DropItem()
     {
-        Vector2 sideDir = Vector2.Perpendicular(facingDir);
-
         for (int i = 0; i < dropPrefabs.Length; i++)
         {
-            float offset = (i - (dropPrefabs.Length - 1) / 2f) * dropSpacing;
+            // hướng rơi chính + lệch ngẫu nhiên
+            Vector2 randomDir =
+                (facingDir + Random.insideUnitCircle * dropSpacing).normalized;
 
-            Vector3 spawnPos = transform.position + (Vector3)(facingDir * dropDis) + (Vector3)(sideDir * offset);
+            // đẩy item ra khỏi thân rương ngay khi spawn
+            Vector3 spawnPos =
+                transform.position +
+                (Vector3)(randomDir * dropDis);
 
             GameObject obj = Instantiate(dropPrefabs[i], spawnPos, Quaternion.identity);
 
+            // save system
             GenerateID newID = obj.GetComponent<GenerateID>();
             if (newID != null)
             {
@@ -78,7 +82,10 @@ public class ChestObject_v2 : MonoBehaviour
             Rigidbody2D rb = obj.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                rb.AddForce(facingDir * dropForce, ForceMode2D.Impulse);
+                rb.AddForce(randomDir * dropForce, ForceMode2D.Impulse);
+
+                // xoay nhẹ → tạo cảm giác nảy
+                rb.AddTorque(Random.Range(-dropForce, dropForce) * 0.1f, ForceMode2D.Impulse);
             }
         }
     }
