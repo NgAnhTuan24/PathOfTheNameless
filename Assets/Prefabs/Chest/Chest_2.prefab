@@ -265,6 +265,14 @@ MonoBehaviour:
   animator: {fileID: 5252634598958685758}
   dropPrefabs:
   - {fileID: 8501477026242332035, guid: 1fdc466ce40bfc5408f2de97d959d6b7, type: 3}
+  - {fileID: 6159683415232751402, guid: f1249aa4810012b4d80df5f62f409056, type: 3}
+  - {fileID: 7385589271822409913, guid: 4ae6179ac0a88b348bda867909ac0cb8, type: 3}
+  - {fileID: 3510423122866213654, guid: b5eb7afdd8bf2614ab6a943c6c7cadc9, type: 3}
+  - {fileID: 7703735699862243036, guid: f424c867ef4ca0d4eab4077b0ce2e7be, type: 3}
+  - {fileID: 4161804822257514482, guid: 9ef46443fbeced24e87e6b6b28306b76, type: 3}
+  - {fileID: 7349163157838996724, guid: 257a0b5986db9664a9f4c16179021d9f, type: 3}
+  - {fileID: 994432579038646101, guid: 7913b622cedc7f14b8906dcda5e1e970, type: 3}
+  - {fileID: 7184845844013592465, guid: 26f87ea4524b5cd44ae475ebee6ab610, type: 3}
   dropDis: 1
   dropSpacing: 1
   dropForce: 1
