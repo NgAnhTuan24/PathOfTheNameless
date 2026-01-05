@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 3217045802237112131}
   - component: {fileID: 8537909914284427570}
   - component: {fileID: 5252634598958685758}
-  - component: {fileID: 2182647468659254444}
-  - component: {fileID: 2236230436113201226}
   - component: {fileID: 28529750940151116}
+  - component: {fileID: 1230961211699267139}
   m_Layer: 0
   m_Name: Chest_2
   m_TagString: Untagged
@@ -155,41 +154,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2182647468659254444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3271451044516731019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27c67785cb75f3a4490ac66e6fa3e9c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 5252634598958685758}
-  dropPrefabs:
-  - {fileID: 2069961269664895568, guid: 614cc8461b7314a4b8187936fb2950d9, type: 3}
-  dropDis: 1
-  dropSpacing: 1
-  dropForce: 1
-  interactDistance: 1.5
-  id: {fileID: 2236230436113201226}
-  openSound: {fileID: 8300000, guid: 7cded6b69c307284b87a2ade94a96583, type: 3}
-  audioSource: {fileID: 28529750940151116}
---- !u!114 &2236230436113201226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3271451044516731019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9368b0b4f2cc2443a7991d1c822baf8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 6a7a1da2-cdd0-4b47-b7e8-c58919333a2e
 --- !u!82 &28529750940151116
 AudioSource:
   m_ObjectHideFlags: 0
@@ -286,3 +250,24 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1230961211699267139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3271451044516731019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 245c284f27521be4c932edcb51b7f1b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 5252634598958685758}
+  dropPrefabs:
+  - {fileID: 8501477026242332035, guid: 1fdc466ce40bfc5408f2de97d959d6b7, type: 3}
+  dropDis: 1
+  dropSpacing: 1
+  dropForce: 1
+  interactDistance: 1.5
+  openSound: {fileID: 8300000, guid: 7cded6b69c307284b87a2ade94a96583, type: 3}
+  audioSource: {fileID: 28529750940151116}
