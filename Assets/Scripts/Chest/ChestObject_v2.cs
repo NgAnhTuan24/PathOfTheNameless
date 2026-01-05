@@ -8,6 +8,7 @@ public class ChestObject_v2 : MonoBehaviour
     [SerializeField] private float dropSpacing = 1f;
     [SerializeField] private float dropForce;
     [SerializeField] private float interactDistance = 1.5f;
+    [SerializeField] private float destroyDelay = 2f;
 
     [Header("Sound")]
     [SerializeField] private AudioClip openSound;
@@ -53,6 +54,8 @@ public class ChestObject_v2 : MonoBehaviour
             }
 
             Invoke(nameof(DropItem), 0.5f);
+
+            Destroy(gameObject, destroyDelay);
         }
     }
 
@@ -60,18 +63,12 @@ public class ChestObject_v2 : MonoBehaviour
     {
         for (int i = 0; i < dropPrefabs.Length; i++)
         {
-            // hướng rơi chính + lệch ngẫu nhiên
-            Vector2 randomDir =
-                (facingDir + Random.insideUnitCircle * dropSpacing).normalized;
+            Vector2 randomDir = (facingDir + Random.insideUnitCircle * dropSpacing).normalized;
 
-            // đẩy item ra khỏi thân rương ngay khi spawn
-            Vector3 spawnPos =
-                transform.position +
-                (Vector3)(randomDir * dropDis);
+            Vector3 spawnPos = transform.position + (Vector3)(randomDir * dropDis);
 
             GameObject obj = Instantiate(dropPrefabs[i], spawnPos, Quaternion.identity);
 
-            // save system
             GenerateID newID = obj.GetComponent<GenerateID>();
             if (newID != null)
             {
@@ -84,7 +81,6 @@ public class ChestObject_v2 : MonoBehaviour
             {
                 rb.AddForce(randomDir * dropForce, ForceMode2D.Impulse);
 
-                // xoay nhẹ → tạo cảm giác nảy
                 rb.AddTorque(Random.Range(-dropForce, dropForce) * 0.1f, ForceMode2D.Impulse);
             }
         }

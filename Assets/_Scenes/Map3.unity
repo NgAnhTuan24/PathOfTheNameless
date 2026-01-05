@@ -305,7 +305,7 @@ GameObject:
   m_Component:
   - component: {fileID: 83035267}
   m_Layer: 0
-  m_Name: p2
+  m_Name: p3
   m_TagString: Untagged
   m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -51594,8 +51594,8 @@ MonoBehaviour:
     spawnDelay: 0.8
   enemySpawnPoints:
   - {fileID: 1313544676}
-  - {fileID: 83035267}
   - {fileID: 1409866700}
+  - {fileID: 83035267}
   - {fileID: 725015417}
   bossPrefab: {fileID: 959636378779484695, guid: 2d52582b57ea3424681140d7f897dcc4, type: 3}
   chestPrefab: {fileID: 3271451044516731019, guid: ebb64148f4efd864892a55d01ea2b9a6, type: 3}
@@ -51614,8 +51614,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1313544676}
-  - {fileID: 83035267}
   - {fileID: 1409866700}
+  - {fileID: 83035267}
   - {fileID: 725015417}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -93801,7 +93801,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1409866700}
   m_Layer: 0
-  m_Name: p3
+  m_Name: p2
   m_TagString: Untagged
   m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
