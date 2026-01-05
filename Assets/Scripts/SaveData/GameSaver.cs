@@ -36,6 +36,9 @@ public class SaveData
 
     public List<TilledTile> tilledTiles = new();
     public List<CropSaveData> crops = new();
+
+    public List<string> clearedArenaIDs = new();
+    public List<string> activatedArenaIDs = new();
 }
 
 [Serializable]
@@ -162,12 +165,17 @@ public static class GameSaver
             );
         }
 
+        if (ArenaSaveManager.Instance != null)
+        {
+            data.clearedArenaIDs = ArenaSaveManager.Instance.GetClearedArenaIDs();
+            data.activatedArenaIDs = ArenaSaveManager.Instance.GetActivatedArenaIDs();
+        }
 
         string json = JsonUtility.ToJson(data, true);
         PlayerPrefs.SetString(SAVE_KEY, json);
         PlayerPrefs.Save();
 
-        Debug.Log("ĐÃ LƯU GAME THÀNH CÔNG! (Backpack + Toolbar + Vị trí Player + Scene hiện tại + trạng thái mở rương + trạng thái hội thoại chỉ chạy được 1 lần + trạng thái cây bị chặt + trạng thái đất cuốc và gieo hạt + stats nhân vật (máu, giáp, tốc độ, damage, level, exp, skill points))");
+        Debug.Log("ĐÃ LƯU GAME THÀNH CÔNG!");
     }
 
     public static SaveData LoadGame()

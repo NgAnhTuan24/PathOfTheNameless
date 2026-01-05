@@ -51566,6 +51566,7 @@ GameObject:
   m_Component:
   - component: {fileID: 965640066}
   - component: {fileID: 965640065}
+  - component: {fileID: 965640067}
   m_Layer: 0
   m_Name: ArenaController
   m_TagString: Untagged
@@ -51619,6 +51620,19 @@ Transform:
   - {fileID: 725015417}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &965640067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965640064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f50f07d596562346b0e8904d1b1b0f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arenaID: a31fb13a-f1ae-4f79-92ff-ffc9bce66e0d
 --- !u!1 &1007533690
 GameObject:
   m_ObjectHideFlags: 0
@@ -93711,6 +93725,7 @@ GameObject:
   - component: {fileID: 1396434508}
   - component: {fileID: 1396434507}
   - component: {fileID: 1396434506}
+  - component: {fileID: 1396434509}
   m_Layer: 0
   m_Name: ArenaTrigger
   m_TagString: Untagged
@@ -93791,6 +93806,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1396434509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1396434505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f50f07d596562346b0e8904d1b1b0f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arenaID: fa122172-2b7a-4889-8006-1bf331ffe2b3
 --- !u!1 &1409866699
 GameObject:
   m_ObjectHideFlags: 0

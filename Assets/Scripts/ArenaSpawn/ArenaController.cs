@@ -27,6 +27,23 @@ public class ArenaController : MonoBehaviour
 
     private int spawnPointIndex = 0;
 
+    private ArenaID arenaID;
+
+    private void Awake()
+    {
+        arenaID = GetComponent<ArenaID>();
+    }
+
+    private void Start()
+    {
+        if (arenaID != null &&
+            ArenaSaveManager.Instance != null &&
+            ArenaSaveManager.Instance.IsArenaCleared(arenaID.GetID()))
+        {
+            arenaCleared = true;
+        }
+    }
+
     public void StartArena()
     {
         if (arenaCleared) return;
@@ -102,6 +119,11 @@ public class ArenaController : MonoBehaviour
     void OnBossKilled()
     {
         arenaCleared = true;
+
+        if (arenaID != null)
+        {
+            ArenaSaveManager.Instance.MarkCleared(arenaID.GetID());
+        }
 
         Instantiate(
             chestPrefab,

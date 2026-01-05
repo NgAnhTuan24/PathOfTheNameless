@@ -35,6 +35,13 @@ public class GameContinueLoader : MonoBehaviour
                 TileManager.Instance.LoadFromSave(data.tilledTiles, data.crops);
             }
 
+            if (ArenaSaveManager.Instance != null)
+            {
+                ArenaSaveManager.Instance.LoadClearedArenas(data.clearedArenaIDs);
+                ArenaSaveManager.Instance.LoadActivatedArenas(data.activatedArenaIDs);
+            }
+
+
             // 1. Đặt lại vị trí player trước (an toàn)
             if (PlayerController.Instance != null)
             {
@@ -68,7 +75,7 @@ public class GameContinueLoader : MonoBehaviour
 
         ApplyPlayerStats(data);
 
-        Debug.Log("LOAD GAME HOÀN TẤT – Inventory + Player Position + Current Scene + Trạng thái mở rương + trạng thái hội thoại chỉ chạy được 1 lần + trạng thái cây bị chặt + trạng thái đất cuốc và gieo hạt + trạng thái nhân vật (máu, giáp, tốc độ, damage, level, exp, skill points)");
+        Debug.Log("LOAD GAME HOÀN TẤT");
     }
 
     void LoadInventory(SaveData data)
@@ -133,8 +140,8 @@ public class GameContinueLoader : MonoBehaviour
 
         if (health != null)
         {
-            health.IncreaseMaxHealth(data.maxHealth - health.GetMaxHealth()); // điều chỉnh max trước
-                                                                              // Gán trực tiếp vì có thể maxHealth đã thay đổi qua upgrade
+            health.IncreaseMaxHealth(data.maxHealth - health.GetMaxHealth());
+                                                                              
             health.GetType().GetField("maxHeath", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
                 ?.SetValue(health, data.maxHealth);
             health.GetType().GetField("currentHealth", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
@@ -161,7 +168,6 @@ public class GameContinueLoader : MonoBehaviour
 
         if (levelSystem != null)
         {
-            // Dùng reflection để gán private field hoặc thêm public setter nếu muốn sạch hơn
             var levelField = levelSystem.GetType().GetField("currentLevel", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             var expField = levelSystem.GetType().GetField("currentExp", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             var totalExpField = levelSystem.GetType().GetField("totalExp", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
@@ -174,7 +180,6 @@ public class GameContinueLoader : MonoBehaviour
             expToNextField?.SetValue(levelSystem, data.expToNextLevel);
             skillPointsField?.SetValue(levelSystem, data.skillPoints);
 
-            // Cập nhật ExpBar
             if (levelSystem.GetType().GetField("expBar", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?
                 .GetValue(levelSystem) is ExpBar expBar && expBar != null)
             {
@@ -183,6 +188,6 @@ public class GameContinueLoader : MonoBehaviour
             }
         }
 
-        GameEvents.ChangedStats(); // Cập nhật UI stats
+        GameEvents.ChangedStats();
     }
 }
