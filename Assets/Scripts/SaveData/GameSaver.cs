@@ -39,7 +39,18 @@ public class SaveData
 
     public List<string> clearedArenaIDs = new();
     public List<string> activatedArenaIDs = new();
+    public List<ArenaProgressData> arenaProgress = new();
 }
+
+[Serializable]
+public class ArenaProgressData
+{
+    public string arenaID;
+    public int currentWave;
+    public bool bossSpawned;
+    public bool cleared;
+}
+
 
 [Serializable]
 public class InventorySlotData
@@ -169,6 +180,7 @@ public static class GameSaver
         {
             data.clearedArenaIDs = ArenaSaveManager.Instance.GetClearedArenaIDs();
             data.activatedArenaIDs = ArenaSaveManager.Instance.GetActivatedArenaIDs();
+            data.arenaProgress = ArenaSaveManager.Instance.GetAllProgress();
         }
 
         string json = JsonUtility.ToJson(data, true);

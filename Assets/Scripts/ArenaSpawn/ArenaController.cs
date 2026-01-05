@@ -19,7 +19,7 @@ public class ArenaController : MonoBehaviour
     [Header("Boss & Reward")]
     public GameObject bossPrefab;
     public GameObject chestPrefab;
-    public Transform arenaCenter; // đúng vị trí khoanh đỏ
+    public Transform arenaCenter;
 
     private int currentWave;
     private int aliveEnemies;
@@ -28,6 +28,8 @@ public class ArenaController : MonoBehaviour
     private int spawnPointIndex = 0;
 
     private ArenaID arenaID;
+    private bool bossSpawned;
+    private bool arenaStarted;
 
     private void Awake()
     {
@@ -36,24 +38,50 @@ public class ArenaController : MonoBehaviour
 
     private void Start()
     {
-        if (arenaID != null &&
-            ArenaSaveManager.Instance != null &&
-            ArenaSaveManager.Instance.IsArenaCleared(arenaID.GetID()))
+        if (arenaID == null || ArenaSaveManager.Instance == null) return;
+
+        var progress = ArenaSaveManager.Instance.GetProgress(arenaID.GetID());
+        if (progress != null)
         {
-            arenaCleared = true;
+            currentWave = progress.currentWave;
+            bossSpawned = progress.bossSpawned;
+            arenaCleared = progress.cleared;
         }
     }
 
     public void StartArena()
     {
-        if (arenaCleared) return;
+        if (arenaCleared || arenaStarted) return;
+
+        arenaStarted = true;
+        SaveProgress();
+        StartCoroutine(SpawnWave());
+    }
+
+    public void ResumeArena()
+    {
+        if (arenaCleared || arenaStarted) return;
+
+        arenaStarted = true;
+
+        if (currentWave >= waves.Count)
+        {
+            if (!bossSpawned)
+            {
+                SpawnBoss();
+            }
+            return;
+        }
 
         StartCoroutine(SpawnWave());
     }
 
     IEnumerator SpawnWave()
     {
-        spawnPointIndex = 0; // reset mỗi wave
+        if (currentWave < 0 || currentWave >= waves.Count)
+            yield break;
+
+        spawnPointIndex = 0;
 
         WaveData wave = waves[currentWave];
 
@@ -73,7 +101,7 @@ public class ArenaController : MonoBehaviour
         spawnPointIndex++;
 
         if (spawnPointIndex >= enemySpawnPoints.Length)
-            spawnPointIndex = 0; // quay vòng
+            spawnPointIndex = 0;
 
         GameObject enemy = Instantiate(prefab, point.position, Quaternion.identity);
 
@@ -88,48 +116,44 @@ public class ArenaController : MonoBehaviour
     {
         aliveEnemies--;
 
-        if (aliveEnemies <= 0)
-        {
-            currentWave++;
+        if (aliveEnemies > 0) return;
 
-            if (currentWave < waves.Count)
-            {
-                StartCoroutine(SpawnWave());
-            }
-            else
-            {
-                SpawnBoss();
-            }
+        currentWave++;
+        SaveProgress();
+
+        if (currentWave < waves.Count)
+        {
+            StartCoroutine(SpawnWave());
+        }
+        else if (!bossSpawned)
+        {
+            SpawnBoss();
         }
     }
 
     void SpawnBoss()
     {
-        GameObject boss = Instantiate(
-            bossPrefab,
-            arenaCenter.position,
-            Quaternion.identity
-        );
-
-        EnemyHealth bossHealth = boss.GetComponent<EnemyHealth>();
-        bossHealth.OnEnemyDeath += OnBossKilled;
+        var boss = Instantiate(bossPrefab, arenaCenter.position, Quaternion.identity);
+        boss.GetComponent<EnemyHealth>().OnEnemyDeath += OnBossKilled;
     }
 
 
     void OnBossKilled()
     {
         arenaCleared = true;
+        SaveProgress();
 
-        if (arenaID != null)
-        {
-            ArenaSaveManager.Instance.MarkCleared(arenaID.GetID());
-        }
+        ArenaSaveManager.Instance.MarkCleared(arenaID.GetID());
 
-        Instantiate(
-            chestPrefab,
-            arenaCenter.position,
-            Quaternion.identity
+        Instantiate(chestPrefab, arenaCenter.position, Quaternion.identity);
+    }
+    void SaveProgress()
+    {
+        ArenaSaveManager.Instance.SetProgress(
+            arenaID.GetID(),
+            currentWave,
+            bossSpawned,
+            arenaCleared
         );
     }
-
 }

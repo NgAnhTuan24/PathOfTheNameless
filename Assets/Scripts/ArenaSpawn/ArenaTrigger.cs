@@ -23,15 +23,17 @@ public class ArenaTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (activated) return;
+        if (!other.CompareTag("Player")) return;
 
-        if (other.CompareTag("Player"))
+        if (!activated)
         {
             activated = true;
-
             ArenaSaveManager.Instance?.MarkActivated(arenaID.GetID());
-
             arenaController.StartArena();
+        }
+        else
+        {
+            arenaController.ResumeArena();
         }
     }
 }

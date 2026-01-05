@@ -39,6 +39,7 @@ public class GameContinueLoader : MonoBehaviour
             {
                 ArenaSaveManager.Instance.LoadClearedArenas(data.clearedArenaIDs);
                 ArenaSaveManager.Instance.LoadActivatedArenas(data.activatedArenaIDs);
+                ArenaSaveManager.Instance.LoadProgress(data.arenaProgress);
             }
 
 
