@@ -51587,18 +51587,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waves:
-  - enemyPrefab: {fileID: 7494120324605413807, guid: 9763643015a53a345a6869e34e159faa, type: 3}
+  - enemyPrefab: {fileID: 796118582263940930, guid: 4c31b2b27746d8a428eb7856e55d180e, type: 3}
     count: 4
     spawnDelay: 0.5
-  - enemyPrefab: {fileID: 959636378779484695, guid: 2d52582b57ea3424681140d7f897dcc4, type: 3}
-    count: 4
+  - enemyPrefab: {fileID: 7049841495400408823, guid: 6c8771ff699a7ba41bcde52f56a4a0a2, type: 3}
+    count: 2
     spawnDelay: 0.8
   enemySpawnPoints:
   - {fileID: 1313544676}
   - {fileID: 1409866700}
   - {fileID: 83035267}
   - {fileID: 725015417}
-  bossPrefab: {fileID: 959636378779484695, guid: 2d52582b57ea3424681140d7f897dcc4, type: 3}
+  bossPrefab: {fileID: 1606085146486989633, guid: 6ea15471a3ba6af46b8996bbdef0cd1c, type: 3}
   chestPrefab: {fileID: 3271451044516731019, guid: ebb64148f4efd864892a55d01ea2b9a6, type: 3}
   arenaCenter: {fileID: 1107274087}
 --- !u!4 &965640066
