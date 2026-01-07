@@ -195,6 +195,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   attackCooldown: 1
+  bulletPrefab: {fileID: 4422364946268710702, guid: fe66e3a72e6c873479d6503e09874336, type: 3}
+  bulletCount: 20
+  bulletSpawnRadius: 0.3
 --- !u!114 &3771989123493461002
 MonoBehaviour:
   m_ObjectHideFlags: 0

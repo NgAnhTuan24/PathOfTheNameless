@@ -13,6 +13,11 @@ public class SlimeBossController : MonoBehaviour {
     [SerializeField] float attackCooldown = 2f;
     float attackCooldownTimer;
 
+    [Header("Projectile Attack")]
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] int bulletCount = 8;
+    [SerializeField] float bulletSpawnRadius = 0.3f;
+
     Rigidbody2D rb; 
     Animator anim; 
     Transform player; 
@@ -60,6 +65,30 @@ public class SlimeBossController : MonoBehaviour {
                 AttackState();
                 break;
         }
+    }
+
+    void ShootRadialProjectiles()
+    {
+        float angleStep = 360f / bulletCount;
+        float angle = 0f;
+
+        for (int i = 0; i < bulletCount; i++)
+        {
+            float rad = angle * Mathf.Deg2Rad;
+            Vector2 dir = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
+
+            Vector2 spawnPos = (Vector2)transform.position + dir * bulletSpawnRadius;
+
+            GameObject bullet = Instantiate(bulletPrefab, spawnPos, Quaternion.identity);
+            bullet.GetComponent<SlimeBullet>().Init(dir);
+
+            angle += angleStep;
+        }
+    }
+
+    public void OnAttackShoot()
+    {
+        ShootRadialProjectiles();
     }
 
     void IdleState()
