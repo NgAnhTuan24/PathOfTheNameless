@@ -107,6 +107,8 @@ MonoBehaviour:
   - {fileID: -2111860268, guid: e5434ec9f9de23741a92afc0a1d38316, type: 3}
   harvestItemName: "Ng\xF4"
   yieldAmount: 1
+  harvestSound: {fileID: 8300000, guid: 252156daf22f0de409eba2f550fbe180, type: 3}
+  harvestVolume: 1
 --- !u!61 &5383571886690078439
 BoxCollider2D:
   m_ObjectHideFlags: 0

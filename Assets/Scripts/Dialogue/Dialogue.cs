@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Dialogue : MonoBehaviour
@@ -21,6 +21,16 @@ public class Dialogue : MonoBehaviour
     public bool playerIsClose;
     public bool oneTimeOnly = false;
     private bool hasPlayed = false;
+
+    private string dialogueID;
+
+    private void Awake()
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+        string objectPath = GetGameObjectPath(transform);
+
+        dialogueID = $"{sceneName}::{objectPath}";
+    }
 
     void Start()
     {
@@ -70,7 +80,12 @@ public class Dialogue : MonoBehaviour
 
     void StartDialogue()
     {
-        if (oneTimeOnly && hasPlayed) return;
+        if (oneTimeOnly &&
+         DialogueSaveManager.Instance != null &&
+         DialogueSaveManager.Instance.IsDialogueCompleted(dialogueID))
+        {
+            return;
+        }
 
         Instance = this;
         dialoguePanel.SetActive(true);
@@ -113,7 +128,13 @@ public class Dialogue : MonoBehaviour
             StartCoroutine(Typing());
         }
         else
-        { 
+        {
+            if (oneTimeOnly &&
+            DialogueSaveManager.Instance != null)
+            {
+                DialogueSaveManager.Instance.MarkDialogueCompleted(dialogueID);
+            }
+
             zezoText();
         }
     }
@@ -138,5 +159,16 @@ public class Dialogue : MonoBehaviour
             playerIsClose = false;
             if (!oneTimeOnly) zezoText();
         }
+    }
+
+    string GetGameObjectPath(Transform t)
+    {
+        string path = t.name;
+        while (t.parent != null)
+        {
+            t = t.parent;
+            path = t.name + "/" + path;
+        }
+        return path;
     }
 }

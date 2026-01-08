@@ -277,6 +277,7 @@ MonoBehaviour:
     m_Bits: 256
   patrolTime: 4
   idleTime: 0.5
+  zone: {fileID: 0}
   hasAttack: 0
 --- !u!114 &351904843381720320
 MonoBehaviour:
@@ -292,6 +293,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 3
   deathVFX: {fileID: 6323569642449757148, guid: 0bac72b7b1df43b41b4054be03b9e751, type: 3}
+  useRandomExp: 0
+  minExp: 10
+  maxExp: 50
+  defaultExp: 20
 --- !u!114 &4683365264981054795
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -11,14 +11,46 @@ public class SaveData
     public float playerPosY;
     public float playerPosZ;
 
-    // Inventory Backpack
+    public int currentHealth;
+    public int maxHealth;
+    public int currentArmor;
+    public int maxArmor;
+    public float movementSpeed;
+    public int damageAmount;
+
+    public int currentLevel;
+    public int currentExp;
+    public int totalExp;
+    public int expToNextLevel;
+    public int skillPoints;
+
     public List<InventorySlotData> backpackSlots = new List<InventorySlotData>();
 
-    // Inventory Toolbar
     public List<InventorySlotData> toolbarSlots = new List<InventorySlotData>();
 
     public List<string> openedChestIDs = new List<string>();
+
+    public List<string> completedDialogueIDs = new List<string>();
+
+    public List<string> removedTreeIDs = new List<string>();
+
+    public List<TilledTile> tilledTiles = new();
+    public List<CropSaveData> crops = new();
+
+    public List<string> clearedArenaIDs = new();
+    public List<string> activatedArenaIDs = new();
+    public List<ArenaProgressData> arenaProgress = new();
 }
+
+[Serializable]
+public class ArenaProgressData
+{
+    public string arenaID;
+    public int currentWave;
+    public bool bossSpawned;
+    public bool cleared;
+}
+
 
 [Serializable]
 public class InventorySlotData
@@ -60,6 +92,37 @@ public static class GameSaver
             data.playerPosZ = pos.z;
         }
 
+        if (PlayerController.Instance != null)
+        {
+            var health = PlayerController.Instance.GetComponent<PlayerHealth>();
+            var damage = PlayerController.Instance.GetComponentInChildren<PlayerDamage>();
+            var levelSystem = PlayerController.Instance.GetComponent<PlayerLevelSystem>();
+
+            if (health != null)
+            {
+                data.currentHealth = health.GetCurrentHealth();
+                data.maxHealth = health.GetMaxHealth();
+                data.currentArmor = health.GetCurrentArmor();
+                data.maxArmor = health.GetMaxArmor();
+            }
+
+            if (damage != null)
+            {
+                data.damageAmount = damage.GetDamageAmount();
+            }
+
+            data.movementSpeed = PlayerController.Instance.GetMovementSpeed();
+
+            if (levelSystem != null)
+            {
+                data.currentLevel = levelSystem.GetCurrentLevel();
+                data.currentExp = levelSystem.GetCurrentExp();
+                data.totalExp = levelSystem.GetTotalExp();
+                data.expToNextLevel = levelSystem.GetExpToNextLevel();
+                data.skillPoints = levelSystem.GetSkillPoints();
+            }
+        }
+
         // Lưu Backpack
         var backpack = GameManager.instance?.player?.inventory?.GetInventoryByName("Backpack");
         if (backpack != null)
@@ -88,11 +151,43 @@ public static class GameSaver
             data.openedChestIDs.AddRange(ChestSaveManager.Instance.GetOpenedChestIDs());
         }
 
+        if (DialogueSaveManager.Instance != null)
+        {
+            data.completedDialogueIDs.Clear();
+            data.completedDialogueIDs.AddRange(
+                DialogueSaveManager.Instance.GetCompletedDialogueIDs()
+            );
+        }
+
+        if (TreeSaveManager.Instance != null)
+        {
+            data.removedTreeIDs.Clear();
+            data.removedTreeIDs.AddRange(TreeSaveManager.Instance.GetRemovedTreeIDs());
+        }
+
+        if (TileManager.Instance != null)
+        {
+            data.tilledTiles = new List<TilledTile>(
+                TileManager.Instance.GetTilledTiles()
+            );
+
+            data.crops = new List<CropSaveData>(
+                TileManager.Instance.savedCrops
+            );
+        }
+
+        if (ArenaSaveManager.Instance != null)
+        {
+            data.clearedArenaIDs = ArenaSaveManager.Instance.GetClearedArenaIDs();
+            data.activatedArenaIDs = ArenaSaveManager.Instance.GetActivatedArenaIDs();
+            data.arenaProgress = ArenaSaveManager.Instance.GetAllProgress();
+        }
+
         string json = JsonUtility.ToJson(data, true);
         PlayerPrefs.SetString(SAVE_KEY, json);
         PlayerPrefs.Save();
 
-        Debug.Log("ĐÃ LƯU GAME THÀNH CÔNG! (Backpack + Toolbar + Vị trí Player + Scene hiện tại)");
+        Debug.Log("ĐÃ LƯU GAME THÀNH CÔNG!");
     }
 
     public static SaveData LoadGame()
