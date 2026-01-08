@@ -139,4 +139,13 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log($"Hồi máu: +{amount}, máu hiện tại: {currentHealth}");
         GameEvents.ChangedStats();
     }
+
+    public void RestoreArmor(int amount)
+    {
+        if (isDead) return;
+        currentArmor = Mathf.Min(currentArmor + amount, maxArmor);
+        armorBar.SetArmor(currentArmor);
+        Debug.Log($"Hồi giáp: +{amount}, giáp hiện tại: {currentHealth}");
+        GameEvents.ChangedStats();
+    }
 }
