@@ -29,6 +29,9 @@ public class UI_Manager : MonoBehaviour
     [Header("Setting Game Play")]
     public GameObject settingGame;
 
+    [Header("Game Over UI")]
+    public GameOverUI gameOverUI;
+
     public static Slot_UI draggedSlot;
     public static Image draggedIcon;
     public static bool dragSingle;
@@ -90,6 +93,16 @@ public class UI_Manager : MonoBehaviour
             else
             {
                 settingGame.SetActive(false);
+            }
+
+            gameOverUI = uiRoot.transform.Find("GameOverPanel")?.GetComponent<GameOverUI>();
+            if (gameOverUI == null)
+            {
+                Debug.LogWarning("Không tìm thấy GameOverUI trong UI Root!");
+            }
+            else
+            {
+                gameOverUI.gameObject.SetActive(false);
             }
 
             // Lấy hết Inventory_UI trong prefab
@@ -231,6 +244,12 @@ public class UI_Manager : MonoBehaviour
                 inventoryPanel.SetActive(false);
             }
         }
+    }
+
+    public void ShowGameOver()
+    {
+        OpenUI(gameOverUI.gameObject);
+        gameOverUI.Show();
     }
 
     public void RefreshInventoryUI(string inventoryName)

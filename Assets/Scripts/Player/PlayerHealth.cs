@@ -96,7 +96,11 @@ public class PlayerHealth : MonoBehaviour
         GetComponent<PlayerController>().enabled = false;
         rb.velocity = Vector2.zero;
 
+        GameSaver.DeleteSave();
+
         Destroy(gameObject, .7f);
+
+        UI_Manager.Instance?.ShowGameOver();
 
         GameEvents.ChangedStats();
     }

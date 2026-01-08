@@ -4137,7 +4137,7 @@ MonoBehaviour:
   dialogueLines:
   - "H\xE3y c\u1EA9n th\u1EADn nh\u1EEFng chi\u1EBFc gai!"
   - "Nh\u1EA5n R \u0111\u1EC3 mi\u1EC5n nhi\u1EC5m s\xE1t th\u01B0\u01A1ng v\xE0
-    v\u01B0\u1EE3t qua nh\u1EEFng chi\u1EBFc gai nguy hi\u1EC3n \u0111\xF3."
+    v\u01B0\u1EE3t qua nh\u1EEFng chi\u1EBFc gai nguy hi\u1EC3m \u0111\xF3."
   wordSpeed: 0.03
   autoTrigger: 1
   playerIsClose: 0
