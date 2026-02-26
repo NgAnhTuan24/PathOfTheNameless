@@ -51,7 +51,6 @@ public class UI_Manager : MonoBehaviour
 
         if (spawnedUIRoot == null)
         {
-            // Spawn prefab UI_Root 1 lần duy nhất
             spawnedUIRoot = Instantiate(uiRootPrefab);
             DontDestroyOnLoad(spawnedUIRoot);
 
@@ -116,7 +115,6 @@ public class UI_Manager : MonoBehaviour
         }
         else
         {
-            // Nếu UI đã spawn rồi thì dùng lại
             uiRoot = spawnedUIRoot;
         }
     }
@@ -200,13 +198,13 @@ public class UI_Manager : MonoBehaviour
     private void PauseGame()
     {
         Time.timeScale = 0f;
-        //AudioListener.pause = true;             // (Tùy chọn) Dừng tất cả âm thanh
+        //AudioListener.pause = true;            
     }
 
     private void ResumeGame()
     {
         Time.timeScale = 1f;
-        //AudioListener.pause = false;            // (Tùy chọn) Bật lại âm thanh
+        //AudioListener.pause = false;           
     }
 
 

@@ -158,7 +158,6 @@ public class EnemyController : MonoBehaviour
         isAttacking = true;
         enemyAttack?.Attack(player); // gọi hàm bắn đạn + trigger animation
 
-        // Giả sử animation attack dài khoảng 1 giây
         yield return new WaitForSeconds(.5f);
 
         isAttacking = false;
@@ -231,7 +230,7 @@ public class EnemyController : MonoBehaviour
         isReturningToZone = true;
         rb.velocity = Vector2.zero;
         StopAllCoroutines();
-        if (gameObject.activeInHierarchy) // ✅ Chỉ chạy nếu object còn active
+        if (gameObject.activeInHierarchy) //Chỉ chạy nếu object còn active
             StartCoroutine(ReturnToZone());
     }
 
