@@ -13,7 +13,7 @@ public class Collectable : MonoBehaviour
 
             if(item != null)
             {
-                player.inventory.Add("Toolbar", item);
+                player.inventory.Add("Backpack", item);
 
                 GetComponent<Item>()?.MarkAsRemoved();
 

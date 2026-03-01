@@ -52,8 +52,6 @@ public class InventoryManager : MonoBehaviour
         if(inventoryByName.ContainsKey(inventoryName))
         {
             inventoryByName[inventoryName].Add(item);
-
-            UI_Manager.Instance?.RefreshInventoryUI(inventoryName);
         }
     }
 
